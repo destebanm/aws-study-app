@@ -2,7 +2,7 @@
   "name": "aws-study-app-client",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://destebanm.github.io/aws-study-app",
+  "homepage": "https://destebanm.github.io/aws-study-app/",
   "dependencies": {
     "date-fns": "^2.30.0",
     "react": "^18.2.0",
