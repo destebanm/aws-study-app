@@ -11,7 +11,7 @@ import './App.css';
 
 function App() {
   return (
-    <Router>
+    <Router basename="/aws-study-app">
       <div className="App">
         <nav className="main-nav">
           <NavLink to="/" end>Nuevo Test</NavLink>
