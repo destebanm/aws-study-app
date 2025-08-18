@@ -1,0 +1,128 @@
+.test-taker-container {
+    padding: 1rem;
+}
+
+.test-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.progress-indicator {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.question-container {
+    background-color: #fdfdfd;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.options-form .option {
+    margin: 0.8rem 0;
+    padding: 0.8rem;
+    border-radius: 5px;
+    transition: background-color 0.2s ease;
+}
+
+.options-form .option:hover {
+    background-color: #f5f5f5;
+}
+
+.options-form input[type="radio"] {
+    margin-right: 10px;
+    transform: scale(1.2);
+}
+
+.notes-container textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-family: inherit;
+    font-size: 1rem;
+    box-sizing: border-box; /* Important for width */
+}
+
+.navigation-buttons {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.navigation-buttons button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.navigation-buttons button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.navigation-buttons button:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.finish-btn {
+    background-color: #28a745;
+    color: white;
+    border-color: #28a745;
+}
+
+/* Results Display */
+.results-container h3 {
+    font-size: 2rem;
+}
+.results-container .pass { color: #28a745; }
+.results-container .fail { color: #dc3545; }
+
+.restart-btn {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    margin: 1rem 0 2rem 0;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.result-card {
+    padding: 1.5rem;
+    margin: 1rem 0;
+    border-radius: 8px;
+    text-align: left;
+}
+
+.result-card.correct {
+    border: 2px solid #28a745;
+    background-color: #f0fff4;
+}
+
+.result-card.incorrect {
+    border: 2px solid #dc3545;
+    background-color: #fff5f5;
+}
+
+.correct-text { color: #28a745; font-weight: bold; }
+.incorrect-text { color: #dc3545; font-weight: bold; }
+
+.explanation {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #ddd;
+    font-style: italic;
+    color: #333;
+}
