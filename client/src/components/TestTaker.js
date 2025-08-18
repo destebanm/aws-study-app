@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './TestTaker.css';
 
 // Helper functions to interact with localStorage
