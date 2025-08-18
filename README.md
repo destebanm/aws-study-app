@@ -2,7 +2,43 @@
 
 A comprehensive study application designed to help users prepare for AWS certifications through interactive quizzes and practice tests. Built with React and deployed automatically to GitHub Pages using GitHub Actions workflow.
 
-## 🚀 Features
+## � CI/CD Pipeline
+
+This project implements a Continuous Integration/Continuous Deployment (CI/CD) pipeline using GitHub Actions:
+
+### Continuous Integration
+- **Automated Builds**: Every push to the `main` branch triggers an automated build process
+- **Environment Setup**: Node.js environment is automatically configured with caching for faster builds
+- **Dependency Management**: `npm ci` ensures clean and reproducible dependency installation
+- **Build Verification**: The application is built to verify no breaking changes were introduced
+
+### Continuous Deployment
+- **Automatic Deployment**: Successful builds are automatically deployed to GitHub Pages
+- **Environment**: Deployment to the `gh-pages` branch which serves as our production environment
+- **Zero-Downtime**: The deployment process ensures zero-downtime updates
+- **Artifact Management**: Build artifacts are properly managed and deployed
+- **URL**: The application is accessible at [https://destebanm.github.io/aws-study-app/](https://destebanm.github.io/aws-study-app/)
+
+### Workflow Details
+```yaml
+# Key workflow features
+- Triggers: Push to main branch
+- Environment: Ubuntu latest
+- Node version: 16
+- Build command: npm run build
+- Deployment: GitHub Pages via actions-gh-pages
+```
+
+### Repository Structure
+```
+aws-study-app/
+├── client/           # React application
+├── .github/          # GitHub configurations
+│   └── workflows/    # CI/CD workflow definitions
+└── README.md        # Project documentation
+```
+
+## �🚀 Features
 
 - Interactive quiz interface
 - Real-time scoring
@@ -16,8 +52,11 @@ A comprehensive study application designed to help users prepare for AWS certifi
 
 - **Frontend**: React.js
 - **Styling**: CSS
+- **Routing**: React Router DOM with basename configuration for GitHub Pages
 - **Deployment**: GitHub Pages
-- **CI/CD**: GitHub Actions
+- **CI/CD**: GitHub Actions with automated workflows
+- **Version Control**: Git with protected main branch
+- **Hosting**: GitHub Pages with custom domain configuration
 
 ## 📋 Prerequisites
 
