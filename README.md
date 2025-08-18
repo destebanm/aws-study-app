@@ -1,6 +1,6 @@
 # AWS Study App
 
-A comprehensive study application designed to help users prepare for AWS certifications through interactive quizzes and practice tests. Built with React and automatically deployed using GitHub Pages and GitHub Actions.
+A comprehensive study application designed to help users prepare for AWS certifications through interactive quizzes and practice tests. Built with React and deployed automatically to GitHub Pages using GitHub Actions workflow.
 
 ## 🚀 Features
 
