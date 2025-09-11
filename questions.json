@@ -1210,5 +1210,593 @@
     ],
     "explanation": "Under the Shared Responsibility Model, the customer is responsible for security 'in' the cloud. This includes managing the guest operating system (including updates and security patches), any application software or utilities installed by the customer on the instances, and the configuration of the AWS-provided firewall (called a security group) on each instance.",
     "awsService": "Security"
+  },
+  {
+    "id": "q102",
+    "questionText": "A company runs a critical application on a Multi-AZ RDS MySQL database. During a planned maintenance window, they need to perform a schema change that will take several hours. What is the BEST approach to minimize downtime while ensuring data consistency?",
+    "options": [
+      { "text": "Create a read replica, promote it to master, and perform the schema change.", "isCorrect": false },
+      { "text": "Create a snapshot, restore it to a new instance, perform the schema change, and switch over.", "isCorrect": true },
+      { "text": "Enable Multi-AZ failover and perform the schema change on the standby instance.", "isCorrect": false },
+      { "text": "Use AWS Database Migration Service to migrate to a new database during the maintenance.", "isCorrect": false }
+    ],
+    "explanation": "The blue-green deployment approach using snapshots allows for testing the schema change on a copy of the production data before switching over, minimizing risk and downtime. Multi-AZ standby instances are synchronized replicas and can't have independent schema changes.",
+    "awsService": "RDS"
+  },
+  {
+    "id": "q103",
+    "questionText": "An organization needs to implement a disaster recovery solution for their three-tier web application. The RTO requirement is 4 hours and RPO is 1 hour. Which AWS disaster recovery strategy would be MOST cost-effective while meeting these requirements?",
+    "options": [
+      { "text": "Backup and Restore", "isCorrect": false },
+      { "text": "Pilot Light", "isCorrect": true },
+      { "text": "Warm Standby", "isCorrect": false },
+      { "text": "Multi-Site Active/Active", "isCorrect": false }
+    ],
+    "explanation": "Pilot Light strategy keeps critical core systems running in AWS (like database replication) but other systems are shut down. It can meet 4-hour RTO requirements cost-effectively. Backup/Restore typically takes longer than 4 hours for full application recovery, while Warm Standby and Multi-Site are more expensive.",
+    "awsService": "Disaster Recovery"
+  },
+  {
+    "id": "q104",
+    "questionText": "A financial services company requires that all API calls to their AWS account be logged and stored for 7 years for compliance. The logs must be tamper-proof and searchable. What combination of services should be used?",
+    "options": [
+      { "text": "CloudTrail + S3 + S3 Glacier", "isCorrect": false },
+      { "text": "CloudTrail + S3 + S3 Object Lock + Amazon Athena", "isCorrect": true },
+      { "text": "CloudWatch Logs + S3 + AWS Config", "isCorrect": false },
+      { "text": "AWS Config + CloudTrail + Amazon ElasticSearch", "isCorrect": false }
+    ],
+    "explanation": "CloudTrail logs all API calls, S3 stores the logs, S3 Object Lock ensures tamper-proof storage with WORM compliance, and Athena enables SQL-based searching of the log data. This combination meets all requirements for compliance logging.",
+    "awsService": "CloudTrail"
+  },
+  {
+    "id": "q105",
+    "questionText": "A gaming company experiences highly variable traffic patterns with spikes during new game releases. Their application uses EC2 instances behind an Application Load Balancer. They want to optimize costs while maintaining performance. What combination of EC2 purchasing options should they use?",
+    "options": [
+      { "text": "100% On-Demand instances with Auto Scaling", "isCorrect": false },
+      { "text": "100% Spot instances with multiple instance types", "isCorrect": false },
+      { "text": "Reserved Instances for baseline + Spot instances for burst capacity", "isCorrect": true },
+      { "text": "Dedicated Hosts for all instances", "isCorrect": false }
+    ],
+    "explanation": "A mixed strategy using Reserved Instances for predictable baseline capacity and Spot instances for burst traffic provides the best cost optimization. Reserved Instances offer significant savings for baseline load, while Spot instances provide cost-effective scaling for unpredictable spikes.",
+    "awsService": "EC2"
+  },
+  {
+    "id": "q106",
+    "questionText": "An e-commerce application stores user session data in a DynamoDB table. During flash sales, the application experiences throttling errors despite provisioned capacity appearing sufficient. What is the MOST likely cause and solution?",
+    "options": [
+      { "text": "Hot partitions due to poor partition key design; implement a more distributed partition key", "isCorrect": true },
+      { "text": "Insufficient read capacity; increase the read capacity units", "isCorrect": false },
+      { "text": "Network latency; move DynamoDB to a different region", "isCorrect": false },
+      { "text": "Application logic errors; implement exponential backoff", "isCorrect": false }
+    ],
+    "explanation": "Hot partitions occur when the partition key doesn't distribute traffic evenly across partitions. During flash sales, if session data uses predictable keys (like sequential user IDs), traffic concentrates on specific partitions causing throttling. A well-distributed partition key strategy is essential.",
+    "awsService": "DynamoDB"
+  },
+  {
+    "id": "q107",
+    "questionText": "A company wants to implement Infrastructure as Code for their AWS resources across multiple accounts and regions. They need to ensure consistent deployments, prevent configuration drift, and enable easy rollbacks. What approach should they use?",
+    "options": [
+      { "text": "AWS CloudFormation with Cross-Stack References", "isCorrect": false },
+      { "text": "AWS CloudFormation StackSets with AWS Organizations", "isCorrect": true },
+      { "text": "Terraform with state file stored in S3", "isCorrect": false },
+      { "text": "AWS CDK with manual deployment scripts", "isCorrect": false }
+    ],
+    "explanation": "CloudFormation StackSets allows deployment and management of CloudFormation stacks across multiple accounts and regions from a central location. Combined with AWS Organizations, it provides governance, consistent deployments, and centralized management with easy rollback capabilities.",
+    "awsService": "CloudFormation"
+  },
+  {
+    "id": "q108",
+    "questionText": "A data analytics team needs to process 50TB of log data daily. The processing jobs are fault-tolerant and can handle interruptions. The data needs to be processed within 6 hours of arrival. What is the MOST cost-effective compute solution?",
+    "options": [
+      { "text": "AWS Lambda with SQS for job queuing", "isCorrect": false },
+      { "text": "EC2 Spot Fleet with Auto Scaling", "isCorrect": true },
+      { "text": "AWS Batch with On-Demand instances", "isCorrect": false },
+      { "text": "Amazon EMR with Reserved Instances", "isCorrect": false }
+    ],
+    "explanation": "For large-scale, fault-tolerant batch processing, EC2 Spot Fleet provides the most cost-effective solution with up to 90% savings. The fault-tolerant nature of the workload makes it ideal for Spot instances, and Auto Scaling ensures capacity is available when needed.",
+    "awsService": "EC2"
+  },
+  {
+    "id": "q109",
+    "questionText": "A company needs to migrate a legacy Oracle database to AWS. The database is 10TB in size, has complex stored procedures, and requires minimal downtime during migration. What migration strategy should be used?",
+    "options": [
+      { "text": "Use AWS Database Migration Service with homogeneous migration to RDS Oracle", "isCorrect": true },
+      { "text": "Export/import using Oracle Data Pump to RDS Oracle", "isCorrect": false },
+      { "text": "Use AWS Schema Conversion Tool to migrate to Aurora PostgreSQL", "isCorrect": false },
+      { "text": "Set up Oracle GoldenGate replication to EC2-hosted Oracle", "isCorrect": false }
+    ],
+    "explanation": "For large Oracle databases with minimal downtime requirements, DMS provides continuous replication capabilities with Change Data Capture (CDC). Homogeneous migration to RDS Oracle preserves stored procedures and reduces conversion complexity while minimizing downtime.",
+    "awsService": "DMS"
+  },
+  {
+    "id": "q110",
+    "questionText": "A SaaS application serves multiple tenants and stores tenant data in separate S3 buckets. Each tenant should only access their own data. What is the MOST scalable way to implement this security requirement?",
+    "options": [
+      { "text": "Create separate IAM users for each tenant with bucket-specific policies", "isCorrect": false },
+      { "text": "Use IAM roles with policy variables and STS assume role with conditions", "isCorrect": true },
+      { "text": "Implement application-level access control without IAM", "isCorrect": false },
+      { "text": "Use S3 bucket policies with explicit deny for other tenants", "isCorrect": false }
+    ],
+    "explanation": "IAM roles with policy variables (like ${aws:username}) and STS assume role provide scalable multi-tenant security. The application assumes roles with conditions that dynamically restrict access to tenant-specific resources without creating separate policies for each tenant.",
+    "awsService": "IAM"
+  },
+  {
+    "id": "q111",
+    "questionText": "A machine learning team trains models using GPU-intensive workloads that run for 2-8 hours unpredictably. The team wants to minimize costs while ensuring jobs complete successfully. What EC2 strategy should they use?",
+    "options": [
+      { "text": "Use Spot instances with checkpointing and multiple AZs", "isCorrect": true },
+      { "text": "Use On-Demand instances with Auto Scaling", "isCorrect": false },
+      { "text": "Use Reserved Instances for GPU instances", "isCorrect": false },
+      { "text": "Use Dedicated Hosts for consistent performance", "isCorrect": false }
+    ],
+    "explanation": "For ML training workloads, Spot instances offer significant cost savings (up to 90%). Implementing checkpointing allows jobs to resume after interruptions, and using multiple AZs increases availability. The unpredictable 2-8 hour duration makes Reserved Instances less cost-effective.",
+    "awsService": "EC2"
+  },
+  {
+    "id": "q112",
+    "questionText": "A company wants to implement a centralized logging solution for applications running across multiple AWS accounts. The logs must be searchable, have configurable retention periods, and support real-time alerting. What architecture should they use?",
+    "options": [
+      { "text": "CloudWatch Logs in each account with cross-account access", "isCorrect": false },
+      { "text": "Kinesis Data Streams + Kinesis Data Firehose + OpenSearch + CloudWatch Alarms", "isCorrect": true },
+      { "text": "S3 with lifecycle policies and Athena for querying", "isCorrect": false },
+      { "text": "ELK stack on EC2 instances with cross-account VPC peering", "isCorrect": false }
+    ],
+    "explanation": "Kinesis Data Streams collects logs from multiple accounts, Kinesis Data Firehose provides reliable delivery to OpenSearch for indexing and searching, with configurable buffering and compression. CloudWatch Alarms enable real-time alerting based on log patterns and metrics.",
+    "awsService": "Kinesis"
+  },
+  {
+    "id": "q113",
+    "questionText": "An organization wants to implement a DevOps pipeline that automatically deploys applications to multiple environments (dev, staging, prod) with appropriate approval gates. What AWS services combination provides the best solution?",
+    "options": [
+      { "text": "CodeCommit + CodeBuild + CodeDeploy + Lambda for approvals", "isCorrect": false },
+      { "text": "CodePipeline + CodeBuild + CodeDeploy + Manual approval actions", "isCorrect": true },
+      { "text": "Jenkins on EC2 + CodeDeploy + SNS notifications", "isCorrect": false },
+      { "text": "GitHub Actions + CodeBuild + CloudFormation", "isCorrect": false }
+    ],
+    "explanation": "CodePipeline orchestrates the entire pipeline with stages for each environment, CodeBuild handles application building/testing, CodeDeploy manages deployments, and manual approval actions provide human gates between environments. This is the native AWS solution for CI/CD with approvals.",
+    "awsService": "CodePipeline"
+  },
+  {
+    "id": "q114",
+    "questionText": "A real-time analytics application processes millions of events per second and needs to maintain exactly-once processing guarantees. The application must scale automatically and handle stream processing with low latency. What architecture should be used?",
+    "options": [
+      { "text": "Kinesis Data Streams + Lambda with DLQ", "isCorrect": false },
+      { "text": "SQS FIFO + Lambda with reserved concurrency", "isCorrect": false },
+      { "text": "Kinesis Data Streams + Kinesis Analytics + Kinesis Data Firehose", "isCorrect": true },
+      { "text": "Amazon MQ + EC2 with Auto Scaling", "isCorrect": false }
+    ],
+    "explanation": "Kinesis Data Streams provides high-throughput event ingestion with ordered processing per shard. Kinesis Analytics enables real-time stream processing with exactly-once semantics using Apache Flink. Kinesis Data Firehose provides reliable delivery to various destinations with automatic scaling.",
+    "awsService": "Kinesis"
+  },
+  {
+    "id": "q115",
+    "questionText": "A financial application requires encryption at rest and in transit for all data. The application also needs to implement key rotation every 90 days and maintain an audit trail of all key usage. What key management strategy should be implemented?",
+    "options": [
+      { "text": "AWS KMS with automatic key rotation and CloudTrail logging", "isCorrect": true },
+      { "text": "Client-side encryption with manually managed keys in S3", "isCorrect": false },
+      { "text": "AWS CloudHSM with custom key rotation scripts", "isCorrect": false },
+      { "text": "Application-level encryption with database-stored keys", "isCorrect": false }
+    ],
+    "explanation": "AWS KMS provides FIPS 140-2 Level 2 validated HSMs, automatic key rotation capabilities, and integrates with CloudTrail for comprehensive audit logging. It supports both server-side encryption and client-side encryption, making it ideal for financial compliance requirements.",
+    "awsService": "KMS"
+  },
+  {
+    "id": "q116",
+    "questionText": "A company wants to implement a microservices architecture with service discovery, load balancing, and health checks. The services need to scale independently and communicate securely. What AWS solution provides the best approach?",
+    "options": [
+      { "text": "ECS with Application Load Balancer and Route 53", "isCorrect": false },
+      { "text": "EKS with AWS Load Balancer Controller and AWS App Mesh", "isCorrect": true },
+      { "text": "Lambda functions with API Gateway", "isCorrect": false },
+      { "text": "EC2 instances with Consul and HAProxy", "isCorrect": false }
+    ],
+    "explanation": "EKS provides a managed Kubernetes platform for microservices, AWS Load Balancer Controller enables advanced load balancing features, and AWS App Mesh provides service mesh capabilities including service discovery, traffic management, and observability for secure service-to-service communication.",
+    "awsService": "EKS"
+  },
+  {
+    "id": "q117",
+    "questionText": "A data science team needs to perform complex analytics on datasets ranging from 100GB to 10TB. The queries are ad-hoc and unpredictable. They want a serverless solution that can scale automatically and only charge for actual usage. What service should they use?",
+    "options": [
+      { "text": "Amazon Redshift with Auto Scaling", "isCorrect": false },
+      { "text": "Amazon Athena with data partitioning", "isCorrect": true },
+      { "text": "Amazon EMR with Spot instances", "isCorrect": false },
+      { "text": "Amazon RDS with read replicas", "isCorrect": false }
+    ],
+    "explanation": "Amazon Athena is serverless and perfect for ad-hoc analytics on large datasets stored in S3. It automatically scales and you only pay for queries run. Proper data partitioning in S3 significantly improves query performance and reduces costs for large datasets.",
+    "awsService": "Athena"
+  },
+  {
+    "id": "q118",
+    "questionText": "An application needs to process video files uploaded to S3. Processing takes 10-30 minutes per file and should start immediately after upload. The processing is CPU-intensive and requires specific software libraries. What architecture provides the best solution?",
+    "options": [
+      { "text": "S3 Event Notification + Lambda + EC2 instances", "isCorrect": false },
+      { "text": "S3 Event Notification + SQS + ECS with Fargate", "isCorrect": true },
+      { "text": "S3 Event Notification + Step Functions + Lambda", "isCorrect": false },
+      { "text": "CloudWatch Events + Lambda + Batch", "isCorrect": false }
+    ],
+    "explanation": "S3 Event Notifications trigger immediately on upload, SQS provides reliable queuing for processing requests, and ECS with Fargate allows containerized processing with custom software libraries. This architecture scales automatically and handles long-running CPU-intensive tasks efficiently.",
+    "awsService": "ECS"
+  },
+  {
+    "id": "q119",
+    "questionText": "A company needs to implement a solution that monitors AWS resources for compliance violations and automatically remediate common issues. The solution should support custom rules and provide detailed reporting. What services should be used?",
+    "options": [
+      { "text": "AWS Config + AWS Config Rules + Systems Manager Automation", "isCorrect": true },
+      { "text": "CloudWatch + CloudWatch Alarms + Lambda", "isCorrect": false },
+      { "text": "AWS Security Hub + GuardDuty + Inspector", "isCorrect": false },
+      { "text": "CloudTrail + CloudWatch Logs + SNS", "isCorrect": false }
+    ],
+    "explanation": "AWS Config continuously monitors resource configurations, Config Rules evaluate compliance against desired configurations (including custom rules), and Systems Manager Automation can automatically remediate violations. This combination provides comprehensive compliance monitoring and automated remediation.",
+    "awsService": "Config"
+  },
+  {
+    "id": "q120",
+    "questionText": "A gaming company wants to implement a global leaderboard system that can handle millions of concurrent users with sub-millisecond latency. The system needs to support real-time updates and maintain consistency. What database solution should they use?",
+    "options": [
+      { "text": "DynamoDB with Global Tables and DAX", "isCorrect": true },
+      { "text": "Aurora Global Database with read replicas", "isCorrect": false },
+      { "text": "ElastiCache for Redis with cluster mode", "isCorrect": false },
+      { "text": "DocumentDB with cross-region replication", "isCorrect": false }
+    ],
+    "explanation": "DynamoDB with Global Tables provides multi-region, multi-master replication for global scale, while DAX (DynamoDB Accelerator) provides microsecond latency for reads. This combination handles millions of concurrent users with the required sub-millisecond performance for gaming applications.",
+    "awsService": "DynamoDB"
+  },
+  {
+    "id": "q121",
+    "questionText": "A company wants to optimize their AWS costs across multiple accounts. They need detailed cost analysis, budget alerts, and recommendations for cost optimization. What combination of AWS services should they implement?",
+    "options": [
+      { "text": "Cost Explorer + Budgets + Trusted Advisor", "isCorrect": false },
+      { "text": "Cost Explorer + Budgets + Compute Optimizer + Trusted Advisor", "isCorrect": true },
+      { "text": "CloudWatch + CloudTrail + Cost Allocation Tags", "isCorrect": false },
+      { "text": "AWS Organizations + Service Control Policies + CloudFormation", "isCorrect": false }
+    ],
+    "explanation": "Cost Explorer provides detailed cost analysis and trends, Budgets enables proactive cost management with alerts, Compute Optimizer provides ML-powered recommendations for right-sizing, and Trusted Advisor offers additional cost optimization recommendations. This comprehensive combination covers all aspects of cost optimization.",
+    "awsService": "Cost Management"
+  },
+  {
+    "id": "q122",
+    "questionText": "An IoT application receives sensor data from millions of devices every minute. The data needs to be processed in real-time for anomaly detection and stored for batch analytics. What architecture should be implemented?",
+    "options": [
+      { "text": "API Gateway + Lambda + DynamoDB + S3", "isCorrect": false },
+      { "text": "IoT Core + Kinesis Data Streams + Lambda + S3 + Kinesis Analytics", "isCorrect": true },
+      { "text": "IoT Core + SQS + EC2 + RDS + RedShift", "isCorrect": false },
+      { "text": "Direct Connect + Kinesis Data Firehose + ElasticSearch", "isCorrect": false }
+    ],
+    "explanation": "IoT Core handles device connectivity and message routing, Kinesis Data Streams provides high-throughput ingestion, Lambda processes data for real-time anomaly detection, S3 stores data for batch analytics, and Kinesis Analytics enables real-time stream processing for immediate insights.",
+    "awsService": "IoT Core"
+  },
+  {
+    "id": "q123",
+    "questionText": "A company needs to implement a data lake solution that can store structured and unstructured data, provide fine-grained access control, and enable both batch and interactive analytics. What AWS services combination should be used?",
+    "options": [
+      { "text": "S3 + Glue + Athena + QuickSight", "isCorrect": false },
+      { "text": "S3 + Lake Formation + Glue + Athena + EMR", "isCorrect": true },
+      { "text": "Redshift + Spectrum + S3 + Glue", "isCorrect": false },
+      { "text": "DynamoDB + S3 + Lambda + Kinesis Analytics", "isCorrect": false }
+    ],
+    "explanation": "S3 provides scalable storage for the data lake, Lake Formation simplifies setup and provides fine-grained access control with column-level security, Glue handles ETL and data catalog, Athena enables interactive SQL queries, and EMR provides big data processing capabilities for batch analytics.",
+    "awsService": "Lake Formation"
+  },
+  {
+    "id": "q124",
+    "questionText": "A startup wants to implement a cost-effective backup strategy for their production environment that includes EC2 instances, EBS volumes, and RDS databases. They need point-in-time recovery and want to automate the backup process. What solution should they use?",
+    "options": [
+      { "text": "AWS Backup with backup plans and lifecycle policies", "isCorrect": true },
+      { "text": "Lambda functions with boto3 to create manual snapshots", "isCorrect": false },
+      { "text": "EBS snapshots + RDS automated backups + AMI creation scripts", "isCorrect": false },
+      { "text": "AWS DataSync + S3 with versioning enabled", "isCorrect": false }
+    ],
+    "explanation": "AWS Backup provides a centralized backup solution across multiple AWS services, with automated backup plans, lifecycle policies for cost optimization, point-in-time recovery, and compliance reporting. It's the most comprehensive and cost-effective solution for multi-service backup requirements.",
+    "awsService": "AWS Backup"
+  },
+  {
+    "id": "q125",
+    "questionText": "A financial trading application requires ultra-low latency networking between compute instances for high-frequency trading algorithms. What EC2 features should be configured to minimize network latency?",
+    "options": [
+      { "text": "Placement groups + Enhanced networking + Instance types with high network performance", "isCorrect": true },
+      { "text": "Multiple AZs + Load balancing + Auto Scaling groups", "isCorrect": false },
+      { "text": "Reserved instances + Dedicated hosts + EBS optimization", "isCorrect": false },
+      { "text": "Spot instances + Mixed instance types + Elastic IP addresses", "isCorrect": false }
+    ],
+    "explanation": "Cluster placement groups provide 10 Gbps network performance between instances, Enhanced Networking (SR-IOV) reduces network latency and jitter, and selecting instance types specifically designed for high network performance (like C5n, M5n, R5n) minimizes latency for HFT applications.",
+    "awsService": "EC2"
+  },
+  {
+    "id": "q126",
+    "questionText": "A company wants to implement a serverless web application with user authentication, file uploads, and real-time notifications. The application should scale automatically and minimize operational overhead. What architecture should be used?",
+    "options": [
+      { "text": "Cognito + API Gateway + Lambda + S3 + SNS", "isCorrect": false },
+      { "text": "Cognito + API Gateway + Lambda + S3 + WebSocket API + DynamoDB", "isCorrect": true },
+      { "text": "ALB + ECS + RDS + ElastiCache + SQS", "isCorrect": false },
+      { "text": "CloudFront + S3 + EC2 + RDS + Redis", "isCorrect": false }
+    ],
+    "explanation": "Cognito handles user authentication, API Gateway provides REST endpoints, Lambda processes business logic, S3 stores files, WebSocket API enables real-time notifications, and DynamoDB provides scalable NoSQL storage. This fully serverless architecture scales automatically with minimal operational overhead.",
+    "awsService": "API Gateway"
+  },
+  {
+    "id": "q127",
+    "questionText": "A machine learning company needs to train large models that require hundreds of GPUs working together. The training jobs can take several days to complete and need fault tolerance. What AWS service is BEST suited for this workload?",
+    "options": [
+      { "text": "EC2 P4 instances with EFA networking", "isCorrect": false },
+      { "text": "SageMaker Training with distributed training", "isCorrect": true },
+      { "text": "AWS Batch with GPU-enabled instances", "isCorrect": false },
+      { "text": "EKS with GPU-enabled node groups", "isCorrect": false }
+    ],
+    "explanation": "SageMaker Training is specifically designed for machine learning workloads, supports distributed training across multiple GPU instances, provides built-in fault tolerance with checkpointing, and offers optimized ML frameworks. It's the most suitable service for large-scale ML training requirements.",
+    "awsService": "SageMaker"
+  },
+  {
+    "id": "q128",
+    "questionText": "A company wants to implement a hybrid cloud storage solution where frequently accessed data is stored on-premises and infrequently accessed data is automatically moved to AWS. What AWS service should they use?",
+    "options": [
+      { "text": "AWS Storage Gateway - Volume Gateway", "isCorrect": false },
+      { "text": "AWS Storage Gateway - File Gateway", "isCorrect": true },
+      { "text": "AWS DataSync with scheduled transfers", "isCorrect": false },
+      { "text": "Direct Connect with S3 Transfer Acceleration", "isCorrect": false }
+    ],
+    "explanation": "AWS Storage Gateway File Gateway provides a seamless bridge between on-premises environments and S3. It caches frequently accessed data locally while automatically storing all data in S3, enabling hybrid cloud storage with intelligent tiering based on access patterns.",
+    "awsService": "Storage Gateway"
+  },
+  {
+    "id": "q129",
+    "questionText": "A global e-commerce application experiences seasonal traffic spikes and wants to implement automatic scaling across multiple regions. The application uses containers and needs zero-downtime deployments. What solution provides the best approach?",
+    "options": [
+      { "text": "ECS with Auto Scaling and Application Load Balancer", "isCorrect": false },
+      { "text": "EKS with Cluster Autoscaler, HPA, and Blue/Green deployments", "isCorrect": true },
+      { "text": "Lambda functions with reserved concurrency", "isCorrect": false },
+      { "text": "EC2 Auto Scaling groups with multiple AZs", "isCorrect": false }
+    ],
+    "explanation": "EKS provides managed Kubernetes with global reach, Cluster Autoscaler handles node scaling, Horizontal Pod Autoscaler (HPA) scales application pods based on metrics, and Blue/Green deployments enable zero-downtime updates. This combination provides enterprise-grade container orchestration with automatic scaling.",
+    "awsService": "EKS"
+  },
+  {
+    "id": "q130",
+    "questionText": "A healthcare organization needs to process and analyze medical images (DICOM files) with machine learning for diagnostic assistance. The solution must be HIPAA compliant and provide audit trails. What AWS architecture should be implemented?",
+    "options": [
+      { "text": "S3 + SageMaker + CloudTrail + KMS", "isCorrect": true },
+      { "text": "EFS + EC2 + Lambda + CloudWatch", "isCorrect": false },
+      { "text": "Glacier + Batch + GuardDuty + Config", "isCorrect": false },
+      { "text": "WorkDocs + Comprehend Medical + WAF", "isCorrect": false }
+    ],
+    "explanation": "S3 provides HIPAA-eligible storage for DICOM files with server-side encryption, SageMaker offers HIPAA-eligible ML services for image analysis, CloudTrail provides audit trails for compliance, and KMS manages encryption keys. This combination meets healthcare compliance requirements while enabling ML capabilities.",
+    "awsService": "SageMaker"
+  },
+  {
+    "id": "q131",
+    "questionText": "A company wants to implement a CDN solution that can handle both static and dynamic content, provide real-time analytics, and integrate with their existing AWS infrastructure. What solution should they choose?",
+    "options": [
+      { "text": "CloudFront with Lambda@Edge and Real-time Logs", "isCorrect": true },
+      { "text": "Application Load Balancer with Global Accelerator", "isCorrect": false },
+      { "text": "Route 53 with health checks and failover routing", "isCorrect": false },
+      { "text": "API Gateway with caching enabled and CloudWatch", "isCorrect": false }
+    ],
+    "explanation": "CloudFront provides global CDN capabilities for both static and dynamic content, Lambda@Edge enables dynamic content processing at edge locations, and Real-time Logs provide immediate access to detailed analytics data. This solution offers the most comprehensive CDN features with AWS integration.",
+    "awsService": "CloudFront"
+  },
+  {
+    "id": "q132",
+    "questionText": "A DevOps team wants to implement infrastructure testing and validation before deploying changes to production. They need to test both infrastructure configuration and application behavior. What approach should they use?",
+    "options": [
+      { "text": "CloudFormation with drift detection and AWS Config rules", "isCorrect": false },
+      { "text": "AWS CodePipeline with AWS CodeBuild for testing and AWS CodeDeploy with blue/green deployment", "isCorrect": true },
+      { "text": "Terraform with terraform validate and manual testing", "isCorrect": false },
+      { "text": "AWS Systems Manager with patch management and compliance scanning", "isCorrect": false }
+    ],
+    "explanation": "CodePipeline orchestrates the testing workflow, CodeBuild runs infrastructure validation tests and application tests in isolated environments, and CodeDeploy with blue/green deployment allows safe production deployment with easy rollback capabilities. This provides comprehensive testing and validation.",
+    "awsService": "CodePipeline"
+  },
+  {
+    "id": "q133",
+    "questionText": "A financial services company needs to implement data masking and tokenization for sensitive customer data across their applications. The solution must support different masking techniques and maintain referential integrity. What AWS service should they use?",
+    "options": [
+      { "text": "AWS Secrets Manager with automatic rotation", "isCorrect": false },
+      { "text": "AWS Glue with custom ETL scripts for data transformation", "isCorrect": true },
+      { "text": "AWS KMS with envelope encryption", "isCorrect": false },
+      { "text": "Amazon Macie for data discovery and classification", "isCorrect": false }
+    ],
+    "explanation": "AWS Glue provides powerful ETL capabilities with custom Python/Scala scripts that can implement various data masking and tokenization techniques while maintaining referential integrity. It can process data at scale and integrate with multiple data sources and targets.",
+    "awsService": "Glue"
+  },
+  {
+    "id": "q134",
+    "questionText": "A company operates a multi-tenant SaaS application where each tenant's data must be isolated and encrypted with separate keys. They want to implement a centralized key management strategy that provides audit trails and key rotation. What solution should they implement?",
+    "options": [
+      { "text": "AWS KMS with customer-managed keys per tenant and CloudTrail logging", "isCorrect": true },
+      { "text": "Application-level encryption with keys stored in Parameter Store", "isCorrect": false },
+      { "text": "Database-level encryption with separate schemas per tenant", "isCorrect": false },
+      { "text": "S3 bucket encryption with default AWS managed keys", "isCorrect": false }
+    ],
+    "explanation": "AWS KMS with customer-managed keys provides tenant-specific encryption keys with centralized management, automatic key rotation capabilities, and comprehensive audit trails through CloudTrail. This approach ensures data isolation while maintaining operational efficiency and compliance.",
+    "awsService": "KMS"
+  },
+  {
+    "id": "q135",
+    "questionText": "A gaming company wants to implement a real-time matchmaking system that can handle millions of concurrent players worldwide. The system needs low latency, automatic scaling, and session state persistence. What architecture should they use?",
+    "options": [
+      { "text": "API Gateway + Lambda + DynamoDB + ElastiCache", "isCorrect": false },
+      { "text": "GameLift + DynamoDB + ElastiCache for Redis with Global Datastore", "isCorrect": true },
+      { "text": "EC2 with Auto Scaling + Application Load Balancer + RDS", "isCorrect": false },
+      { "text": "Fargate + Application Load Balancer + Aurora Global Database", "isCorrect": false }
+    ],
+    "explanation": "Amazon GameLift provides dedicated game server hosting with automatic scaling and fleet management, DynamoDB handles player data with global scale, and ElastiCache for Redis with Global Datastore provides ultra-low latency session state persistence across regions for optimal gaming experience.",
+    "awsService": "GameLift"
+  },
+  {
+    "id": "q136",
+    "questionText": "A company wants to implement a document processing pipeline that can extract text from various file formats (PDF, images, handwritten documents), analyze sentiment, and store structured data. What AWS services should be combined?",
+    "options": [
+      { "text": "Textract + Comprehend + Lambda + DynamoDB", "isCorrect": true },
+      { "text": "Rekognition + Transcribe + Step Functions + S3", "isCorrect": false },
+      { "text": "SageMaker + Polly + API Gateway + RDS", "isCorrect": false },
+      { "text": "Translate + Lex + Kinesis + Redshift", "isCorrect": false }
+    ],
+    "explanation": "Amazon Textract extracts text and data from documents including handwritten text, Amazon Comprehend analyzes sentiment and extracts insights from text, Lambda orchestrates the processing pipeline, and DynamoDB stores the structured results. This combination provides end-to-end document processing capabilities.",
+    "awsService": "Textract"
+  },
+  {
+    "id": "q137",
+    "questionText": "A media company needs to implement a video streaming platform that can handle live broadcasts, on-demand content, and adaptive bitrate streaming for global audiences. What AWS architecture should they implement?",
+    "options": [
+      { "text": "MediaLive + MediaStore + CloudFront + Elemental MediaConvert", "isCorrect": true },
+      { "text": "EC2 with FFmpeg + S3 + CloudFront + Lambda", "isCorrect": false },
+      { "text": "Kinesis Video Streams + S3 + API Gateway + Lambda", "isCorrect": false },
+      { "text": "ECS with streaming containers + ALB + Route 53", "isCorrect": false }
+    ],
+    "explanation": "AWS MediaLive provides live video processing and streaming, MediaStore offers optimized storage for media content, CloudFront delivers global content distribution with low latency, and Elemental MediaConvert handles video processing and adaptive bitrate encoding for various devices and network conditions.",
+    "awsService": "MediaLive"
+  },
+  {
+    "id": "q138",
+    "questionText": "A company wants to implement predictive maintenance for their IoT devices using machine learning. They need to collect sensor data, train models, and deploy them for real-time inference. What end-to-end solution should they use?",
+    "options": [
+      { "text": "IoT Core + Kinesis + SageMaker + Lambda + IoT Greengrass", "isCorrect": true },
+      { "text": "API Gateway + Lambda + DynamoDB + EC2 + CloudWatch", "isCorrect": false },
+      { "text": "Kinesis + EMR + S3 + Batch + ECS", "isCorrect": false },
+      { "text": "Direct Connect + Glue + Athena + QuickSight", "isCorrect": false }
+    ],
+    "explanation": "IoT Core collects sensor data from devices, Kinesis streams data for processing, SageMaker handles model training and deployment, Lambda processes inference requests, and IoT Greengrass enables edge computing for real-time inference on IoT devices, creating a complete predictive maintenance solution.",
+    "awsService": "IoT Core"
+  },
+  {
+    "id": "q139",
+    "questionText": "A startup wants to implement a cost-effective solution for their development, testing, and staging environments that can be easily provisioned and destroyed. They want infrastructure as code and environment consistency. What approach should they use?",
+    "options": [
+      { "text": "AWS CDK with multiple stacks and environment-specific parameters", "isCorrect": true },
+      { "text": "Manual EC2 instance creation with saved AMIs", "isCorrect": false },
+      { "text": "Docker containers on single EC2 instance", "isCorrect": false },
+      { "text": "AWS Quick Starts with default configurations", "isCorrect": false }
+    ],
+    "explanation": "AWS CDK (Cloud Development Kit) enables infrastructure as code using familiar programming languages, supports multiple stacks for different environments, allows environment-specific parameters, and provides easy provisioning/destruction of resources. This approach ensures consistency and cost-effectiveness for development workflows.",
+    "awsService": "CDK"
+  },
+  {
+    "id": "q140",
+    "questionText": "A company needs to implement a solution for processing millions of small files (1-10KB each) stored in S3. The processing is CPU-intensive and needs to scale based on the number of files in the queue. What architecture provides the best performance and cost optimization?",
+    "options": [
+      { "text": "S3 Event Notifications + Lambda with high memory configuration", "isCorrect": false },
+      { "text": "S3 Event Notifications + SQS + EC2 Auto Scaling with Spot instances", "isCorrect": true },
+      { "text": "S3 Event Notifications + Step Functions + Fargate", "isCorrect": false },
+      { "text": "S3 Transfer Acceleration + API Gateway + Lambda", "isCorrect": false }
+    ],
+    "explanation": "For millions of small files requiring CPU-intensive processing, S3 Event Notifications trigger processing requests, SQS provides reliable queuing with visibility timeouts, and EC2 Auto Scaling with Spot instances provides cost-effective compute power that scales based on queue depth. This architecture handles high volume efficiently.",
+    "awsService": "SQS"
+  },
+  {
+    "id": "q141",
+    "questionText": "A financial institution needs to implement automated security scanning and vulnerability management across their AWS infrastructure. The solution should provide continuous monitoring, threat detection, and compliance reporting. What services should be combined?",
+    "options": [
+      { "text": "Security Hub + GuardDuty + Inspector + Config + Systems Manager Patch Manager", "isCorrect": true },
+      { "text": "CloudTrail + CloudWatch + WAF + Shield", "isCorrect": false },
+      { "text": "Macie + Secrets Manager + Certificate Manager + KMS", "isCorrect": false },
+      { "text": "Organizations + Control Tower + Service Control Policies", "isCorrect": false }
+    ],
+    "explanation": "Security Hub provides centralized security findings management, GuardDuty offers intelligent threat detection, Inspector performs vulnerability assessments, Config monitors compliance, and Systems Manager Patch Manager automates patch management. This comprehensive combination covers all aspects of security scanning and vulnerability management.",
+    "awsService": "Security Hub"
+  },
+  {
+    "id": "q142",
+    "questionText": "A company wants to implement a real-time recommendation engine for their e-commerce platform. The system needs to process user behavior events, update recommendations instantly, and serve millions of requests per second. What architecture should they use?",
+    "options": [
+      { "text": "Kinesis Data Streams + Lambda + DynamoDB + API Gateway + CloudFront", "isCorrect": false },
+      { "text": "Kinesis Data Streams + Kinesis Analytics + DynamoDB + ElastiCache + Application Load Balancer", "isCorrect": true },
+      { "text": "SQS + EC2 + RDS + ElasticSearch + Route 53", "isCorrect": false },
+      { "text": "API Gateway + Lambda + S3 + Athena + QuickSight", "isCorrect": false }
+    ],
+    "explanation": "Kinesis Data Streams ingests real-time user behavior events, Kinesis Analytics processes streams to generate recommendations, DynamoDB stores user profiles and product data, ElastiCache provides microsecond latency for serving recommendations, and Application Load Balancer distributes traffic across multiple endpoints for high throughput.",
+    "awsService": "Kinesis"
+  },
+  {
+    "id": "q143",
+    "questionText": "A company operates a global application with users in North America, Europe, and Asia. They want to implement a database solution that provides low-latency reads in all regions while maintaining strong consistency for writes. What database architecture should they use?",
+    "options": [
+      { "text": "RDS with cross-region read replicas", "isCorrect": false },
+      { "text": "Aurora Global Database with read replicas in each region", "isCorrect": true },
+      { "text": "DynamoDB Global Tables with eventual consistency", "isCorrect": false },
+      { "text": "DocumentDB with manual cross-region replication", "isCorrect": false }
+    ],
+    "explanation": "Aurora Global Database provides a single database that spans multiple regions with typically less than 1 second replication lag between regions. It offers low-latency local reads in each region while maintaining strong consistency for writes to the primary region, making it ideal for global applications requiring both performance and consistency.",
+    "awsService": "Aurora"
+  },
+  {
+    "id": "q144",
+    "questionText": "A healthcare organization wants to implement a HIPAA-compliant data analytics platform for processing patient data. The solution needs to support both real-time and batch analytics while maintaining strict access controls. What architecture should they implement?",
+    "options": [
+      { "text": "Kinesis + Lambda + S3 + Athena with encryption and IAM", "isCorrect": false },
+      { "text": "Kinesis + S3 + Lake Formation + Glue + EMR with encryption at rest and in transit", "isCorrect": true },
+      { "text": "API Gateway + DynamoDB + QuickSight with VPC endpoints", "isCorrect": false },
+      { "text": "SQS + EC2 + RDS + Redshift with dedicated tenancy", "isCorrect": false }
+    ],
+    "explanation": "This architecture uses HIPAA-eligible services: Kinesis for real-time data ingestion, S3 for encrypted storage, Lake Formation for fine-grained access control and data governance, Glue for ETL processing, and EMR for big data analytics. All services support encryption at rest and in transit, meeting HIPAA compliance requirements.",
+    "awsService": "Lake Formation"
+  },
+  {
+    "id": "q145",
+    "questionText": "A company wants to implement a multi-account strategy for their organization with centralized governance, billing management, and security policies. They need to automate account creation and apply policies consistently. What AWS solution should they use?",
+    "options": [
+      { "text": "AWS Organizations + Control Tower + Service Control Policies + Account Factory", "isCorrect": true },
+      { "text": "IAM + CloudFormation + Config + CloudTrail", "isCorrect": false },
+      { "text": "Resource Groups + Systems Manager + AWS Config", "isCorrect": false },
+      { "text": "Service Catalog + CloudFormation StackSets + IAM", "isCorrect": false }
+    ],
+    "explanation": "AWS Organizations provides multi-account management, Control Tower offers account governance and compliance, Service Control Policies enforce organization-wide policies, and Account Factory automates account provisioning with pre-configured security guardrails. This combination provides comprehensive multi-account governance.",
+    "awsService": "Control Tower"
+  },
+  {
+    "id": "q146",
+    "questionText": "A company needs to migrate their on-premises Hadoop cluster to AWS while maintaining compatibility with existing Spark and Hive jobs. They want a managed solution that can scale dynamically and integrate with other AWS services. What migration strategy should they use?",
+    "options": [
+      { "text": "Migrate to EC2 instances with manual Hadoop installation", "isCorrect": false },
+      { "text": "Use Amazon EMR with existing job configurations and S3 for data storage", "isCorrect": true },
+      { "text": "Migrate to EKS with containerized Hadoop components", "isCorrect": false },
+      { "text": "Use AWS Glue to replace all Hadoop workloads", "isCorrect": false }
+    ],
+    "explanation": "Amazon EMR is a managed Hadoop service that supports existing Spark and Hive jobs with minimal changes. It integrates seamlessly with S3 for data storage, provides automatic scaling, and offers cost optimization features like Spot instances while maintaining compatibility with existing big data workflows.",
+    "awsService": "EMR"
+  },
+  {
+    "id": "q147",
+    "questionText": "A social media company wants to implement content moderation using machine learning to detect inappropriate images and text in real-time. The solution should handle millions of posts per day and provide confidence scores. What AWS services should be combined?",
+    "options": [
+      { "text": "Rekognition + Comprehend + Step Functions + DynamoDB", "isCorrect": true },
+      { "text": "SageMaker + Lambda + S3 + ElasticSearch", "isCorrect": false },
+      { "text": "Textract + Translate + API Gateway + RDS", "isCorrect": false },
+      { "text": "Lex + Polly + Kinesis + Redshift", "isCorrect": false }
+    ],
+    "explanation": "Amazon Rekognition provides image moderation with confidence scores for inappropriate content detection, Amazon Comprehend analyzes text for sentiment and inappropriate content, Step Functions orchestrates the moderation workflow, and DynamoDB stores moderation results and metadata for high-volume processing.",
+    "awsService": "Rekognition"
+  },
+  {
+    "id": "q148",
+    "questionText": "A company wants to implement a serverless data processing pipeline that can handle both scheduled batch jobs and event-driven processing. The pipeline needs to support complex workflows with error handling and retry logic. What solution should they use?",
+    "options": [
+      { "text": "Lambda + CloudWatch Events + SQS + DLQ", "isCorrect": false },
+      { "text": "Step Functions + Lambda + EventBridge + S3", "isCorrect": true },
+      { "text": "Glue + Batch + CloudFormation + SNS", "isCorrect": false },
+      { "text": "Kinesis + Lambda + DynamoDB + CloudWatch", "isCorrect": false }
+    ],
+    "explanation": "AWS Step Functions provides serverless workflow orchestration with built-in error handling and retry logic, Lambda executes individual processing steps, EventBridge handles both scheduled and event-driven triggers, and S3 stores processed data. This combination offers comprehensive serverless data processing capabilities.",
+    "awsService": "Step Functions"
+  },
+  {
+    "id": "q149",
+    "questionText": "A company operates a microservices architecture and wants to implement distributed tracing to monitor application performance and troubleshoot issues across service boundaries. What AWS solution should they implement?",
+    "options": [
+      { "text": "CloudWatch + CloudTrail + Config", "isCorrect": false },
+      { "text": "X-Ray + CloudWatch + Application Insights", "isCorrect": true },
+      { "text": "GuardDuty + Security Hub + Inspector", "isCorrect": false },
+      { "text": "Systems Manager + OpsWorks + CloudFormation", "isCorrect": false }
+    ],
+    "explanation": "AWS X-Ray provides distributed tracing capabilities to track requests across microservices, CloudWatch collects metrics and logs, and Application Insights automatically discovers application topology and provides intelligent analytics. This combination enables comprehensive monitoring and troubleshooting of distributed applications.",
+    "awsService": "X-Ray"
+  },
+  {
+    "id": "q150",
+    "questionText": "A company wants to implement a solution for automated infrastructure remediation that can detect configuration drift, security violations, and performance issues, then automatically fix common problems. What combination of services provides the best approach?",
+    "options": [
+      { "text": "Config + CloudWatch + Lambda + Systems Manager Automation", "isCorrect": true },
+      { "text": "CloudTrail + SNS + Lambda + EC2", "isCorrect": false },
+      { "text": "Security Hub + GuardDuty + WAF + Shield", "isCorrect": false },
+      { "text": "Trusted Advisor + Support API + CloudFormation", "isCorrect": false }
+    ],
+    "explanation": "AWS Config monitors resource configurations and detects drift, CloudWatch monitors performance metrics and security events, Lambda processes alerts and triggers remediation, and Systems Manager Automation executes pre-defined remediation runbooks. This combination provides comprehensive automated infrastructure remediation capabilities.",
+    "awsService": "Systems Manager"
   }
 ]
