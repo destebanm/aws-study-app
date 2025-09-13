@@ -4,7 +4,6 @@ import './NotesReview.css';
 const getNotes = () => JSON.parse(localStorage.getItem('aws-notes') || '{}');
 
 const NotesReview = () => {
-  const [questions, setQuestions] = useState([]);
   const [notes, setNotes] = useState({});
   const [questionsWithNotes, setQuestionsWithNotes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -28,7 +27,6 @@ const NotesReview = () => {
           note: notesData[q.id]
         }));
 
-        setQuestions(questionsData);
         setNotes(notesData);
         setQuestionsWithNotes(questionsWithNotesData);
         setIsLoading(false);
@@ -55,7 +53,7 @@ const NotesReview = () => {
   };
 
   const deleteNote = (questionId) => {
-    if (window.confirm('¿Estás seguro de que quieres eliminar esta nota?')) {
+    if (window.confirm('Are you sure you want to delete this note?')) {
       const updatedNotes = { ...notes };
       delete updatedNotes[questionId];
       setNotes(updatedNotes);
@@ -67,28 +65,28 @@ const NotesReview = () => {
   };
 
   if (isLoading) {
-    return <div>Cargando tus notas...</div>;
+    return <div>Loading your notes...</div>;
   }
 
   return (
     <div className="notes-review-container">
-      <h2>Mis Notas de Estudio</h2>
-      <p>Aquí puedes revisar todas las preguntas sobre las que has tomado notas.</p>
+      <h2>My Study Notes</h2>
+      <p>Here you can review all the questions you've taken notes on.</p>
       
       {questionsWithNotes.length === 0 ? (
         <div className="no-notes">
-          <p>Aún no tienes notas guardadas. Durante los exámenes, puedes escribir notas en cada pregunta para revisarlas posteriormente.</p>
+          <p>You don't have any saved notes yet. During exams, you can write notes for each question to review them later.</p>
         </div>
       ) : (
         <>
           <div className="notes-stats">
-            <span><strong>{questionsWithNotes.length}</strong> preguntas con notas</span>
+            <span><strong>{questionsWithNotes.length}</strong> questions with notes</span>
           </div>
           <div className="notes-list">
             {questionsWithNotes.map((question, index) => (
               <div key={question.id} className="note-card">
                 <div className="question-header">
-                  <h3>Pregunta #{question.id.replace('q', '')}</h3>
+                  <h3>Question #{question.id.replace('q', '')}</h3>
                   <span className="service-tag">{question.awsService}</span>
                 </div>
                 <div className="question-text">
@@ -102,22 +100,22 @@ const NotesReview = () => {
                   ))}
                 </div>
                 <div className="explanation">
-                  <strong>Explicación:</strong> {question.explanation}
+                  <strong>Explanation:</strong> {question.explanation}
                 </div>
                 <div className="note-section">
-                  <label><strong>Tus notas:</strong></label>
+                  <label><strong>Your notes:</strong></label>
                   <textarea
                     value={question.note}
                     onChange={(e) => updateNote(question.id, e.target.value)}
                     rows="3"
-                    placeholder="Escribe tus notas aquí..."
+                    placeholder="Write your notes here..."
                   />
                   <div className="note-actions">
                     <button 
                       onClick={() => deleteNote(question.id)}
                       className="delete-btn"
                     >
-                      Eliminar Nota
+                      Delete Note
                     </button>
                   </div>
                 </div>

@@ -27,7 +27,7 @@ const QuestionDisplay = ({ question, onAnswer, onNoteChange, note, userAnswerInd
       </form>
       <div className="notes-container">
         <textarea
-          placeholder="Tus notas sobre esta pregunta..."
+          placeholder="Your notes about this question..."
           value={note}
           onChange={(e) => onNoteChange(question.id, e.target.value)}
           rows="4"
@@ -40,17 +40,17 @@ const QuestionDisplay = ({ question, onAnswer, onNoteChange, note, userAnswerInd
 const ResultsDisplay = ({ results, score, onRestart }) => {
   return (
     <div className="results-container">
-      <h2>Resultados del Examen</h2>
-      <h3 className={score >= 72 ? 'pass' : 'fail'}>Puntuación Final: {score.toFixed(2)}%</h3>
-      <button onClick={onRestart} className="restart-btn">Hacer otro test</button>
+      <h2>Exam Results</h2>
+      <h3 className={score >= 72 ? 'pass' : 'fail'}>Final Score: {score.toFixed(2)}%</h3>
+      <button onClick={onRestart} className="restart-btn">Take another test</button>
       {results.map((result, index) => (
         <div key={result.id} className={`result-card ${result.isCorrect ? 'correct' : 'incorrect'}`}>
           <h4>{index + 1}. {result.questionText}</h4>
-          <p><strong>Tu respuesta:</strong> {result.selectedOptionIndex !== undefined ? result.options[result.selectedOptionIndex].text : 'No contestada'} <span className={result.isCorrect ? 'correct-text' : 'incorrect-text'}>({result.isCorrect ? 'Correcta' : 'Incorrecta'})</span></p>
+          <p><strong>Your answer:</strong> {result.selectedOptionIndex !== undefined ? result.options[result.selectedOptionIndex].text : 'Not answered'} <span className={result.isCorrect ? 'correct-text' : 'incorrect-text'}>({result.isCorrect ? 'Correct' : 'Incorrect'})</span></p>
           {!result.isCorrect && (
-            <p><strong>Respuesta correcta:</strong> {result.options.find(o => o.isCorrect).text}</p>
+            <p><strong>Correct answer:</strong> {result.options.find(o => o.isCorrect).text}</p>
           )}
-          <p className="explanation"><strong>Explicación:</strong> {result.explanation}</p>
+          <p className="explanation"><strong>Explanation:</strong> {result.explanation}</p>
         </div>
       ))}
     </div>
@@ -60,7 +60,7 @@ const ResultsDisplay = ({ results, score, onRestart }) => {
 const TestTaker = ({ testData }) => {
   // Extract data from testData object
   const questions = testData.questions || testData; // Backward compatibility
-  const testType = testData.type || 'Test Regular';
+  const testType = testData.type || 'Regular Test';
   const isNotesReview = testData.isNotesReview || false;
   
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -117,7 +117,7 @@ const TestTaker = ({ testData }) => {
   };
 
   const handleSubmit = () => {
-    if (window.confirm('¿Estás seguro de que quieres finalizar el examen?')) {
+    if (window.confirm('Are you sure you want to finish the exam?')) {
       const endTime = new Date();
       const totalTimeInSeconds = Math.floor((endTime - startTime) / 1000);
       
@@ -182,11 +182,11 @@ const TestTaker = ({ testData }) => {
         <div className="test-title">
                     <h2>{testType}</h2>
           {isNotesReviewTest && (
-            <p className="notes-review-subtitle">Preguntas con tus notas guardadas</p>
+            <p className="notes-review-subtitle">Questions with your saved notes</p>
           )}
         </div>
         <div className="test-info">
-          <div className="progress-indicator">Pregunta {currentQuestionIndex + 1} de {questions.length}</div>
+          <div className="progress-indicator">Question {currentQuestionIndex + 1} of {questions.length}</div>
           <div className="timer">⏱️ {formatTime(elapsedTime)}</div>
         </div>
       </div>
@@ -198,10 +198,10 @@ const TestTaker = ({ testData }) => {
         userAnswerIndex={userAnswers[currentQuestion.id]}
       />
       <div className="navigation-buttons">
-        <button onClick={handlePrevious} disabled={currentQuestionIndex === 0}>Anterior</button>
+        <button onClick={handlePrevious} disabled={currentQuestionIndex === 0}>Previous</button>
         {currentQuestionIndex === questions.length - 1
-          ? <button onClick={handleSubmit} className="finish-btn">Finalizar Examen</button>
-          : <button onClick={handleNext}>Siguiente</button>}
+          ? <button onClick={handleSubmit} className="finish-btn">Finish Exam</button>
+          : <button onClick={handleNext}>Next</button>}
       </div>
     </div>
   );

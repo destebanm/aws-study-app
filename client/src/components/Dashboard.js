@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { format } from 'date-fns';
-import { es } from 'date-fns/locale';
+import { enUS } from 'date-fns/locale';
 import VersionInfo from './VersionInfo';
 import './Dashboard.css';
 
@@ -115,15 +115,15 @@ const Dashboard = () => {
     return (
       <div className="test-review-container">
         <div className="review-header">
-          <button onClick={closeReview} className="back-btn">← Volver al Historial</button>
-          <h2>Revisión del Examen</h2>
+          <button onClick={closeReview} className="back-btn">← Back to History</button>
+          <h2>Exam Review</h2>
           <div className="test-info">
-            <span>Fecha: {format(new Date(selectedTest.createdAt), "d 'de' MMMM 'de' yyyy, HH:mm", { locale: es })}</span>
+            <span>Date: {format(new Date(selectedTest.createdAt), "MMMM d, yyyy, HH:mm", { locale: enUS })}</span>
             <span>
-              Tipo: {selectedTest.testType || (selectedTest.isNotesReview ? 'Repaso de Notas' : 'Test Regular')}
+              Type: {selectedTest.testType || (selectedTest.isNotesReview ? 'Notes Review' : 'Regular Test')}
             </span>
-            <span>Puntuación: {selectedTest.score.toFixed(2)}%</span>
-            <span>Tiempo: {formatTime(selectedTest.timeInSeconds)}</span>
+            <span>Score: {selectedTest.score.toFixed(2)}%</span>
+            <span>Time: {formatTime(selectedTest.timeInSeconds)}</span>
           </div>
         </div>
         <div className="review-results">
@@ -135,22 +135,22 @@ const Dashboard = () => {
             return (
               <div key={result.id} className={`result-card ${result.isCorrect ? 'correct' : 'incorrect'}`}>
                 <h4>{index + 1}. {result.questionText}</h4>
-                <p><strong>Tu respuesta:</strong> {result.selectedOptionIndex !== undefined ? result.options[result.selectedOptionIndex].text : 'No contestada'} <span className={result.isCorrect ? 'correct-text' : 'incorrect-text'}>({result.isCorrect ? 'Correcta' : 'Incorrecta'})</span></p>
+                <p><strong>Your answer:</strong> {result.selectedOptionIndex !== undefined ? result.options[result.selectedOptionIndex].text : 'Not answered'} <span className={result.isCorrect ? 'correct-text' : 'incorrect-text'}>({result.isCorrect ? 'Correct' : 'Incorrect'})</span></p>
                 {!result.isCorrect && (
-                  <p><strong>Respuesta correcta:</strong> {result.options.find(o => o.isCorrect).text}</p>
+                  <p><strong>Correct answer:</strong> {result.options.find(o => o.isCorrect).text}</p>
                 )}
-                <p className="explanation"><strong>Explicación:</strong> {result.explanation}</p>
+                <p className="explanation"><strong>Explanation:</strong> {result.explanation}</p>
                 
                 <div className="notes-section">
                   <div className="notes-header">
-                    <strong>📝 Mis Notas:</strong>
+                    <strong>📝 My Notes:</strong>
                     {!isEditing && (
                       <button 
                         className="edit-note-btn"
                         onClick={() => startEditingNote(result.id)}
-                        title={hasNote ? "Editar nota" : "Añadir nota"}
+                        title={hasNote ? "Edit note" : "Add note"}
                       >
-                        {hasNote ? "✏️ Editar" : "➕ Añadir Nota"}
+                        {hasNote ? "✏️ Edit" : "➕ Add Note"}
                       </button>
                     )}
                   </div>
@@ -160,7 +160,7 @@ const Dashboard = () => {
                       <textarea
                         value={tempNotes[result.id] || ''}
                         onChange={(e) => updateTempNote(result.id, e.target.value)}
-                        placeholder="Escribe aquí tus notas sobre esta pregunta..."
+                        placeholder="Write your notes about this question here..."
                         rows="3"
                         className="note-textarea"
                       />
@@ -169,13 +169,13 @@ const Dashboard = () => {
                           className="save-note-btn"
                           onClick={() => saveNote(result.id)}
                         >
-                          💾 Guardar
+                          💾 Save
                         </button>
                         <button 
                           className="cancel-note-btn"
                           onClick={() => cancelEditingNote(result.id)}
                         >
-                          ❌ Cancelar
+                          ❌ Cancel
                         </button>
                       </div>
                     </div>
@@ -184,7 +184,7 @@ const Dashboard = () => {
                       <p>{hasNote}</p>
                     </div>
                   ) : (
-                    <p className="no-note">No tienes notas para esta pregunta</p>
+                    <p className="no-note">You have no notes for this question</p>
                   )}
                 </div>
               </div>
@@ -197,61 +197,61 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container">
-      <h2>Mi Historial de Exámenes</h2>
+      <h2>My Exam History</h2>
       {testHistory.length === 0 ? (
-        <p>Aún no has completado ningún examen. ¡Empieza uno nuevo para ver tu progreso!</p>
+        <p>You haven't completed any exams yet. Start a new one to see your progress!</p>
       ) : (
         <>
           <div className="stats-container">
             <div className="stat-card">
-              <h3>Tests Completados</h3>
+              <h3>Tests Completed</h3>
               <p>{stats.totalTests}</p>
             </div>
             <div className="stat-card">
-              <h3>Puntuación Media</h3>
+              <h3>Average Score</h3>
               <p>{stats.averageScore.toFixed(2)}%</p>
             </div>
             <div className="stat-card">
-              <h3>Mejor Puntuación</h3>
+              <h3>Best Score</h3>
               <p>{stats.bestScore.toFixed(2)}%</p>
             </div>
             <div className="stat-card">
-              <h3>Tests Aprobados</h3>
-              <p>{stats.passedTests} de {stats.totalTests}</p>
+              <h3>Tests Passed</h3>
+              <p>{stats.passedTests} of {stats.totalTests}</p>
             </div>
             <div className="stat-card">
-              <h3>Total Preguntas</h3>
+              <h3>Total Questions</h3>
               <p>{stats.totalQuestions}</p>
             </div>
             <div className="stat-card">
-              <h3>Repasos de Notas</h3>
+              <h3>Notes Reviews</h3>
               <p>{stats.notesReviewTests}</p>
             </div>
           </div>
           <table className="history-table">
             <thead>
               <tr>
-                <th>Fecha</th>
-                <th>Tipo</th>
-                <th>Nº Preguntas</th>
-                <th>Tiempo</th>
-                <th>Puntuación</th>
-                <th>Acciones</th>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Questions</th>
+                <th>Time</th>
+                <th>Score</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {testHistory.map(test => (
                 <tr key={test._id}>
-                  <td>{format(new Date(test.createdAt), "d 'de' MMMM 'de' yyyy, HH:mm", { locale: es })}</td>
+                  <td>{format(new Date(test.createdAt), "MMM d, yyyy, HH:mm", { locale: enUS })}</td>
                   <td className="center-text">
                     <span className={`test-type ${test.isNotesReview ? 'notes-review' : 'regular'}`}>
-                      {test.testType || (test.isNotesReview ? 'Repaso de Notas' : 'Test Regular')}
+                      {test.testType || (test.isNotesReview ? 'Notes Review' : 'Regular Test')}
                     </span>
                   </td>
                   <td className="center-text">{test.numberOfQuestions}</td>
                   <td className="center-text">{formatTime(test.timeInSeconds)}</td>
                   <td className={`center-text score ${test.score >= 72 ? 'pass' : 'fail'}`}>{test.score.toFixed(2)}%</td>
-                  <td className="center-text"><button onClick={() => reviewTest(test)}>Revisar</button></td>
+                  <td className="center-text"><button onClick={() => reviewTest(test)}>Review</button></td>
                 </tr>
               ))}
             </tbody>

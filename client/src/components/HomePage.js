@@ -62,14 +62,14 @@ const HomePage = () => {
     // Determine test type based on number of questions and source
     let testType = '';
     const sourceLabel = selectedQuestionSet === 'practice' ? ' (Practice)' : 
-                       selectedQuestionSet === 'all' ? ' (Mixto)' : '';
+                       selectedQuestionSet === 'all' ? ' (Mixed)' : '';
     
     switch(num) {
-      case 10: testType = `Test Rápido${sourceLabel}`; break;
-      case 25: testType = `Test Medio${sourceLabel}`; break;
-      case 65: testType = `Simulacro Completo${sourceLabel}`; break;
-      case 100: testType = `Test Extendido${sourceLabel}`; break;
-      default: testType = `Test Personalizado${sourceLabel}`;
+      case 10: testType = `Quick Test${sourceLabel}`; break;
+      case 25: testType = `Medium Test${sourceLabel}`; break;
+      case 65: testType = `Full Exam${sourceLabel}`; break;
+      case 100: testType = `Extended Test${sourceLabel}`; break;
+      default: testType = `Custom Test${sourceLabel}`;
     }
     
     setSelectedTest({ questions: selectedQuestions, type: testType, isNotesReview: false });
@@ -84,38 +84,38 @@ const HomePage = () => {
     );
     
     if (questionsWithNotes.length === 0) {
-      const sourceText = selectedQuestionSet === 'practice' ? 'de Practice' : 
-                        selectedQuestionSet === 'all' ? 'mixtas' : 'oficiales';
-      alert(`No tienes notas guardadas para preguntas ${sourceText}. Primero completa algunos exámenes y toma notas sobre las preguntas que te resulten difíciles.`);
+      const sourceText = selectedQuestionSet === 'practice' ? 'Practice' : 
+                        selectedQuestionSet === 'all' ? 'mixed' : 'official';
+      alert(`You don't have any saved notes for ${sourceText} questions. First complete some exams and take notes on questions you find difficult.`);
       return;
     }
     
     const sourceLabel = selectedQuestionSet === 'practice' ? ' (Practice)' : 
-                       selectedQuestionSet === 'all' ? ' (Mixto)' : '';
+                       selectedQuestionSet === 'all' ? ' (Mixed)' : '';
     
-    setSelectedTest({ questions: questionsWithNotes, type: `Repaso de Notas${sourceLabel}`, isNotesReview: true });
+    setSelectedTest({ questions: questionsWithNotes, type: `Notes Review${sourceLabel}`, isNotesReview: true });
   };  if (selectedTest) {
     return <TestTaker testData={selectedTest} />;
   }
 
   if (isLoading) {
-    return <div>Cargando banco de preguntas...</div>;
+    return <div>Loading question bank...</div>;
   }
 
   return (
     <div className="home-page">
-      <h1>Prepárate para tu Examen de AWS</h1>
-      <p>Selecciona el tipo de preguntas y el número de preguntas para tu simulacro.</p>
+      <h1>Prepare for your AWS Exam</h1>
+      <p>Select the question type and number of questions for your practice exam.</p>
       
-      {/* Selector de tipo de preguntas */}
+      {/* Question type selector */}
       <div className="question-set-selector">
-        <h3>Tipo de Preguntas:</h3>
+        <h3>Question Type:</h3>
         <div className="selector-buttons">
           <button 
             className={`selector-btn ${selectedQuestionSet === 'official' ? 'active' : ''}`}
             onClick={() => setSelectedQuestionSet('official')}
           >
-            📋 Oficiales ({officialQuestions.length})
+            📋 Official ({officialQuestions.length})
           </button>
           <button 
             className={`selector-btn ${selectedQuestionSet === 'practice' ? 'active' : ''}`}
@@ -127,24 +127,24 @@ const HomePage = () => {
             className={`selector-btn ${selectedQuestionSet === 'all' ? 'active' : ''}`}
             onClick={() => setSelectedQuestionSet('all')}
           >
-            🔄 Mixto ({allQuestions.length})
+            🔄 Mixed ({allQuestions.length})
           </button>
         </div>
       </div>
       
       <div className="question-count">
         <strong>
-          Usando: {getCurrentQuestions().length} preguntas 
-          ({selectedQuestionSet === 'official' ? 'Fuente Oficial' : 
-            selectedQuestionSet === 'practice' ? 'Curso Practice' : 'Ambas Fuentes'})
+          Using: {getCurrentQuestions().length} questions 
+          ({selectedQuestionSet === 'official' ? 'Official Source' : 
+            selectedQuestionSet === 'practice' ? 'Practice Course' : 'Both Sources'})
         </strong>
       </div>
       
       <div className="options-container">
-        <button onClick={() => startTest(10)}>Test Rápido (10 preguntas)</button>
-        <button onClick={() => startTest(25)}>Test Medio (25 preguntas)</button>
-        <button onClick={() => startTest(65)}>Simulacro Completo (65 preguntas)</button>
-        <button onClick={() => startTest(100)}>Test Extendido (100 preguntas)</button>
+        <button onClick={() => startTest(10)}>Quick Test (10 questions)</button>
+        <button onClick={() => startTest(25)}>Medium Test (25 questions)</button>
+        <button onClick={() => startTest(65)}>Full Exam (65 questions)</button>
+        <button onClick={() => startTest(100)}>Extended Test (100 questions)</button>
         
         <div className="notes-test-section">
           <button 
@@ -152,12 +152,12 @@ const HomePage = () => {
             className="notes-test-btn"
             disabled={notesCount === 0}
           >
-            📝 Repaso de Notas ({notesCount} preguntas)
+            📝 Notes Review ({notesCount} questions)
           </button>
           <p className="notes-test-description">
             {notesCount > 0 
-              ? "Practica solo con las preguntas sobre las que has tomado notas" 
-              : "Toma notas durante los exámenes para habilitar esta opción"}
+              ? "Practice only with questions you've taken notes on" 
+              : "Take notes during exams to enable this option"}
           </p>
         </div>
       </div>

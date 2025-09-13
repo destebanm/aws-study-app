@@ -15,9 +15,9 @@ function App() {
     <Router basename="/aws-study-app">
       <div className="App">
         <nav className="main-nav">
-          <NavLink to="/" end>Nuevo Test</NavLink>
-          <NavLink to="/history">Historial</NavLink>
-          <NavLink to="/notes">Mis Notas</NavLink>
+          <NavLink to="/" end>New Test</NavLink>
+          <NavLink to="/history">History</NavLink>
+          <NavLink to="/notes">My Notes</NavLink>
         </nav>
         <main className="content">
           <Routes>
