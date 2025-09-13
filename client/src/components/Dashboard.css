@@ -88,3 +88,80 @@
 .history-table button:hover {
     background-color: #0056b3;
 }
+
+/* Test Review Styles */
+.test-review-container {
+    padding: 1rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.review-header {
+    margin-bottom: 2rem;
+}
+
+.back-btn {
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.back-btn:hover {
+    background: #5a6268;
+}
+
+.review-header h2 {
+    color: #232f3e;
+    margin: 1rem 0;
+}
+
+.test-info {
+    display: flex;
+    gap: 2rem;
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #ff9900;
+    flex-wrap: wrap;
+}
+
+.test-info span {
+    font-weight: bold;
+    color: #495057;
+}
+
+.review-results {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.saved-note {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 4px;
+    padding: 12px;
+    margin-top: 10px;
+}
+
+.saved-note strong {
+    color: #856404;
+}
+
+.saved-note p {
+    margin: 5px 0 0 0;
+    color: #856404;
+    font-style: italic;
+}
+
+@media (max-width: 768px) {
+    .test-info {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}

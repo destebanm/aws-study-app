@@ -63,6 +63,29 @@ const TestTaker = ({ questions }) => {
   const [notes, setNotes] = useState(getNotes());
   const [isFinished, setIsFinished] = useState(false);
   const [finalResults, setFinalResults] = useState(null);
+  const [startTime] = useState(new Date());
+  const [elapsedTime, setElapsedTime] = useState(0);
+
+  // Timer effect
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setElapsedTime(Math.floor((new Date() - startTime) / 1000));
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [startTime]);
+
+  // Format time display
+  const formatTime = (seconds) => {
+    const hours = Math.floor(seconds / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+    
+    if (hours > 0) {
+      return `${hours}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
 
   const handleAnswer = (questionId, optionIndex) => {
     setUserAnswers({ ...userAnswers, [questionId]: optionIndex });
@@ -87,6 +110,9 @@ const TestTaker = ({ questions }) => {
 
   const handleSubmit = () => {
     if (window.confirm('¿Estás seguro de que quieres finalizar el examen?')) {
+      const endTime = new Date();
+      const totalTimeInSeconds = Math.floor((endTime - startTime) / 1000);
+      
       // 1. Grade the test
       let correctAnswersCount = 0;
       const results = questions.map(q => {
@@ -113,7 +139,14 @@ const TestTaker = ({ questions }) => {
         createdAt: new Date(),
         score,
         numberOfQuestions: questions.length,
+        timeInSeconds: totalTimeInSeconds,
         results, // Save full results for review
+        notes: Object.keys(notes).reduce((acc, questionId) => {
+          if (notes[questionId] && notes[questionId].trim()) {
+            acc[questionId] = notes[questionId];
+          }
+          return acc;
+        }, {})
       };
       saveHistory([...history, newTestResult]);
 
@@ -137,7 +170,10 @@ const TestTaker = ({ questions }) => {
     <div className="test-taker-container">
       <div className="test-header">
         <h2>Simulacro de Examen</h2>
-        <div className="progress-indicator">Pregunta {currentQuestionIndex + 1} de {questions.length}</div>
+        <div className="test-info">
+          <div className="progress-indicator">Pregunta {currentQuestionIndex + 1} de {questions.length}</div>
+          <div className="timer">⏱️ {formatTime(elapsedTime)}</div>
+        </div>
       </div>
       <QuestionDisplay
         question={currentQuestion}

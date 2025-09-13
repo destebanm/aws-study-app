@@ -7,12 +7,42 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.test-info {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
 }
 
 .progress-indicator {
     font-weight: bold;
     font-size: 1.1rem;
     color: #555;
+}
+
+.timer {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #ff9900;
+    background: #f8f9fa;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: 1px solid #dee2e6;
+}
+
+@media (max-width: 768px) {
+    .test-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .test-info {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
 }
 
 .question-container {

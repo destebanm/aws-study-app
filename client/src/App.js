@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 import HomePage from './components/HomePage';
 import Dashboard from './components/Dashboard';
+import NotesReview from './components/NotesReview';
 import './App.css';
 
 function App() {
@@ -16,11 +17,13 @@ function App() {
         <nav className="main-nav">
           <NavLink to="/" end>Nuevo Test</NavLink>
           <NavLink to="/history">Historial</NavLink>
+          <NavLink to="/notes">Mis Notas</NavLink>
         </nav>
         <main className="content">
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/history" element={<Dashboard />} />
+            <Route path="/notes" element={<NotesReview />} />
           </Routes>
         </main>
       </div>

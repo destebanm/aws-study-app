@@ -45,6 +45,9 @@ const HomePage = () => {
     <div className="home-page">
       <h1>Prepárate para tu Examen de AWS</h1>
       <p>Selecciona el número de preguntas para tu simulacro.</p>
+      <div className="question-count">
+        <strong>Base de datos: {questions.length} preguntas disponibles</strong>
+      </div>
       <div className="options-container">
         <button onClick={() => startTest(10)}>Test Rápido (10 preguntas)</button>
         <button onClick={() => startTest(25)}>Test Medio (25 preguntas)</button>

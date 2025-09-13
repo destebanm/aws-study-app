@@ -10,6 +10,7 @@ const getHistory = () => {
 
 const Dashboard = () => {
   const [testHistory, setTestHistory] = useState([]);
+  const [selectedTest, setSelectedTest] = useState(null);
 
   useEffect(() => {
     const history = getHistory();
@@ -17,6 +18,26 @@ const Dashboard = () => {
     history.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     setTestHistory(history);
   }, []);
+
+  const formatTime = (seconds) => {
+    if (!seconds) return 'N/A';
+    const hours = Math.floor(seconds / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+    
+    if (hours > 0) {
+      return `${hours}h ${mins}m ${secs}s`;
+    }
+    return `${mins}m ${secs}s`;
+  };
+
+  const reviewTest = (test) => {
+    setSelectedTest(test);
+  };
+
+  const closeReview = () => {
+    setSelectedTest(null);
+  };
 
   const calculateStats = () => {
     if (testHistory.length === 0) return null;
@@ -32,6 +53,40 @@ const Dashboard = () => {
   };
 
   const stats = calculateStats();
+
+  if (selectedTest) {
+    return (
+      <div className="test-review-container">
+        <div className="review-header">
+          <button onClick={closeReview} className="back-btn">← Volver al Historial</button>
+          <h2>Revisión del Examen</h2>
+          <div className="test-info">
+            <span>Fecha: {format(new Date(selectedTest.createdAt), "d 'de' MMMM 'de' yyyy, HH:mm", { locale: es })}</span>
+            <span>Puntuación: {selectedTest.score.toFixed(2)}%</span>
+            <span>Tiempo: {formatTime(selectedTest.timeInSeconds)}</span>
+          </div>
+        </div>
+        <div className="review-results">
+          {selectedTest.results.map((result, index) => (
+            <div key={result.id} className={`result-card ${result.isCorrect ? 'correct' : 'incorrect'}`}>
+              <h4>{index + 1}. {result.questionText}</h4>
+              <p><strong>Tu respuesta:</strong> {result.selectedOptionIndex !== undefined ? result.options[result.selectedOptionIndex].text : 'No contestada'} <span className={result.isCorrect ? 'correct-text' : 'incorrect-text'}>({result.isCorrect ? 'Correcta' : 'Incorrecta'})</span></p>
+              {!result.isCorrect && (
+                <p><strong>Respuesta correcta:</strong> {result.options.find(o => o.isCorrect).text}</p>
+              )}
+              <p className="explanation"><strong>Explicación:</strong> {result.explanation}</p>
+              {selectedTest.notes && selectedTest.notes[result.id] && (
+                <div className="saved-note">
+                  <strong>Tus notas:</strong>
+                  <p>{selectedTest.notes[result.id]}</p>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="dashboard-container">
@@ -67,6 +122,7 @@ const Dashboard = () => {
               <tr>
                 <th>Fecha</th>
                 <th>Nº Preguntas</th>
+                <th>Tiempo</th>
                 <th>Puntuación</th>
                 <th>Acciones</th>
               </tr>
@@ -76,8 +132,9 @@ const Dashboard = () => {
                 <tr key={test._id}>
                   <td>{format(new Date(test.createdAt), "d 'de' MMMM 'de' yyyy, HH:mm", { locale: es })}</td>
                   <td className="center-text">{test.numberOfQuestions}</td>
+                  <td className="center-text">{formatTime(test.timeInSeconds)}</td>
                   <td className={`center-text score ${test.score >= 72 ? 'pass' : 'fail'}`}>{test.score.toFixed(2)}%</td>
-                  <td className="center-text"><button onClick={() => alert(`Próximamente: Revisar test ${test._id}`)}>Revisar</button></td>
+                  <td className="center-text"><button onClick={() => reviewTest(test)}>Revisar</button></td>
                 </tr>
               ))}
             </tbody>
