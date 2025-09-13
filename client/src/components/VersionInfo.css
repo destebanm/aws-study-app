@@ -1,29 +1,10 @@
-/* Version Info - Text Style */
+/* Version Info - Plain Text */
 .version-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   margin-top: 20px;
-}
-
-.version-info {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  text-align: center;
 }
 
 .version-badge {
-  color: #666;
-  font-size: 0.9em;
-  font-weight: normal;
-  font-family: inherit;
-  text-align: center;
-  user-select: none;
-}
-
-/* Responsive */
-@media (max-width: 600px) {
-  .version-badge {
-    font-size: 0.85em;
-  }
+  color: #999;
+  font-size: 0.8em;
 }
