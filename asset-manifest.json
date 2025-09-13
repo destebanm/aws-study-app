@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/aws-study-app/static/css/main.885718ef.css",
-    "main.js": "/aws-study-app/static/js/main.6cadf325.js",
+    "main.css": "/aws-study-app/static/css/main.c00d5058.css",
+    "main.js": "/aws-study-app/static/js/main.87fa118f.js",
     "index.html": "/aws-study-app/index.html",
-    "main.885718ef.css.map": "/aws-study-app/static/css/main.885718ef.css.map",
-    "main.6cadf325.js.map": "/aws-study-app/static/js/main.6cadf325.js.map"
+    "main.c00d5058.css.map": "/aws-study-app/static/css/main.c00d5058.css.map",
+    "main.87fa118f.js.map": "/aws-study-app/static/js/main.87fa118f.js.map"
   },
   "entrypoints": [
-    "static/css/main.885718ef.css",
-    "static/js/main.6cadf325.js"
+    "static/css/main.c00d5058.css",
+    "static/js/main.87fa118f.js"
   ]
 }
