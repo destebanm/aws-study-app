@@ -6,44 +6,64 @@ const questions = JSON.parse(fs.readFileSync(questionsFile, 'utf8'));
 
 // Function to improve question readability
 function improveQuestionText(text) {
-  // If text already has good formatting, return as is
-  if (text.includes('\n\n') || text.includes('**')) {
+  // If text already has extensive formatting, return as is
+  if (text.includes('**Current Architecture:**') || text.includes('**Problem:**') || text.includes('**Background:**')) {
     return text;
   }
   
   let improved = text;
   
-  // Split very long sentences and add structure
+  // More comprehensive improvements for long sentences
   const improvements = [
-    // Add structure to architecture descriptions
+    // Company scenarios with architecture descriptions
     {
-      pattern: /^([^.]+has developed[^.]+\.) ([^.]+includes[^.]+\.) ([^.]+stores[^.]+\.) ([^.]+analyzing[^.]+\.) (.+)$/,
-      replacement: '$1\n\n**Current Architecture:**\n$2 $3\n\n**Performance Analysis:**\n$4\n\n**Question:**\n$5'
+      pattern: /^(A [^.]+company[^.]+\.) ([^.]+architecture[^.]+\.) ([^.]+stores?[^.]+\.) ([^.]+analyzing[^.]+\.) (.+)$/,
+      replacement: '$1\n\n**Current Architecture:**\n• $2\n• $3\n\n**Analysis:**\n• $4\n\n**Question:**\n$5'
     },
-    // Structure for startup scenarios
+    // Startup/company scenarios with problems
     {
-      pattern: /^([^.]+startup[^.]+AWS\.) ([^.]+architecture includes[^.]+\.) ([^.]+Recently[^.]+\.) (.+)$/,
-      replacement: '$1\n\n**Current Architecture:**\n$2\n\n**Problem Observed:**\n$3\n\n**Question:**\n$4'
+      pattern: /^(A [^.]+(?:startup|company)[^.]+AWS\.) ([^.]+(?:architecture|setup)[^.]+\.) ([^.]+(?:Recently|Currently)[^.]+\.) (.+)$/,
+      replacement: '$1\n\n**Current Setup:**\n• $2\n\n**Problem:**\n• $3\n\n**Question:**\n$4'
     },
-    // General long paragraph improvements
+    // Break up very long sentences with "The" 
     {
-      pattern: /\. The ([A-Z][^.]+\.) ([^.]+\.) (.+)/g,
-      replacement: '.\n\n**Background:**\nThe $1 $2\n\n**Question:**\n$3'
+      pattern: /^([^.]{50,}\.) (The [^.]{50,}\.) ([^.]{30,}\.) (.+)$/,
+      replacement: '$1\n\n**Background:**\n$2 $3\n\n**Question:**\n$4'
     },
-    // Question indicators
+    // Healthcare/firm scenarios
     {
-      pattern: /\. (Which|What|How) ([a-z][^?]+\?)/g,
+      pattern: /^(A [^.]+(?:healthcare|firm|organization)[^.]+\.) ([^.]+application[^.]+\.) ([^.]+policy[^.]+\.) (.+)$/,
+      replacement: '$1\n\n**Current Setup:**\n• $2\n\n**Requirements:**\n• $3\n\n**Question:**\n$4'
+    },
+    // Media/streaming company scenarios
+    {
+      pattern: /^(A [^.]+(?:media|streaming)[^.]+\.) ([^.]+users[^.]+\.) ([^.]+team[^.]+\.) (.+)$/,
+      replacement: '$1\n\n**Current Situation:**\n• $2\n\n**Challenge:**\n• $3\n\n**Question:**\n$4'
+    },
+    // Engineering team scenarios
+    {
+      pattern: /^(The [^.]+team[^.]+\.) ([^.]+wants to[^.]+\.) (.+)$/,
+      replacement: '$1\n\n**Objective:**\n• $2\n\n**Question:**\n$3'
+    },
+    // Question indicators - more comprehensive
+    {
+      pattern: /\. (Which|What|How|As a [^,]+,) ([^?]+\?)/g,
       replacement: '.\n\n**Question:**\n$1 $2'
     },
-    // Current state indicators
+    // Split on "Recently" or "Currently"
     {
-      pattern: /Currently, ([^.]+\.)/g,
-      replacement: '\n\n**Current State:**\n• $1'
+      pattern: /\. (Recently|Currently), ([^.]+\.)/g,
+      replacement: '.\n\n**Current Status:**\n• $1, $2'
     },
-    // Problem indicators
+    // Split on "The company" or "The team"
     {
-      pattern: /Recently, ([^.]+\.)/g,
-      replacement: '\n\n**Problem:**\n• $1'
+      pattern: /\. (The (?:company|team|organization) [^.]+\.)/g,
+      replacement: '.\n\n**Context:**\n• $1'
+    },
+    // Break up sentences with multiple services mentioned
+    {
+      pattern: /([^.]+Amazon [A-Z][^.]+) and ([^.]+Amazon [A-Z][^.]+\.)/g,
+      replacement: '$1\n• $2'
     }
   ];
   
@@ -51,31 +71,41 @@ function improveQuestionText(text) {
     improved = improved.replace(improvement.pattern, improvement.replacement);
   });
   
-  // Clean up multiple newlines
-  improved = improved.replace(/\n{3,}/g, '\n\n');
+  // Additional simple line breaks for readability
+  if (!improved.includes('\n')) {
+    // If still no line breaks, try to split on long sentences
+    improved = improved.replace(/(\. )([A-Z][^.]{80,}\.)/g, '$1\n\n$2');
+  }
   
-  return improved.trim();
+  // Clean up multiple newlines and trim
+  improved = improved.replace(/\n{3,}/g, '\n\n').trim();
+  
+  return improved;
 }
 
-// Target specific long questions that need improvement
-const problematicQuestions = [
-  'q677', 'q678', 'q301', 'q683', 'q689', 'q680', 'q682'
-];
-
 let improvedCount = 0;
+let totalProcessed = 0;
 
 questions.forEach(question => {
-  if (problematicQuestions.includes(question.id) || question.questionText.length > 300) {
+  // Process questions that are longer than 200 characters OR don't have line breaks
+  const shouldProcess = question.questionText.length > 200 || 
+                       (!question.questionText.includes('\n') && question.questionText.length > 150);
+  
+  if (shouldProcess) {
+    totalProcessed++;
     const originalText = question.questionText;
     const improvedText = improveQuestionText(originalText);
     
     if (improvedText !== originalText) {
       question.questionText = improvedText;
-      console.log(`Improved question ${question.id}:`);
-      console.log('Original length:', originalText.length);
-      console.log('New length:', improvedText.length);
+      console.log(`✅ Improved question ${question.id}:`);
+      console.log('   Original length:', originalText.length);
+      console.log('   New length:', improvedText.length);
+      console.log('   Has line breaks now:', improvedText.includes('\n'));
       console.log('---');
       improvedCount++;
+    } else {
+      console.log(`⏭️  Skipped question ${question.id} (already well formatted)`);
     }
   }
 });
@@ -83,5 +113,14 @@ questions.forEach(question => {
 // Write the improved questions back to file
 fs.writeFileSync(questionsFile, JSON.stringify(questions, null, 2));
 
-console.log(`\nImproved ${improvedCount} questions for better readability!`);
-console.log('Changes saved to questions.json');
+console.log(`\n🎯 SUMMARY:`);
+console.log(`📊 Total questions processed: ${totalProcessed}`);
+console.log(`✅ Questions improved: ${improvedCount}`);
+console.log(`📈 Improvement rate: ${((improvedCount/totalProcessed)*100).toFixed(1)}%`);
+console.log(`💾 Changes saved to questions.json`);
+
+if (improvedCount > 0) {
+  console.log(`\n🚀 All improved questions now have better structure and readability!`);
+} else {
+  console.log(`\n✨ All questions were already well formatted!`);
+}
