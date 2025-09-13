@@ -7,24 +7,74 @@ const saveNotes = (notes) => localStorage.setItem('aws-notes', JSON.stringify(no
 const getHistory = () => JSON.parse(localStorage.getItem('aws-history') || '[]');
 const saveHistory = (history) => localStorage.setItem('aws-history', JSON.stringify(history));
 
-const QuestionDisplay = ({ question, onAnswer, onNoteChange, note, userAnswerIndex }) => {
+// Helper function to detect if a question is multi-select
+const isMultiSelectQuestion = (question) => {
+  const text = question.questionText.toLowerCase();
+  return text.includes('(select two)') || 
+         text.includes('(select three)') || 
+         text.includes('(select 2)') ||
+         text.includes('(select 3)') ||
+         text.includes('select two') ||
+         text.includes('select three') ||
+         question.options.filter(option => option.isCorrect).length > 1;
+};
+
+// Helper function to get number of correct answers needed
+const getRequiredAnswers = (question) => {
+  const text = question.questionText.toLowerCase();
+  if (text.includes('(select two)') || text.includes('(select 2)') || text.includes('select two')) {
+    return 2;
+  }
+  if (text.includes('(select three)') || text.includes('(select 3)') || text.includes('select three')) {
+    return 3;
+  }
+  // Fallback: count actual correct answers
+  return question.options.filter(option => option.isCorrect).length;
+};
+
+const QuestionDisplay = ({ question, onAnswer, onNoteChange, note, userAnswerIndex, userAnswers }) => {
+  const isMultiSelect = isMultiSelectQuestion(question);
+  const requiredAnswers = isMultiSelect ? getRequiredAnswers(question) : 1;
+  const currentAnswers = isMultiSelect ? (userAnswers || []) : [];
+  
+  const handleOptionChange = (index) => {
+    if (isMultiSelect) {
+      const newAnswers = currentAnswers.includes(index) 
+        ? currentAnswers.filter(i => i !== index)
+        : [...currentAnswers, index];
+      onAnswer(question.id, newAnswers);
+    } else {
+      onAnswer(question.id, index);
+    }
+  };
+
   return (
     <div className="question-container">
       <h3>{question.questionText}</h3>
+      {isMultiSelect && (
+        <div className="multi-select-info">
+          <p><strong>Select {requiredAnswers} answer{requiredAnswers > 1 ? 's' : ''}:</strong></p>
+        </div>
+      )}
       <form className="options-form">
         {question.options.map((option, index) => (
           <div key={index} className="option">
             <input
-              type="radio"
+              type={isMultiSelect ? "checkbox" : "radio"}
               name={`question_${question.id}`}
               id={`option_${question.id}_${index}`}
-              checked={userAnswerIndex === index}
-              onChange={() => onAnswer(question.id, index)}
+              checked={isMultiSelect ? currentAnswers.includes(index) : userAnswerIndex === index}
+              onChange={() => handleOptionChange(index)}
             />
             <label htmlFor={`option_${question.id}_${index}`}>{option.text}</label>
           </div>
         ))}
       </form>
+      {isMultiSelect && (
+        <div className="selection-counter">
+          <p>Selected: {currentAnswers.length} of {requiredAnswers}</p>
+        </div>
+      )}
       <div className="notes-container">
         <textarea
           placeholder="Your notes about this question..."
@@ -38,6 +88,26 @@ const QuestionDisplay = ({ question, onAnswer, onNoteChange, note, userAnswerInd
 };
 
 const ResultsDisplay = ({ results, score, onRestart }) => {
+  const renderUserAnswers = (result) => {
+    const isMultiSelect = isMultiSelectQuestion(result);
+    
+    if (isMultiSelect) {
+      const selectedIndices = Array.isArray(result.selectedOptionIndices) ? result.selectedOptionIndices : [];
+      if (selectedIndices.length === 0) {
+        return 'Not answered';
+      }
+      return selectedIndices.map(index => result.options[index]?.text).join(', ');
+    } else {
+      const selectedIndex = result.selectedOptionIndex;
+      return selectedIndex !== undefined ? result.options[selectedIndex]?.text : 'Not answered';
+    }
+  };
+
+  const renderCorrectAnswers = (result) => {
+    const correctOptions = result.options.filter(option => option.isCorrect);
+    return correctOptions.map(option => option.text).join(', ');
+  };
+
   return (
     <div className="results-container">
       <h2>Exam Results</h2>
@@ -46,9 +116,9 @@ const ResultsDisplay = ({ results, score, onRestart }) => {
       {results.map((result, index) => (
         <div key={result.id} className={`result-card ${result.isCorrect ? 'correct' : 'incorrect'}`}>
           <h4>{index + 1}. {result.questionText}</h4>
-          <p><strong>Your answer:</strong> {result.selectedOptionIndex !== undefined ? result.options[result.selectedOptionIndex].text : 'Not answered'} <span className={result.isCorrect ? 'correct-text' : 'incorrect-text'}>({result.isCorrect ? 'Correct' : 'Incorrect'})</span></p>
+          <p><strong>Your answer{isMultiSelectQuestion(result) ? 's' : ''}:</strong> {renderUserAnswers(result)} <span className={result.isCorrect ? 'correct-text' : 'incorrect-text'}>({result.isCorrect ? 'Correct' : 'Incorrect'})</span></p>
           {!result.isCorrect && (
-            <p><strong>Correct answer:</strong> {result.options.find(o => o.isCorrect).text}</p>
+            <p><strong>Correct answer{result.options.filter(o => o.isCorrect).length > 1 ? 's' : ''}:</strong> {renderCorrectAnswers(result)}</p>
           )}
           <p className="explanation"><strong>Explanation:</strong> {result.explanation}</p>
         </div>
@@ -95,8 +165,8 @@ const TestTaker = ({ testData }) => {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
-  const handleAnswer = (questionId, optionIndex) => {
-    setUserAnswers({ ...userAnswers, [questionId]: optionIndex });
+  const handleAnswer = (questionId, optionIndexOrIndices) => {
+    setUserAnswers({ ...userAnswers, [questionId]: optionIndexOrIndices });
   };
 
   const handleNoteChange = (questionId, text) => {
@@ -116,6 +186,29 @@ const TestTaker = ({ testData }) => {
     }
   };
 
+  const evaluateAnswer = (question, userAnswer) => {
+    const isMultiSelect = isMultiSelectQuestion(question);
+    
+    if (isMultiSelect) {
+      const userIndices = Array.isArray(userAnswer) ? userAnswer : [];
+      const correctIndices = question.options
+        .map((option, index) => option.isCorrect ? index : null)
+        .filter(index => index !== null);
+      
+      // Check if user selected exactly the right answers
+      if (userIndices.length !== correctIndices.length) {
+        return false;
+      }
+      
+      // Check if all selected answers are correct and all correct answers are selected
+      return userIndices.every(index => correctIndices.includes(index)) &&
+             correctIndices.every(index => userIndices.includes(index));
+    } else {
+      // Single select question
+      return userAnswer !== undefined && question.options[userAnswer]?.isCorrect;
+    }
+  };
+
   const handleSubmit = () => {
     if (window.confirm('Are you sure you want to finish the exam?')) {
       const endTime = new Date();
@@ -124,14 +217,17 @@ const TestTaker = ({ testData }) => {
       // 1. Grade the test
       let correctAnswersCount = 0;
       const results = questions.map(q => {
-        const userAnswerIndex = userAnswers[q.id];
-        const isCorrect = (userAnswerIndex !== undefined) && q.options[userAnswerIndex]?.isCorrect;
+        const userAnswer = userAnswers[q.id];
+        const isCorrect = evaluateAnswer(q, userAnswer);
         if (isCorrect) {
           correctAnswersCount++;
         }
+        
+        const isMultiSelect = isMultiSelectQuestion(q);
         return {
           ...q,
-          selectedOptionIndex: userAnswerIndex,
+          selectedOptionIndex: isMultiSelect ? undefined : userAnswer,
+          selectedOptionIndices: isMultiSelect ? (Array.isArray(userAnswer) ? userAnswer : []) : undefined,
           isCorrect: isCorrect || false,
         };
       });
@@ -196,6 +292,7 @@ const TestTaker = ({ testData }) => {
         onNoteChange={handleNoteChange}
         note={notes[currentQuestion.id] || ''}
         userAnswerIndex={userAnswers[currentQuestion.id]}
+        userAnswers={userAnswers[currentQuestion.id]}
       />
       <div className="navigation-buttons">
         <button onClick={handlePrevious} disabled={currentQuestionIndex === 0}>Previous</button>
