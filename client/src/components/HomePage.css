@@ -12,12 +12,15 @@
     color: #232f3e;
     text-align: center;
     margin-bottom: 1.5rem;
+    font-size: 2.5rem;
+    line-height: 1.3;
 }
 
 .home-page p {
     color: #666;
     text-align: center;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
+    line-height: 1.6;
     margin-bottom: 1rem;
     max-width: 600px;
 }
@@ -25,30 +28,77 @@
 .question-count {
     background: #e7f3ff;
     color: #0066cc;
-    padding: 12px 20px;
-    border-radius: 8px;
+    padding: 16px 24px;
+    border-radius: 12px;
     margin-bottom: 2rem;
     border-left: 4px solid #ff9900;
     text-align: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(0,102,204,0.1);
 }
 
 .options-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1.5rem;
     width: 100%;
     padding: 1rem;
 }
 
 .options-container button {
-    padding: 1.5rem;
-    font-size: 1.1rem;
+    padding: 2rem;
+    font-size: 1.2rem;
     font-weight: 600;
     color: white;
     background-color: #ff9900;
     border: none;
-    border-radius: 8px;
+    border-radius: 12px;
     cursor: pointer;
+    line-height: 1.4;
+    word-wrap: break-word;
+    hyphens: auto;
+}
+
+/* Estilos mejorados para móviles */
+@media (max-width: 768px) {
+    .home-page {
+        padding: 1.5rem;
+    }
+    
+    .home-page h1 {
+        font-size: 2rem;
+        margin-bottom: 1.25rem;
+    }
+    
+    .home-page p {
+        font-size: 1.1rem;
+        line-height: 1.7;
+        margin-bottom: 1.25rem;
+    }
+    
+    .question-count {
+        padding: 14px 20px;
+        margin-bottom: 1.5rem;
+        font-size: 1rem;
+        border-radius: 8px;
+    }
+    
+    .options-container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        padding: 0.5rem;
+    }
+    
+    .options-container button {
+        padding: 1.5rem;
+        font-size: 1.1rem;
+        min-height: 80px;
+        border-radius: 8px;
+    }
+}
+
+.options-container button {
     transition: all 0.3s ease;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     text-align: center;
