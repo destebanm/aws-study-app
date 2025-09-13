@@ -6001,7 +6001,7 @@
   },
   {
     "id": "q251",
-    "questionText": "A company has a CRM application hosted on an Auto Scaling group of On-Demand EC2 instances with different instance types and sizes. The application is extensively used during office hours from 9 AM to 5 PM. Users are complaining that the performance of the application is slow during the start of the day but then works normally after a couple of hours. Which of the following is the MOST operationally efficient solution?",
+    "questionText": "A company has a CRM application hosted on an Auto Scaling group of On-Demand EC2 instances with different instance types and sizes. The application is extensively used during office hours from 9 AM to 5 PM. Users are complaining that the performance of the application is slow during the start of the day but then works normally after a couple of hours.\n\n**Question:**\nWhich of the following is the MOST operationally efficient solution?",
     "options": [
       {
         "text": "Configure a Dynamic scaling policy for the Auto Scaling group to launch new instances based on the CPU utilization",
@@ -6025,7 +6025,7 @@
   },
   {
     "id": "q252",
-    "questionText": "A financial application consists of an Auto Scaling group of Amazon EC2 instances, an Application Load Balancer, and a MySQL RDS instance in Multi-AZ deployment. To protect customers' confidential data, the RDS database must only be accessible using authentication tokens specific to the profile credentials of EC2 instances. Which action should be taken?",
+    "questionText": "A financial application consists of an Auto Scaling group of Amazon EC2 instances, an Application Load Balancer, and a MySQL RDS instance in Multi-AZ deployment. To protect customers' confidential data, the RDS database must only be accessible using authentication tokens specific to the profile credentials of EC2 instances.\n\n**Question:**\nWhich action should be taken?",
     "options": [
       {
         "text": "Enable the IAM DB Authentication",
@@ -7201,7 +7201,7 @@
   },
   {
     "id": "q301",
-    "questionText": "A retail company has developed a REST API which is deployed in an Auto Scaling group behind an Application Load Balancer. The REST API stores the user data in Amazon DynamoDB and any static content, such as images, are served via Amazon Simple Storage Service (Amazon S3). On analyzing the usage trends, it is found that 90% of the read requests are for commonly accessed data across all users.\n\nAs a Solutions Architect, which of the following would you suggest as the MOST efficient solution to improve the application performance?",
+    "questionText": "A retail company has developed a REST API with the following architecture:\n\n**Current Setup:**\n• Deployed in Auto Scaling group behind Application Load Balancer\n• User data stored in Amazon DynamoDB\n• Static content (images) served via Amazon S3\n\n**Performance Analysis:**\n• 90% of read requests target commonly accessed data across all users\n\n**Question:**\nAs a Solutions Architect, which solution would you suggest as the MOST efficient way to improve application performance?",
     "options": [
       {
         "text": "Enable Amazon DynamoDB Accelerator (DAX) for Amazon DynamoDB and Amazon CloudFront for Amazon S3",
@@ -9971,7 +9971,7 @@
   },
   {
     "id": "q404",
-    "questionText": "You have a team of developers in your company, and you would like to ensure they can quickly experiment with AWS Managed Policies by attaching them to their accounts, but you would like to prevent them from doing an escalation of privileges, by granting themselves the AdministratorAccess managed policy. How should you proceed?",
+    "questionText": "You have a team of developers in your company, and you would like to ensure they can quickly experiment with AWS Managed Policies by attaching them to their accounts, but you would like to prevent them from doing an escalation of privileges, by granting themselves the AdministratorAccess managed policy.\n\n**Question:**\nHow should you proceed?",
     "options": [
       {
         "text": "For each developer, define an IAM permission boundary that will restrict the managed policies they can attach to themselves",
