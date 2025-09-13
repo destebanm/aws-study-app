@@ -2,9 +2,24 @@
 .version-container {
   margin-top: 20px;
   text-align: center;
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+.version-info {
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
 }
 
 .version-badge {
   color: #999;
   font-size: 0.8em;
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  font-weight: normal !important;
 }
