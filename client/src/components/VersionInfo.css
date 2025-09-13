@@ -1,25 +1,28 @@
 /* Version Info - Plain Text */
 .version-container {
-  margin-top: 20px;
-  text-align: center;
   background: none !important;
   border: none !important;
   padding: 0 !important;
+  margin: 0 !important;
+  text-align: center !important;
 }
 
 .version-info {
   background: none !important;
   border: none !important;
   padding: 0 !important;
+  margin: 0 !important;
 }
 
 .version-badge {
-  color: #999;
-  font-size: 0.8em;
   background: none !important;
   border: none !important;
   padding: 0 !important;
+  margin: 0 !important;
   box-shadow: none !important;
   border-radius: 0 !important;
+  color: #6c757d !important;
+  font-size: 14px !important;
   font-weight: normal !important;
+  display: inline !important;
 }

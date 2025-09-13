@@ -5,11 +5,9 @@ import './VersionInfo.css';
 const VersionInfo = () => {
   return (
     <div className="version-container">
-      <div className="version-info">
-        <span className="version-badge">
-          {VERSION_INFO?.version || 'v1.0.0'}
-        </span>
-      </div>
+      <span className="version-badge">
+        {VERSION_INFO?.version || 'v1.0.0'}
+      </span>
     </div>
   );
 };
