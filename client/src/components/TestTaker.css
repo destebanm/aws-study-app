@@ -11,6 +11,19 @@
     gap: 1rem;
 }
 
+.test-title h2 {
+    margin: 0;
+    color: #232f3e;
+}
+
+.notes-review-subtitle {
+    margin: 5px 0 0 0;
+    color: #007bff;
+    font-style: italic;
+    font-size: 0.9rem;
+    font-weight: normal;
+}
+
 .test-info {
     display: flex;
     gap: 2rem;

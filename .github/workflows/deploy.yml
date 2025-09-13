@@ -35,6 +35,9 @@ jobs:
           npm ci
 
       - name: Build 🔧
+        env:
+          GITHUB_SHA: ${{ github.sha }}
+          NODE_ENV: production
         run: |
           cd client
           CI=false npm run build

@@ -65,6 +65,9 @@ const TestTaker = ({ questions }) => {
   const [finalResults, setFinalResults] = useState(null);
   const [startTime] = useState(new Date());
   const [elapsedTime, setElapsedTime] = useState(0);
+  
+  // Check if this is a notes review test
+  const isNotesReviewTest = questions.every(q => notes[q.id] && notes[q.id].trim());
 
   // Timer effect
   useEffect(() => {
@@ -140,6 +143,7 @@ const TestTaker = ({ questions }) => {
         score,
         numberOfQuestions: questions.length,
         timeInSeconds: totalTimeInSeconds,
+        isNotesReview: isNotesReviewTest,
         results, // Save full results for review
         notes: Object.keys(notes).reduce((acc, questionId) => {
           if (notes[questionId] && notes[questionId].trim()) {
@@ -169,7 +173,14 @@ const TestTaker = ({ questions }) => {
   return (
     <div className="test-taker-container">
       <div className="test-header">
-        <h2>Simulacro de Examen</h2>
+        <div className="test-title">
+          <h2>{isNotesReviewTest ? '📝 Repaso de Notas' : 'Simulacro de Examen'}</h2>
+          {isNotesReviewTest && (
+            <p className="notes-review-subtitle">
+              Practicando con preguntas que tenían notas guardadas
+            </p>
+          )}
+        </div>
         <div className="test-info">
           <div className="progress-indicator">Pregunta {currentQuestionIndex + 1} de {questions.length}</div>
           <div className="timer">⏱️ {formatTime(elapsedTime)}</div>

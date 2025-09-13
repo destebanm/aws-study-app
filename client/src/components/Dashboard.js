@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
+import VersionInfo from './VersionInfo';
 import './Dashboard.css';
 
 const getHistory = () => {
@@ -11,6 +12,8 @@ const getHistory = () => {
 const Dashboard = () => {
   const [testHistory, setTestHistory] = useState([]);
   const [selectedTest, setSelectedTest] = useState(null);
+  const [editingNotes, setEditingNotes] = useState({});
+  const [tempNotes, setTempNotes] = useState({});
 
   useEffect(() => {
     const history = getHistory();
@@ -37,6 +40,59 @@ const Dashboard = () => {
 
   const closeReview = () => {
     setSelectedTest(null);
+    setEditingNotes({});
+    setTempNotes({});
+  };
+
+  const startEditingNote = (questionId) => {
+    const savedNotes = JSON.parse(localStorage.getItem('aws-notes') || '{}');
+    setEditingNotes(prev => ({ ...prev, [questionId]: true }));
+    setTempNotes(prev => ({ 
+      ...prev, 
+      [questionId]: savedNotes[questionId] || '' 
+    }));
+  };
+
+  const cancelEditingNote = (questionId) => {
+    setEditingNotes(prev => {
+      const newState = { ...prev };
+      delete newState[questionId];
+      return newState;
+    });
+    setTempNotes(prev => {
+      const newState = { ...prev };
+      delete newState[questionId];
+      return newState;
+    });
+  };
+
+  const saveNote = (questionId) => {
+    const savedNotes = JSON.parse(localStorage.getItem('aws-notes') || '{}');
+    const noteText = tempNotes[questionId]?.trim();
+    
+    if (noteText) {
+      savedNotes[questionId] = noteText;
+    } else {
+      delete savedNotes[questionId];
+    }
+    
+    localStorage.setItem('aws-notes', JSON.stringify(savedNotes));
+    
+    // Clear editing state
+    setEditingNotes(prev => {
+      const newState = { ...prev };
+      delete newState[questionId];
+      return newState;
+    });
+    setTempNotes(prev => {
+      const newState = { ...prev };
+      delete newState[questionId];
+      return newState;
+    });
+  };
+
+  const updateTempNote = (questionId, value) => {
+    setTempNotes(prev => ({ ...prev, [questionId]: value }));
   };
 
   const calculateStats = () => {
@@ -47,7 +103,8 @@ const Dashboard = () => {
       averageScore: testHistory.reduce((acc, test) => acc + test.score, 0) / testHistory.length,
       bestScore: Math.max(...testHistory.map(test => test.score)),
       passedTests: testHistory.filter(test => test.score >= 72).length,
-      totalQuestions: testHistory.reduce((acc, test) => acc + test.numberOfQuestions, 0)
+      totalQuestions: testHistory.reduce((acc, test) => acc + test.numberOfQuestions, 0),
+      notesReviewTests: testHistory.filter(test => test.isNotesReview).length
     };
     return stats;
   };
@@ -62,27 +119,77 @@ const Dashboard = () => {
           <h2>Revisión del Examen</h2>
           <div className="test-info">
             <span>Fecha: {format(new Date(selectedTest.createdAt), "d 'de' MMMM 'de' yyyy, HH:mm", { locale: es })}</span>
+            <span>
+              Tipo: {selectedTest.isNotesReview ? '📝 Repaso de Notas' : '📋 Examen Regular'}
+            </span>
             <span>Puntuación: {selectedTest.score.toFixed(2)}%</span>
             <span>Tiempo: {formatTime(selectedTest.timeInSeconds)}</span>
           </div>
         </div>
         <div className="review-results">
-          {selectedTest.results.map((result, index) => (
-            <div key={result.id} className={`result-card ${result.isCorrect ? 'correct' : 'incorrect'}`}>
-              <h4>{index + 1}. {result.questionText}</h4>
-              <p><strong>Tu respuesta:</strong> {result.selectedOptionIndex !== undefined ? result.options[result.selectedOptionIndex].text : 'No contestada'} <span className={result.isCorrect ? 'correct-text' : 'incorrect-text'}>({result.isCorrect ? 'Correcta' : 'Incorrecta'})</span></p>
-              {!result.isCorrect && (
-                <p><strong>Respuesta correcta:</strong> {result.options.find(o => o.isCorrect).text}</p>
-              )}
-              <p className="explanation"><strong>Explicación:</strong> {result.explanation}</p>
-              {selectedTest.notes && selectedTest.notes[result.id] && (
-                <div className="saved-note">
-                  <strong>Tus notas:</strong>
-                  <p>{selectedTest.notes[result.id]}</p>
+          {selectedTest.results.map((result, index) => {
+            const savedNotes = JSON.parse(localStorage.getItem('aws-notes') || '{}');
+            const hasNote = savedNotes[result.id];
+            const isEditing = editingNotes[result.id];
+            
+            return (
+              <div key={result.id} className={`result-card ${result.isCorrect ? 'correct' : 'incorrect'}`}>
+                <h4>{index + 1}. {result.questionText}</h4>
+                <p><strong>Tu respuesta:</strong> {result.selectedOptionIndex !== undefined ? result.options[result.selectedOptionIndex].text : 'No contestada'} <span className={result.isCorrect ? 'correct-text' : 'incorrect-text'}>({result.isCorrect ? 'Correcta' : 'Incorrecta'})</span></p>
+                {!result.isCorrect && (
+                  <p><strong>Respuesta correcta:</strong> {result.options.find(o => o.isCorrect).text}</p>
+                )}
+                <p className="explanation"><strong>Explicación:</strong> {result.explanation}</p>
+                
+                <div className="notes-section">
+                  <div className="notes-header">
+                    <strong>📝 Mis Notas:</strong>
+                    {!isEditing && (
+                      <button 
+                        className="edit-note-btn"
+                        onClick={() => startEditingNote(result.id)}
+                        title={hasNote ? "Editar nota" : "Añadir nota"}
+                      >
+                        {hasNote ? "✏️ Editar" : "➕ Añadir Nota"}
+                      </button>
+                    )}
+                  </div>
+                  
+                  {isEditing ? (
+                    <div className="note-editor">
+                      <textarea
+                        value={tempNotes[result.id] || ''}
+                        onChange={(e) => updateTempNote(result.id, e.target.value)}
+                        placeholder="Escribe aquí tus notas sobre esta pregunta..."
+                        rows="3"
+                        className="note-textarea"
+                      />
+                      <div className="note-actions">
+                        <button 
+                          className="save-note-btn"
+                          onClick={() => saveNote(result.id)}
+                        >
+                          💾 Guardar
+                        </button>
+                        <button 
+                          className="cancel-note-btn"
+                          onClick={() => cancelEditingNote(result.id)}
+                        >
+                          ❌ Cancelar
+                        </button>
+                      </div>
+                    </div>
+                  ) : hasNote ? (
+                    <div className="saved-note">
+                      <p>{hasNote}</p>
+                    </div>
+                  ) : (
+                    <p className="no-note">No tienes notas para esta pregunta</p>
+                  )}
                 </div>
-              )}
-            </div>
-          ))}
+              </div>
+            );
+          })}
         </div>
       </div>
     );
@@ -116,11 +223,16 @@ const Dashboard = () => {
               <h3>Total Preguntas</h3>
               <p>{stats.totalQuestions}</p>
             </div>
+            <div className="stat-card">
+              <h3>Repasos de Notas</h3>
+              <p>{stats.notesReviewTests}</p>
+            </div>
           </div>
           <table className="history-table">
             <thead>
               <tr>
                 <th>Fecha</th>
+                <th>Tipo</th>
                 <th>Nº Preguntas</th>
                 <th>Tiempo</th>
                 <th>Puntuación</th>
@@ -131,6 +243,13 @@ const Dashboard = () => {
               {testHistory.map(test => (
                 <tr key={test._id}>
                   <td>{format(new Date(test.createdAt), "d 'de' MMMM 'de' yyyy, HH:mm", { locale: es })}</td>
+                  <td className="center-text">
+                    {test.isNotesReview ? (
+                      <span className="test-type notes-review">📝 Repaso</span>
+                    ) : (
+                      <span className="test-type regular">📋 Regular</span>
+                    )}
+                  </td>
                   <td className="center-text">{test.numberOfQuestions}</td>
                   <td className="center-text">{formatTime(test.timeInSeconds)}</td>
                   <td className={`center-text score ${test.score >= 72 ? 'pass' : 'fail'}`}>{test.score.toFixed(2)}%</td>
@@ -141,6 +260,10 @@ const Dashboard = () => {
           </table>
         </>
       )}
+      
+      <footer className="app-footer">
+        <VersionInfo />
+      </footer>
     </div>
   );
 };

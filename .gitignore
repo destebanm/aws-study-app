@@ -86,3 +86,7 @@ coverage/
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Auto-generated version files
+client/src/version.js
+client/public/version.json

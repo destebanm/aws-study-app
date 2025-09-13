@@ -70,6 +70,107 @@
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
+.notes-test-section {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #e7f3ff 0%, #f0f8ff 100%);
+    border-radius: 12px;
+    border: 2px dashed #007bff;
+}
+
+.notes-test-btn {
+    padding: 1.5rem 2rem !important;
+    font-size: 1.2rem !important;
+    font-weight: 700 !important;
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 10px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3) !important;
+    min-height: auto !important;
+    width: auto !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+.notes-test-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #0056b3 0%, #004085 100%) !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4) !important;
+}
+
+.notes-test-btn:disabled:hover {
+  background: linear-gradient(135deg, #95a5a6, #bdc3c7);
+  transform: none;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+/* Footer y versión */
+.app-footer {
+  margin-top: 40px;
+  padding: 20px 0;
+  border-top: 2px solid #e0e0e0;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+}
+
+.version-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.version-badge {
+  background: linear-gradient(135deg, #ff9900, #ffb347);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.9em;
+  box-shadow: 0 2px 4px rgba(255, 153, 0, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.build-date {
+  background: linear-gradient(135deg, #232f3e, #37475a);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85em;
+  box-shadow: 0 2px 4px rgba(35, 47, 62, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 600px) {
+  .version-info {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .version-badge,
+  .build-date {
+    font-size: 0.8em;
+    padding: 5px 10px;
+  }
+}.notes-test-description {
+    margin: 0 !important;
+    text-align: center !important;
+    color: #495057 !important;
+    font-style: italic !important;
+    font-size: 0.9rem !important;
+    max-width: 400px !important;
+}
+
 @media (max-width: 768px) {
     .home-page {
         padding: 1rem;
@@ -81,5 +182,15 @@
     
     .options-container button {
         min-height: 100px;
+    }
+    
+    .notes-test-section {
+        margin-top: 1rem;
+        padding: 1rem;
+    }
+    
+    .notes-test-btn {
+        padding: 1.2rem 1.5rem !important;
+        font-size: 1.1rem !important;
     }
 }
