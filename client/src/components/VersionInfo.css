@@ -1,4 +1,4 @@
-/* Version Info - Discrete Style */
+/* Version Info - Text Style */
 .version-container {
   display: flex;
   justify-content: center;
@@ -13,23 +13,17 @@
 }
 
 .version-badge {
-  color: #888;
-  font-size: 0.75em;
-  font-weight: 400;
-  opacity: 0.7;
+  color: #666;
+  font-size: 0.9em;
+  font-weight: normal;
+  font-family: inherit;
+  text-align: center;
   user-select: none;
-  font-family: 'Courier New', monospace;
-  letter-spacing: 0.5px;
-  transition: opacity 0.2s ease;
-}
-
-.version-badge:hover {
-  opacity: 1;
 }
 
 /* Responsive */
 @media (max-width: 600px) {
   .version-badge {
-    font-size: 0.7em;
+    font-size: 0.85em;
   }
 }
