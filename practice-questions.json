@@ -1,0 +1,28 @@
+[
+  {
+    "id": "practice_q1",
+    "questionText": "¿Cuál es el servicio de AWS que proporciona un sistema de archivos escalable para instancias EC2?",
+    "options": [
+      {
+        "text": "Amazon S3",
+        "isCorrect": false
+      },
+      {
+        "text": "Amazon EBS",
+        "isCorrect": false
+      },
+      {
+        "text": "Amazon EFS",
+        "isCorrect": true
+      },
+      {
+        "text": "Amazon FSx",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Amazon EFS (Elastic File System) es un sistema de archivos NFS completamente administrado que se puede montar en múltiples instancias EC2 simultáneamente.",
+    "awsService": "EFS",
+    "source": "practice",
+    "category": "Storage"
+  }
+]
