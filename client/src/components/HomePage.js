@@ -101,7 +101,7 @@ const HomePage = () => {
 
   return (
     <div className="home-page">
-      <h1>Prepare for your AWS Exam</h1>
+      <h1>Prepare for your AWS SAA-C03 exam</h1>
       <p>Select the question type and number of questions for your practice exam.</p>
       
       {/* Question type selector */}
