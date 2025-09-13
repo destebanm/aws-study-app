@@ -32,10 +32,41 @@ const getRequiredAnswers = (question) => {
   return question.options.filter(option => option.isCorrect).length;
 };
 
+// Helper function to format question text for better readability
+const formatQuestionText = (text) => {
+  // If text already has good formatting, return as is
+  if (text.includes('\n\n') || text.includes('**')) {
+    return text;
+  }
+  
+  // Split long sentences and add structure
+  let formatted = text;
+  
+  // Common patterns to break up
+  const patterns = [
+    { regex: /\. The ([A-Z])/g, replacement: '.\n\n**The $1' },
+    { regex: /\. As a ([A-Z])/g, replacement: '.\n\n**Question:**\nAs a $1' },
+    { regex: /\. Which ([a-z])/g, replacement: '.\n\n**Question:**\nWhich $1' },
+    { regex: /\. What ([a-z])/g, replacement: '.\n\n**Question:**\nWhat $1' },
+    { regex: /\. How ([a-z])/g, replacement: '.\n\n**Question:**\nHow $1' },
+    { regex: /Currently, ([^.]+\.) /g, replacement: '\n\n**Current State:**\n• $1\n\n' },
+    { regex: /Recently, ([^.]+\.) /g, replacement: '\n\n**Problem:**\n• $1\n\n' },
+    { regex: /The architecture includes ([^.]+\.) /g, replacement: '\n\n**Architecture:**\n• $1\n\n' },
+    { regex: /The company ([^.]+needs to [^.]+\.) /g, replacement: '\n\n**Requirements:**\n• The company $1\n\n' }
+  ];
+  
+  patterns.forEach(pattern => {
+    formatted = formatted.replace(pattern.regex, pattern.replacement);
+  });
+  
+  return formatted;
+};
+
 const QuestionDisplay = ({ question, onAnswer, onNoteChange, note, userAnswerIndex, userAnswers }) => {
   const isMultiSelect = isMultiSelectQuestion(question);
   const requiredAnswers = isMultiSelect ? getRequiredAnswers(question) : 1;
   const currentAnswers = isMultiSelect ? (userAnswers || []) : [];
+  const formattedQuestionText = formatQuestionText(question.questionText);
   
   const handleOptionChange = (index) => {
     if (isMultiSelect) {
@@ -48,9 +79,22 @@ const QuestionDisplay = ({ question, onAnswer, onNoteChange, note, userAnswerInd
     }
   };
 
+  // Function to render formatted text with proper line breaks and styling
+  const renderFormattedText = (text) => {
+    const parts = text.split(/(\*\*[^*]+\*\*)/g);
+    return parts.map((part, index) => {
+      if (part.startsWith('**') && part.endsWith('**')) {
+        return <strong key={index}>{part.slice(2, -2)}</strong>;
+      }
+      return part;
+    });
+  };
+
   return (
     <div className="question-container">
-      <h3>{question.questionText}</h3>
+      <div style={{ whiteSpace: 'pre-line' }}>
+        <h3>{renderFormattedText(formattedQuestionText)}</h3>
+      </div>
       {isMultiSelect && (
         <div className="multi-select-info">
           <p><strong>Select {requiredAnswers} answer{requiredAnswers > 1 ? 's' : ''}:</strong></p>

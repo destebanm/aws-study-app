@@ -88,20 +88,54 @@
 /* Mejorar legibilidad del texto de la pregunta */
 .question-container h3 {
     font-size: 1.3rem;
-    line-height: 1.6;
+    line-height: 1.8;
     color: #2c3e50;
     margin-bottom: 1.5rem;
     word-wrap: break-word;
     hyphens: auto;
+    white-space: pre-line;
 }
 
 .question-container p {
     font-size: 1.1rem;
-    line-height: 1.7;
+    line-height: 1.9;
     color: #34495e;
     margin-bottom: 1.5rem;
     word-wrap: break-word;
     hyphens: auto;
+    white-space: pre-line;
+}
+
+/* Estilo especial para texto con formato markdown-like */
+.question-container p strong,
+.question-container h3 strong {
+    color: #1565c0;
+    font-weight: 700;
+    display: inline-block;
+    margin: 1rem 0 0.5rem 0;
+    font-size: 1.1em;
+    border-bottom: 2px solid #e3f2fd;
+    padding-bottom: 2px;
+}
+
+/* Estilo para listas con bullets */
+.question-container ul {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+}
+
+.question-container li {
+    margin: 0.5rem 0;
+    line-height: 1.7;
+}
+
+/* Contenedor con fondo para secciones estructuradas */
+.question-structure {
+    background-color: #fafafa;
+    border-left: 4px solid #e3f2fd;
+    padding: 1rem;
+    margin: 1rem 0;
+    border-radius: 6px;
 }
 
 /* Estilos mejorados para las opciones */
@@ -149,14 +183,23 @@
     
     .question-container h3 {
         font-size: 1.2rem;
-        line-height: 1.7;
+        line-height: 1.9;
         margin-bottom: 1.25rem;
+        white-space: pre-line;
     }
     
     .question-container p {
         font-size: 1rem;
-        line-height: 1.8;
+        line-height: 2;
         margin-bottom: 1.25rem;
+        white-space: pre-line;
+    }
+    
+    .question-container p strong,
+    .question-container h3 strong {
+        margin: 0.75rem 0 0.4rem 0;
+        font-size: 1.05rem;
+        display: inline-block;
     }
     
     .options-form .option {
