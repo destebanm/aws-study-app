@@ -40,7 +40,18 @@ const HomePage = () => {
     // Fisher-Yates shuffle algorithm to get random questions
     const shuffled = [...questions].sort(() => 0.5 - Math.random());
     const selectedQuestions = shuffled.slice(0, num);
-    setSelectedTest(selectedQuestions);
+    
+    // Determine test type based on number of questions
+    let testType = '';
+    switch(num) {
+      case 10: testType = 'Test Rápido'; break;
+      case 25: testType = 'Test Medio'; break;
+      case 65: testType = 'Simulacro Completo'; break;
+      case 100: testType = 'Test Extendido'; break;
+      default: testType = 'Test Personalizado';
+    }
+    
+    setSelectedTest({ questions: selectedQuestions, type: testType, isNotesReview: false });
   };
 
   const startNotesTest = () => {
@@ -55,13 +66,9 @@ const HomePage = () => {
       return;
     }
     
-    // Shuffle the questions with notes
-    const shuffled = [...questionsWithNotes].sort(() => 0.5 - Math.random());
-    setSelectedTest(shuffled);
-  };
-
-  if (selectedTest) {
-    return <TestTaker questions={selectedTest} />;
+    setSelectedTest({ questions: questionsWithNotes, type: 'Repaso de Notas', isNotesReview: true });
+  };  if (selectedTest) {
+    return <TestTaker testData={selectedTest} />;
   }
 
   if (isLoading) {

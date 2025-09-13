@@ -120,7 +120,7 @@ const Dashboard = () => {
           <div className="test-info">
             <span>Fecha: {format(new Date(selectedTest.createdAt), "d 'de' MMMM 'de' yyyy, HH:mm", { locale: es })}</span>
             <span>
-              Tipo: {selectedTest.isNotesReview ? '📝 Repaso de Notas' : '📋 Examen Regular'}
+              Tipo: {selectedTest.testType || (selectedTest.isNotesReview ? 'Repaso de Notas' : 'Test Regular')}
             </span>
             <span>Puntuación: {selectedTest.score.toFixed(2)}%</span>
             <span>Tiempo: {formatTime(selectedTest.timeInSeconds)}</span>
@@ -244,11 +244,9 @@ const Dashboard = () => {
                 <tr key={test._id}>
                   <td>{format(new Date(test.createdAt), "d 'de' MMMM 'de' yyyy, HH:mm", { locale: es })}</td>
                   <td className="center-text">
-                    {test.isNotesReview ? (
-                      <span className="test-type notes-review">📝 Repaso</span>
-                    ) : (
-                      <span className="test-type regular">📋 Regular</span>
-                    )}
+                    <span className={`test-type ${test.isNotesReview ? 'notes-review' : 'regular'}`}>
+                      {test.testType || (test.isNotesReview ? 'Repaso de Notas' : 'Test Regular')}
+                    </span>
                   </td>
                   <td className="center-text">{test.numberOfQuestions}</td>
                   <td className="center-text">{formatTime(test.timeInSeconds)}</td>

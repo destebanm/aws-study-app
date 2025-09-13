@@ -57,7 +57,12 @@ const ResultsDisplay = ({ results, score, onRestart }) => {
   );
 };
 
-const TestTaker = ({ questions }) => {
+const TestTaker = ({ testData }) => {
+  // Extract data from testData object
+  const questions = testData.questions || testData; // Backward compatibility
+  const testType = testData.type || 'Test Regular';
+  const isNotesReview = testData.isNotesReview || false;
+  
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState({});
   const [notes, setNotes] = useState(getNotes());
@@ -66,8 +71,8 @@ const TestTaker = ({ questions }) => {
   const [startTime] = useState(new Date());
   const [elapsedTime, setElapsedTime] = useState(0);
   
-  // Check if this is a notes review test
-  const isNotesReviewTest = questions.every(q => notes[q.id] && notes[q.id].trim());
+  // Use testType instead of detecting from notes
+  const isNotesReviewTest = isNotesReview;
 
   // Timer effect
   useEffect(() => {
@@ -144,6 +149,7 @@ const TestTaker = ({ questions }) => {
         numberOfQuestions: questions.length,
         timeInSeconds: totalTimeInSeconds,
         isNotesReview: isNotesReviewTest,
+        testType: testType, // Add test type information
         results, // Save full results for review
         notes: Object.keys(notes).reduce((acc, questionId) => {
           if (notes[questionId] && notes[questionId].trim()) {
@@ -174,11 +180,9 @@ const TestTaker = ({ questions }) => {
     <div className="test-taker-container">
       <div className="test-header">
         <div className="test-title">
-          <h2>{isNotesReviewTest ? '📝 Repaso de Notas' : 'Simulacro de Examen'}</h2>
+                    <h2>{testType}</h2>
           {isNotesReviewTest && (
-            <p className="notes-review-subtitle">
-              Practicando con preguntas que tenían notas guardadas
-            </p>
+            <p className="notes-review-subtitle">Preguntas con tus notas guardadas</p>
           )}
         </div>
         <div className="test-info">
