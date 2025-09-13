@@ -188,47 +188,7 @@
   background: linear-gradient(135deg, #f8f9fa, #e9ecef);
 }
 
-.version-info {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-  flex-wrap: wrap;
-}
-
-.version-badge {
-  background: linear-gradient(135deg, #ff9900, #ffb347);
-  color: white;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-weight: bold;
-  font-size: 0.9em;
-  box-shadow: 0 2px 4px rgba(255, 153, 0, 0.3);
-  border: 2px solid rgba(255, 255, 255, 0.2);
-}
-
-.build-date {
-  background: linear-gradient(135deg, #232f3e, #37475a);
-  color: white;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 0.85em;
-  box-shadow: 0 2px 4px rgba(35, 47, 62, 0.3);
-  border: 2px solid rgba(255, 255, 255, 0.1);
-}
-
-@media (max-width: 600px) {
-  .version-info {
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .version-badge,
-  .build-date {
-    font-size: 0.8em;
-    padding: 5px 10px;
-  }
-}.notes-test-description {
+.notes-test-description {
     margin: 0 !important;
     text-align: center !important;
     color: #495057 !important;
