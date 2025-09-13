@@ -1,8 +1,8 @@
 {
-  "version": "v2025.09.13.1801",
-  "buildTimestamp": "2025-09-13T18:01:51.523Z",
-  "buildDate": "13 de septiembre de 2025, 20:01",
+  "version": "v2025.09.13.1803",
+  "buildTimestamp": "2025-09-13T18:03:58.915Z",
+  "buildDate": "13 de septiembre de 2025, 20:03",
   "buildEnv": "production",
-  "gitCommit": "5a0938d026d5e99150c2de1c98ff853e45d40992",
+  "gitCommit": "cd538e3efedeac5772dfcd5e7e0792377e40197e",
   "deployUrl": "https://destebanm.github.io/aws-study-app/"
 }
