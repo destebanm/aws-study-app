@@ -4078,5 +4078,3125 @@
     ],
     "explanation": "Amazon Cognito provides authentication, authorization, and user management for web and mobile apps, and can provide temporary AWS credentials to authenticated users through identity pools.",
     "awsService": "Cognito"
+  },
+  {
+    "id": "q171",
+    "questionText": "A company has a web application that stores user session data in memory on EC2 instances. The application needs to be highly available across multiple AZs. What is the best solution for session storage?",
+    "options": [
+      {
+        "text": "Store sessions in local EC2 instance memory",
+        "isCorrect": false
+      },
+      {
+        "text": "Use Amazon ElastiCache for Redis",
+        "isCorrect": true
+      },
+      {
+        "text": "Store sessions in Amazon S3",
+        "isCorrect": false
+      },
+      {
+        "text": "Use Amazon RDS for session storage",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "ElastiCache for Redis provides high availability, automatic failover, and sub-millisecond latency perfect for session storage across multiple AZs.",
+    "awsService": "ElastiCache"
+  },
+  {
+    "id": "q172",
+    "questionText": "A startup needs to deploy a simple web application quickly without managing servers. The application receives sporadic traffic. Which service combination is most cost-effective?",
+    "options": [
+      {
+        "text": "EC2 + Application Load Balancer",
+        "isCorrect": false
+      },
+      {
+        "text": "Lambda + API Gateway",
+        "isCorrect": true
+      },
+      {
+        "text": "ECS Fargate + ALB",
+        "isCorrect": false
+      },
+      {
+        "text": "Elastic Beanstalk",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Lambda + API Gateway is serverless, automatically scales to zero when not in use, and charges only for actual requests - perfect for sporadic traffic patterns.",
+    "awsService": "Lambda"
+  },
+  {
+    "id": "q173",
+    "questionText": "A company wants to analyze clickstream data in real-time to detect fraud. The data comes in at 10,000 events per second. Which architecture is most suitable?",
+    "options": [
+      {
+        "text": "S3 + Athena",
+        "isCorrect": false
+      },
+      {
+        "text": "Kinesis Data Streams + Lambda",
+        "isCorrect": true
+      },
+      {
+        "text": "SQS + EC2",
+        "isCorrect": false
+      },
+      {
+        "text": "DynamoDB + CloudWatch",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Kinesis Data Streams can handle high-throughput real-time data ingestion, and Lambda can process events immediately for real-time fraud detection.",
+    "awsService": "Kinesis"
+  },
+  {
+    "id": "q174",
+    "questionText": "An application needs to store configuration data that is accessed frequently but changes rarely. The data must be encrypted and versioned. Which service is most appropriate?",
+    "options": [
+      {
+        "text": "Amazon S3",
+        "isCorrect": false
+      },
+      {
+        "text": "AWS Systems Manager Parameter Store",
+        "isCorrect": true
+      },
+      {
+        "text": "AWS Secrets Manager",
+        "isCorrect": false
+      },
+      {
+        "text": "Amazon DynamoDB",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Parameter Store provides secure storage for configuration data with built-in versioning, encryption via KMS, and high availability with low latency access.",
+    "awsService": "Systems Manager"
+  },
+  {
+    "id": "q175",
+    "questionText": "A company needs to ensure their Lambda functions can access RDS databases in a private subnet. What is required?",
+    "options": [
+      {
+        "text": "Configure Lambda with VPC settings",
+        "isCorrect": true
+      },
+      {
+        "text": "Make RDS publicly accessible",
+        "isCorrect": false
+      },
+      {
+        "text": "Use Lambda@Edge",
+        "isCorrect": false
+      },
+      {
+        "text": "Create a VPC endpoint",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Lambda functions must be configured with VPC settings (subnet and security group) to access resources in private subnets like RDS databases.",
+    "awsService": "Lambda"
+  },
+  {
+    "id": "q176",
+    "questionText": "A media company needs to transcode video files uploaded to S3. The processing takes 30-60 minutes per file. Which compute option is most cost-effective?",
+    "options": [
+      {
+        "text": "AWS Lambda",
+        "isCorrect": false
+      },
+      {
+        "text": "EC2 Spot Instances",
+        "isCorrect": true
+      },
+      {
+        "text": "EC2 On-Demand Instances",
+        "isCorrect": false
+      },
+      {
+        "text": "AWS Batch on Fargate",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "EC2 Spot Instances can provide up to 90% cost savings for batch processing workloads that can tolerate interruptions, perfect for video transcoding jobs.",
+    "awsService": "EC2"
+  },
+  {
+    "id": "q177",
+    "questionText": "A company wants to implement auto-scaling for their containerized application based on custom metrics like queue length. Which service should they use?",
+    "options": [
+      {
+        "text": "EC2 Auto Scaling",
+        "isCorrect": false
+      },
+      {
+        "text": "ECS Service Auto Scaling",
+        "isCorrect": true
+      },
+      {
+        "text": "Lambda Auto Scaling",
+        "isCorrect": false
+      },
+      {
+        "text": "Application Auto Scaling",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "ECS Service Auto Scaling can scale containers based on CloudWatch metrics including custom metrics like queue length, providing precise scaling control.",
+    "awsService": "ECS"
+  },
+  {
+    "id": "q178",
+    "questionText": "An e-commerce site experiences high read traffic during flash sales. The database is MySQL. How can you improve read performance without changing the application code?",
+    "options": [
+      {
+        "text": "Enable Multi-AZ deployment",
+        "isCorrect": false
+      },
+      {
+        "text": "Add an ElastiCache layer",
+        "isCorrect": true
+      },
+      {
+        "text": "Increase the instance size",
+        "isCorrect": false
+      },
+      {
+        "text": "Enable automated backups",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "ElastiCache can be used as a read-through cache in front of MySQL, dramatically improving read performance without requiring application code changes.",
+    "awsService": "ElastiCache"
+  },
+  {
+    "id": "q179",
+    "questionText": "A financial services company needs to ensure all data in transit between their application and S3 is encrypted. What should they implement?",
+    "options": [
+      {
+        "text": "Server-side encryption with S3-managed keys",
+        "isCorrect": false
+      },
+      {
+        "text": "HTTPS/TLS for all S3 API calls",
+        "isCorrect": true
+      },
+      {
+        "text": "Client-side encryption",
+        "isCorrect": false
+      },
+      {
+        "text": "S3 bucket policy for encryption",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "HTTPS/TLS encrypts data in transit between the client and S3. This is the standard method for ensuring data is encrypted while being transmitted.",
+    "awsService": "S3"
+  },
+  {
+    "id": "q180",
+    "questionText": "A company wants to migrate their on-premises Active Directory to AWS while maintaining existing user authentication. Which service should they use?",
+    "options": [
+      {
+        "text": "Amazon Cognito",
+        "isCorrect": false
+      },
+      {
+        "text": "AWS Directory Service",
+        "isCorrect": true
+      },
+      {
+        "text": "AWS IAM",
+        "isCorrect": false
+      },
+      {
+        "text": "AWS SSO",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "AWS Directory Service provides managed Microsoft Active Directory in the AWS cloud, allowing seamless migration and integration with existing AD infrastructure.",
+    "awsService": "Directory Service"
+  },
+  {
+    "id": "q181",
+    "questionText": "An application needs to send email notifications to thousands of users. The emails should be delivered reliably with bounce and complaint tracking. Which service is most appropriate?",
+    "options": [
+      {
+        "text": "Amazon SNS",
+        "isCorrect": false
+      },
+      {
+        "text": "Amazon SES",
+        "isCorrect": true
+      },
+      {
+        "text": "Amazon SQS",
+        "isCorrect": false
+      },
+      {
+        "text": "AWS Lambda",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Amazon SES (Simple Email Service) is designed for bulk email sending with features like bounce and complaint tracking, delivery analytics, and high deliverability.",
+    "awsService": "SES"
+  },
+  {
+    "id": "q182",
+    "questionText": "A company needs to store structured data with complex queries involving multiple tables and transactions. Which database service is most suitable?",
+    "options": [
+      {
+        "text": "Amazon DynamoDB",
+        "isCorrect": false
+      },
+      {
+        "text": "Amazon RDS",
+        "isCorrect": true
+      },
+      {
+        "text": "Amazon ElastiCache",
+        "isCorrect": false
+      },
+      {
+        "text": "Amazon Redshift",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Amazon RDS provides fully managed relational databases that support complex queries, joins across multiple tables, and ACID transactions - perfect for structured data with complex relationships.",
+    "awsService": "RDS"
+  },
+  {
+    "id": "q183",
+    "questionText": "A mobile gaming company needs to handle sudden spikes in traffic during game launches. Their API can scale from 100 to 10,000 requests per second. Which architecture is most cost-effective?",
+    "options": [
+      {
+        "text": "EC2 instances with Auto Scaling",
+        "isCorrect": false
+      },
+      {
+        "text": "API Gateway + Lambda",
+        "isCorrect": true
+      },
+      {
+        "text": "ECS with Fargate",
+        "isCorrect": false
+      },
+      {
+        "text": "Elastic Load Balancer + EC2",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "API Gateway + Lambda provides automatic scaling from zero to thousands of concurrent executions without pre-provisioning, making it perfect for unpredictable traffic spikes.",
+    "awsService": "API Gateway"
+  },
+  {
+    "id": "q184",
+    "questionText": "A company wants to analyze customer behavior data to recommend products. They need to process terabytes of historical data. Which service is most appropriate?",
+    "options": [
+      {
+        "text": "Amazon RDS",
+        "isCorrect": false
+      },
+      {
+        "text": "Amazon Redshift",
+        "isCorrect": true
+      },
+      {
+        "text": "Amazon DynamoDB",
+        "isCorrect": false
+      },
+      {
+        "text": "Amazon ElastiCache",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Amazon Redshift is a data warehouse service optimized for analyzing large datasets (terabytes to petabytes) and complex analytical queries perfect for recommendation engines.",
+    "awsService": "Redshift"
+  },
+  {
+    "id": "q185",
+    "questionText": "An application needs to process images uploaded by users to extract text. The processing should be automatic and scalable. Which service combination is best?",
+    "options": [
+      {
+        "text": "S3 + Lambda + Textract",
+        "isCorrect": true
+      },
+      {
+        "text": "EC2 + OpenCV",
+        "isCorrect": false
+      },
+      {
+        "text": "ECS + Custom OCR",
+        "isCorrect": false
+      },
+      {
+        "text": "SageMaker + Custom Model",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "S3 can trigger Lambda functions automatically when images are uploaded, and Lambda can call Amazon Textract to extract text from images - providing a fully managed, scalable solution.",
+    "awsService": "Textract"
+  },
+  {
+    "id": "q186",
+    "questionText": "A startup wants to implement CI/CD for their web application. They need automated testing and deployment to multiple environments. Which AWS service provides this capability?",
+    "options": [
+      {
+        "text": "AWS CodeBuild only",
+        "isCorrect": false
+      },
+      {
+        "text": "AWS CodePipeline",
+        "isCorrect": true
+      },
+      {
+        "text": "AWS CodeDeploy only",
+        "isCorrect": false
+      },
+      {
+        "text": "AWS CodeCommit only",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "AWS CodePipeline orchestrates the entire CI/CD workflow, integrating with CodeBuild for testing and CodeDeploy for deployment across multiple environments.",
+    "awsService": "CodePipeline"
+  },
+  {
+    "id": "q187",
+    "questionText": "A company needs to ensure their EC2 instances are compliant with security standards and automatically remediate violations. Which service should they use?",
+    "options": [
+      {
+        "text": "AWS CloudTrail",
+        "isCorrect": false
+      },
+      {
+        "text": "AWS Config",
+        "isCorrect": true
+      },
+      {
+        "text": "Amazon Inspector",
+        "isCorrect": false
+      },
+      {
+        "text": "AWS Security Hub",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "AWS Config can monitor resource configurations against compliance rules and trigger automatic remediation actions when violations are detected.",
+    "awsService": "Config"
+  },
+  {
+    "id": "q188",
+    "questionText": "A data science team needs to train machine learning models using GPU instances. The training jobs run for several hours and can be interrupted. Which compute option is most cost-effective?",
+    "options": [
+      {
+        "text": "EC2 On-Demand GPU instances",
+        "isCorrect": false
+      },
+      {
+        "text": "EC2 Spot GPU instances",
+        "isCorrect": true
+      },
+      {
+        "text": "SageMaker training jobs",
+        "isCorrect": false
+      },
+      {
+        "text": "Lambda with high memory",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "EC2 Spot instances can provide up to 90% cost savings for interruptible workloads. GPU training jobs that can handle interruptions benefit significantly from Spot pricing.",
+    "awsService": "EC2"
+  },
+  {
+    "id": "q189",
+    "questionText": "A company needs to connect their on-premises data center to AWS with a dedicated, high-bandwidth connection for hybrid cloud architecture. Which service should they use?",
+    "options": [
+      {
+        "text": "VPN Gateway",
+        "isCorrect": false
+      },
+      {
+        "text": "AWS Direct Connect",
+        "isCorrect": true
+      },
+      {
+        "text": "Internet Gateway",
+        "isCorrect": false
+      },
+      {
+        "text": "NAT Gateway",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "AWS Direct Connect provides a dedicated network connection from on-premises to AWS, offering higher bandwidth, lower latency, and more consistent network experience than VPN.",
+    "awsService": "Direct Connect"
+  },
+  {
+    "id": "q190",
+    "questionText": "An application generates log files that need to be analyzed for security threats. The analysis should happen in real-time. Which architecture is most suitable?",
+    "options": [
+      {
+        "text": "S3 + Athena",
+        "isCorrect": false
+      },
+      {
+        "text": "CloudWatch Logs + Lambda",
+        "isCorrect": true
+      },
+      {
+        "text": "ELK Stack on EC2",
+        "isCorrect": false
+      },
+      {
+        "text": "Kinesis Data Firehose + S3",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "CloudWatch Logs can stream log data to Lambda in real-time, allowing immediate analysis and response to security threats as they appear in the logs.",
+    "awsService": "CloudWatch"
+  },
+  {
+    "id": "q191",
+    "questionText": "A company wants to implement blue-green deployments for their containerized application running on ECS. What is the best approach?",
+    "options": [
+      {
+        "text": "Use ECS rolling updates",
+        "isCorrect": false
+      },
+      {
+        "text": "Use CodeDeploy with ECS",
+        "isCorrect": true
+      },
+      {
+        "text": "Manually switch load balancer targets",
+        "isCorrect": false
+      },
+      {
+        "text": "Use Auto Scaling groups",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "AWS CodeDeploy supports blue-green deployments for ECS services, automatically managing the deployment process and traffic shifting between environments.",
+    "awsService": "CodeDeploy"
+  },
+  {
+    "id": "q192",
+    "questionText": "A gaming company needs to store player profiles with flexible schema and fast read/write performance for millions of users. Which database is most suitable?",
+    "options": [
+      {
+        "text": "Amazon RDS MySQL",
+        "isCorrect": false
+      },
+      {
+        "text": "Amazon DynamoDB",
+        "isCorrect": true
+      },
+      {
+        "text": "Amazon Aurora",
+        "isCorrect": false
+      },
+      {
+        "text": "Amazon Redshift",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "DynamoDB provides single-digit millisecond performance at any scale, flexible NoSQL schema perfect for varying player profile structures, and seamless scaling for millions of users.",
+    "awsService": "DynamoDB"
+  },
+  {
+    "id": "q193",
+    "questionText": "A company needs to ensure their S3 data is replicated to another region for disaster recovery. What should they implement?",
+    "options": [
+      {
+        "text": "S3 Versioning",
+        "isCorrect": false
+      },
+      {
+        "text": "S3 Cross-Region Replication",
+        "isCorrect": true
+      },
+      {
+        "text": "S3 Transfer Acceleration",
+        "isCorrect": false
+      },
+      {
+        "text": "S3 Lifecycle policies",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "S3 Cross-Region Replication automatically replicates objects to a bucket in another AWS region, providing geographic redundancy for disaster recovery.",
+    "awsService": "S3"
+  },
+  {
+    "id": "q194",
+    "questionText": "An IoT application collects sensor data from thousands of devices. The data needs to be processed and stored for analytics. Which architecture handles this best?",
+    "options": [
+      {
+        "text": "API Gateway + Lambda + RDS",
+        "isCorrect": false
+      },
+      {
+        "text": "IoT Core + Kinesis + S3",
+        "isCorrect": true
+      },
+      {
+        "text": "ALB + EC2 + DynamoDB",
+        "isCorrect": false
+      },
+      {
+        "text": "CloudFront + S3 + Athena",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "IoT Core securely connects devices, Kinesis handles high-throughput data streaming from thousands of devices, and S3 provides cost-effective storage for analytics.",
+    "awsService": "IoT Core"
+  },
+  {
+    "id": "q195",
+    "questionText": "A company wants to automate the deployment of infrastructure using code. Which AWS service provides this capability?",
+    "options": [
+      {
+        "text": "AWS Systems Manager",
+        "isCorrect": false
+      },
+      {
+        "text": "AWS CloudFormation",
+        "isCorrect": true
+      },
+      {
+        "text": "AWS Config",
+        "isCorrect": false
+      },
+      {
+        "text": "AWS OpsWorks",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "AWS CloudFormation allows you to define infrastructure as code using JSON or YAML templates, enabling automated, repeatable, and version-controlled infrastructure deployments.",
+    "awsService": "CloudFormation"
+  },
+  {
+    "id": "q196",
+    "questionText": "A web application experiences slow database queries during peak hours. The database CPU and memory utilization are normal. What is the most likely cause and solution?",
+    "options": [
+      {
+        "text": "Increase instance size",
+        "isCorrect": false
+      },
+      {
+        "text": "Optimize database queries and add indexes",
+        "isCorrect": true
+      },
+      {
+        "text": "Enable Multi-AZ deployment",
+        "isCorrect": false
+      },
+      {
+        "text": "Add read replicas",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "If CPU and memory are normal but queries are slow, the issue is likely inefficient queries or missing indexes. Query optimization and proper indexing will improve performance.",
+    "awsService": "RDS"
+  },
+  {
+    "id": "q197",
+    "questionText": "A company needs to process batch jobs that can run for up to 2 hours and require specific GPU configurations. Which service is most appropriate?",
+    "options": [
+      {
+        "text": "AWS Lambda",
+        "isCorrect": false
+      },
+      {
+        "text": "AWS Batch",
+        "isCorrect": true
+      },
+      {
+        "text": "Amazon ECS",
+        "isCorrect": false
+      },
+      {
+        "text": "EC2 Spot Instances",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "AWS Batch is specifically designed for batch computing workloads, automatically managing the underlying compute resources and job queues, with support for GPU instances.",
+    "awsService": "Batch"
+  },
+  {
+    "id": "q198",
+    "questionText": "A media streaming company needs to deliver content globally with low latency and DDoS protection. Which service combination provides this?",
+    "options": [
+      {
+        "text": "S3 + Route 53",
+        "isCorrect": false
+      },
+      {
+        "text": "CloudFront + AWS Shield",
+        "isCorrect": true
+      },
+      {
+        "text": "ELB + WAF",
+        "isCorrect": false
+      },
+      {
+        "text": "Global Accelerator + GuardDuty",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "CloudFront provides global content delivery with low latency through edge locations, while AWS Shield provides DDoS protection for the CloudFront distribution.",
+    "awsService": "CloudFront"
+  },
+  {
+    "id": "q199",
+    "questionText": "A company wants to analyze customer reviews to determine sentiment. They have thousands of reviews to process. Which AI service should they use?",
+    "options": [
+      {
+        "text": "Amazon Textract",
+        "isCorrect": false
+      },
+      {
+        "text": "Amazon Comprehend",
+        "isCorrect": true
+      },
+      {
+        "text": "Amazon Rekognition",
+        "isCorrect": false
+      },
+      {
+        "text": "Amazon Translate",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Amazon Comprehend is a natural language processing service that can analyze text for sentiment, entities, key phrases, and topics - perfect for review analysis.",
+    "awsService": "Comprehend"
+  },
+  {
+    "id": "q200",
+    "questionText": "A development team needs to securely store database passwords and API keys that their applications can retrieve at runtime. Which service is most appropriate?",
+    "options": [
+      {
+        "text": "AWS Systems Manager Parameter Store",
+        "isCorrect": false
+      },
+      {
+        "text": "AWS Secrets Manager",
+        "isCorrect": true
+      },
+      {
+        "text": "AWS KMS",
+        "isCorrect": false
+      },
+      {
+        "text": "S3 with encryption",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "AWS Secrets Manager is specifically designed for storing and retrieving sensitive information like database credentials and API keys, with automatic rotation capabilities.",
+    "awsService": "Secrets Manager"
+  },
+  {
+    "id": "q201",
+    "questionText": "A company runs a critical application that requires 99.99% availability. The RDS database must be highly available across multiple regions. What is the best architecture?",
+    "options": [
+      {
+        "text": "RDS Multi-AZ in one region",
+        "isCorrect": false
+      },
+      {
+        "text": "RDS with read replicas in multiple regions",
+        "isCorrect": true
+      },
+      {
+        "text": "RDS with automated backups",
+        "isCorrect": false
+      },
+      {
+        "text": "Single RDS instance with EBS snapshots",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "RDS read replicas in multiple regions provide cross-region disaster recovery and can be promoted to master in case of regional failure, achieving the highest availability.",
+    "awsService": "RDS"
+  },
+  {
+    "id": "q202",
+    "questionText": "A startup needs to build a REST API that can handle unpredictable traffic spikes with minimal operational overhead. Which solution is most cost-effective?",
+    "options": [
+      {
+        "text": "EC2 Auto Scaling + ALB",
+        "isCorrect": false
+      },
+      {
+        "text": "API Gateway + Lambda",
+        "isCorrect": true
+      },
+      {
+        "text": "ECS Fargate + ALB",
+        "isCorrect": false
+      },
+      {
+        "text": "Elastic Beanstalk",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "API Gateway + Lambda provides serverless REST API with automatic scaling, pay-per-request pricing, and zero operational overhead - perfect for startups with unpredictable traffic.",
+    "awsService": "API Gateway"
+  },
+  {
+    "id": "q203",
+    "questionText": "A data analytics company processes large CSV files (100GB each) stored in S3. The processing takes 2-3 hours per file. What is the most cost-effective compute option?",
+    "options": [
+      {
+        "text": "Lambda functions",
+        "isCorrect": false
+      },
+      {
+        "text": "EC2 Spot Instances",
+        "isCorrect": true
+      },
+      {
+        "text": "EC2 Reserved Instances",
+        "isCorrect": false
+      },
+      {
+        "text": "Fargate",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "EC2 Spot Instances provide up to 90% cost savings for batch processing workloads that can tolerate interruptions, perfect for long-running data processing jobs.",
+    "awsService": "EC2"
+  },
+  {
+    "id": "q204",
+    "questionText": "A mobile app needs to sync user data across devices in real-time. The data should be available offline and sync when connectivity is restored. Which service is most appropriate?",
+    "options": [
+      {
+        "text": "DynamoDB with DynamoDB Streams",
+        "isCorrect": false
+      },
+      {
+        "text": "AppSync with offline capabilities",
+        "isCorrect": true
+      },
+      {
+        "text": "Cognito Sync",
+        "isCorrect": false
+      },
+      {
+        "text": "S3 with Transfer Acceleration",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "AWS AppSync provides real-time data synchronization, offline capabilities, and automatic conflict resolution for mobile and web applications.",
+    "awsService": "AppSync"
+  },
+  {
+    "id": "q205",
+    "questionText": "A company needs to ensure their EC2 instances are patched monthly with zero downtime. What is the best approach?",
+    "options": [
+      {
+        "text": "Manual patching during maintenance windows",
+        "isCorrect": false
+      },
+      {
+        "text": "Systems Manager Patch Manager with blue-green deployment",
+        "isCorrect": true
+      },
+      {
+        "text": "Auto Scaling with instance refresh",
+        "isCorrect": false
+      },
+      {
+        "text": "Lambda function to restart instances",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Systems Manager Patch Manager can automate patching, and when combined with blue-green deployment strategies, can achieve zero-downtime patching.",
+    "awsService": "Systems Manager"
+  },
+  {
+    "id": "q206",
+    "questionText": "An e-commerce website experiences 10x traffic increase during Black Friday. The application uses session-based authentication. How should sessions be managed?",
+    "options": [
+      {
+        "text": "Store sessions in EC2 local storage",
+        "isCorrect": false
+      },
+      {
+        "text": "Use ElastiCache for session storage",
+        "isCorrect": true
+      },
+      {
+        "text": "Store sessions in RDS",
+        "isCorrect": false
+      },
+      {
+        "text": "Use EBS volumes for sessions",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "ElastiCache provides high-performance, distributed session storage that can scale with traffic and provides sub-millisecond latency for session retrieval.",
+    "awsService": "ElastiCache"
+  },
+  {
+    "id": "q207",
+    "questionText": "A financial institution needs to encrypt all data at rest and in transit with customer-managed encryption keys. Which combination satisfies this requirement?",
+    "options": [
+      {
+        "text": "KMS with AWS-managed keys + TLS",
+        "isCorrect": false
+      },
+      {
+        "text": "KMS with customer-managed CMKs + TLS",
+        "isCorrect": true
+      },
+      {
+        "text": "S3 server-side encryption + HTTPS",
+        "isCorrect": false
+      },
+      {
+        "text": "CloudHSM + VPN",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "KMS with customer-managed CMKs provides full control over encryption keys for data at rest, while TLS ensures data in transit encryption.",
+    "awsService": "KMS"
+  },
+  {
+    "id": "q208",
+    "questionText": "A gaming company needs to store player session data that expires after 24 hours. The data must be highly available and have sub-millisecond latency. Which service is best?",
+    "options": [
+      {
+        "text": "DynamoDB with TTL",
+        "isCorrect": true
+      },
+      {
+        "text": "RDS with scheduled cleanup",
+        "isCorrect": false
+      },
+      {
+        "text": "ElastiCache",
+        "isCorrect": false
+      },
+      {
+        "text": "S3 with lifecycle policies",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "DynamoDB provides single-digit millisecond latency, built-in TTL (Time To Live) for automatic expiration, and high availability across multiple AZs.",
+    "awsService": "DynamoDB"
+  },
+  {
+    "id": "q209",
+    "questionText": "A company wants to run Docker containers without managing the underlying infrastructure. They need persistent storage for databases. Which service combination is appropriate?",
+    "options": [
+      {
+        "text": "ECS on EC2 with EBS",
+        "isCorrect": false
+      },
+      {
+        "text": "Fargate with EFS",
+        "isCorrect": true
+      },
+      {
+        "text": "Lambda with S3",
+        "isCorrect": false
+      },
+      {
+        "text": "EKS with instance store",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Fargate provides serverless container hosting, and EFS provides persistent, shared file storage that can be mounted by Fargate containers.",
+    "awsService": "Fargate"
+  },
+  {
+    "id": "q210",
+    "questionText": "A media company needs to transcode video files uploaded to S3. The transcoding process is triggered by file uploads and takes 10-45 minutes. What architecture is most suitable?",
+    "options": [
+      {
+        "text": "S3 → Lambda → MediaConvert",
+        "isCorrect": false
+      },
+      {
+        "text": "S3 → SQS → EC2 → MediaConvert",
+        "isCorrect": true
+      },
+      {
+        "text": "S3 → SNS → Lambda → MediaConvert",
+        "isCorrect": false
+      },
+      {
+        "text": "S3 → Step Functions → MediaConvert",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Lambda has a 15-minute execution limit. S3 can trigger SQS messages, which EC2 instances can process to handle long-running MediaConvert jobs.",
+    "awsService": "MediaConvert"
+  },
+  {
+    "id": "q211",
+    "questionText": "A company needs to implement disaster recovery with RPO of 1 hour and RTO of 4 hours. Their current infrastructure is entirely on-premises. What AWS strategy is most cost-effective?",
+    "options": [
+      {
+        "text": "Multi-site active/active",
+        "isCorrect": false
+      },
+      {
+        "text": "Warm standby in AWS",
+        "isCorrect": false
+      },
+      {
+        "text": "Pilot light in AWS",
+        "isCorrect": true
+      },
+      {
+        "text": "Backup and restore in AWS",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Pilot light maintains minimal infrastructure in AWS (databases, key services) that can be quickly scaled up to meet 4-hour RTO while minimizing costs.",
+    "awsService": "Disaster Recovery"
+  },
+  {
+    "id": "q212",
+    "questionText": "An application needs to process messages in strict order (FIFO) with exactly-once processing. Which service should be used?",
+    "options": [
+      {
+        "text": "Standard SQS queue",
+        "isCorrect": false
+      },
+      {
+        "text": "SQS FIFO queue",
+        "isCorrect": true
+      },
+      {
+        "text": "SNS topic",
+        "isCorrect": false
+      },
+      {
+        "text": "Kinesis Data Streams",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "SQS FIFO queues guarantee message ordering and exactly-once processing, perfect for applications requiring strict message sequencing.",
+    "awsService": "SQS"
+  },
+  {
+    "id": "q213",
+    "questionText": "A machine learning team needs to train models using large datasets stored in S3. Training jobs require GPU instances and can run for several days. What is the most cost-effective solution?",
+    "options": [
+      {
+        "text": "SageMaker training jobs",
+        "isCorrect": false
+      },
+      {
+        "text": "EC2 Spot instances with persistent storage",
+        "isCorrect": true
+      },
+      {
+        "text": "EC2 On-Demand GPU instances",
+        "isCorrect": false
+      },
+      {
+        "text": "Lambda with high memory allocation",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "EC2 Spot instances provide significant cost savings for long-running, interruptible workloads like ML training, with EBS for persistent storage.",
+    "awsService": "EC2"
+  },
+  {
+    "id": "q214",
+    "questionText": "A company wants to analyze clickstream data in real-time to personalize user experience. The data volume is 50,000 events per second. Which architecture is most suitable?",
+    "options": [
+      {
+        "text": "Kinesis Data Streams → Lambda → DynamoDB",
+        "isCorrect": true
+      },
+      {
+        "text": "SQS → EC2 → RDS",
+        "isCorrect": false
+      },
+      {
+        "text": "S3 → Athena → QuickSight",
+        "isCorrect": false
+      },
+      {
+        "text": "SNS → Lambda → ElastiCache",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Kinesis Data Streams handles high-throughput real-time data, Lambda processes events, and DynamoDB provides fast storage for personalization data.",
+    "awsService": "Kinesis"
+  },
+  {
+    "id": "q215",
+    "questionText": "A SaaS company needs to provide each customer with isolated data storage while sharing the same application code. What is the best approach?",
+    "options": [
+      {
+        "text": "Separate RDS instance per customer",
+        "isCorrect": false
+      },
+      {
+        "text": "Multi-tenant DynamoDB with partition keys",
+        "isCorrect": true
+      },
+      {
+        "text": "Separate S3 bucket per customer",
+        "isCorrect": false
+      },
+      {
+        "text": "Shared RDS with row-level security",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "DynamoDB with customer-specific partition keys provides logical data isolation in a multi-tenant architecture while sharing infrastructure costs.",
+    "awsService": "DynamoDB"
+  },
+  {
+    "id": "q216",
+    "questionText": "A company needs to ensure their web application can handle a sudden increase from 1,000 to 100,000 concurrent users. The application is stateless. What architecture provides this scalability?",
+    "options": [
+      {
+        "text": "Single large EC2 instance",
+        "isCorrect": false
+      },
+      {
+        "text": "Auto Scaling Group with ALB",
+        "isCorrect": true
+      },
+      {
+        "text": "Reserved EC2 instances",
+        "isCorrect": false
+      },
+      {
+        "text": "Elastic Beanstalk single instance",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Auto Scaling Groups automatically add/remove instances based on demand, while ALB distributes traffic across instances, providing the needed scalability.",
+    "awsService": "Auto Scaling"
+  },
+  {
+    "id": "q217",
+    "questionText": "A financial services company needs to ensure all API calls are logged and monitored for compliance. Which combination of services provides comprehensive auditing?",
+    "options": [
+      {
+        "text": "CloudWatch Logs only",
+        "isCorrect": false
+      },
+      {
+        "text": "CloudTrail + CloudWatch + Config",
+        "isCorrect": true
+      },
+      {
+        "text": "VPC Flow Logs only",
+        "isCorrect": false
+      },
+      {
+        "text": "GuardDuty only",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "CloudTrail logs API calls, CloudWatch provides monitoring and alerting, and Config tracks resource configuration changes for comprehensive compliance auditing.",
+    "awsService": "CloudTrail"
+  },
+  {
+    "id": "q218",
+    "questionText": "An IoT application collects telemetry data from vehicles. The data must be processed within 1 second of arrival to detect emergencies. Which service combination is most appropriate?",
+    "options": [
+      {
+        "text": "IoT Core → Kinesis Data Streams → Lambda",
+        "isCorrect": true
+      },
+      {
+        "text": "IoT Core → S3 → Athena",
+        "isCorrect": false
+      },
+      {
+        "text": "IoT Core → SQS → EC2",
+        "isCorrect": false
+      },
+      {
+        "text": "IoT Core → DynamoDB → Lambda",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "IoT Core ingests data, Kinesis Data Streams provides real-time processing, and Lambda can process events within seconds for emergency detection.",
+    "awsService": "IoT Core"
+  },
+  {
+    "id": "q219",
+    "questionText": "A company wants to migrate their on-premises PostgreSQL database to AWS with minimal downtime. The database is 2TB and actively used. What is the best migration approach?",
+    "options": [
+      {
+        "text": "Export/import using pg_dump",
+        "isCorrect": false
+      },
+      {
+        "text": "AWS Database Migration Service (DMS)",
+        "isCorrect": true
+      },
+      {
+        "text": "Manual replication setup",
+        "isCorrect": false
+      },
+      {
+        "text": "Stop application and copy data",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "AWS DMS provides continuous data replication during migration, allowing minimal downtime by keeping source and target databases in sync during the migration process.",
+    "awsService": "DMS"
+  },
+  {
+    "id": "q220",
+    "questionText": "A mobile app backend needs to send push notifications to millions of devices across iOS and Android platforms. Which service should be used?",
+    "options": [
+      {
+        "text": "SES for email notifications",
+        "isCorrect": false
+      },
+      {
+        "text": "SNS for mobile push notifications",
+        "isCorrect": true
+      },
+      {
+        "text": "SQS for message queuing",
+        "isCorrect": false
+      },
+      {
+        "text": "Lambda for custom notifications",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Amazon SNS supports mobile push notifications for iOS, Android, and other platforms, handling the complexity of different notification services.",
+    "awsService": "SNS"
+  },
+  {
+    "id": "q221",
+    "questionText": "A data warehouse needs to store 100TB of historical sales data for analytics. Queries are run monthly for reporting. Which storage solution is most cost-effective?",
+    "options": [
+      {
+        "text": "RDS with large instances",
+        "isCorrect": false
+      },
+      {
+        "text": "Redshift with Reserved Instances",
+        "isCorrect": true
+      },
+      {
+        "text": "DynamoDB with provisioned capacity",
+        "isCorrect": false
+      },
+      {
+        "text": "S3 with frequent access tier",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Redshift is designed for data warehousing and analytics on large datasets. Reserved Instances provide significant cost savings for predictable workloads like monthly reporting.",
+    "awsService": "Redshift"
+  },
+  {
+    "id": "q222",
+    "questionText": "A company runs microservices that need to communicate asynchronously. Each service should be able to publish and subscribe to multiple message types. What is the best messaging pattern?",
+    "options": [
+      {
+        "text": "Point-to-point with SQS",
+        "isCorrect": false
+      },
+      {
+        "text": "Publish-subscribe with SNS and SQS",
+        "isCorrect": true
+      },
+      {
+        "text": "Direct service-to-service calls",
+        "isCorrect": false
+      },
+      {
+        "text": "Database-based messaging",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "SNS provides publish-subscribe messaging where services can publish to topics, and multiple SQS queues can subscribe to receive relevant messages for each microservice.",
+    "awsService": "SNS"
+  },
+  {
+    "id": "q223",
+    "questionText": "A web application needs to store user-uploaded images with automatic image resizing and thumbnail generation. What architecture is most efficient?",
+    "options": [
+      {
+        "text": "Upload to EC2, process images, store in S3",
+        "isCorrect": false
+      },
+      {
+        "text": "S3 → Lambda → S3 for processed images",
+        "isCorrect": true
+      },
+      {
+        "text": "CloudFront → Lambda@Edge for processing",
+        "isCorrect": false
+      },
+      {
+        "text": "API Gateway → EC2 → S3",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "S3 can trigger Lambda functions automatically when images are uploaded, Lambda can process/resize images, and store results back to S3 - providing a serverless, scalable solution.",
+    "awsService": "Lambda"
+  },
+  {
+    "id": "q224",
+    "questionText": "A company needs to ensure their application deployment can be rolled back quickly if issues are detected. They use containerized applications. What deployment strategy is best?",
+    "options": [
+      {
+        "text": "Rolling deployment",
+        "isCorrect": false
+      },
+      {
+        "text": "Blue-green deployment",
+        "isCorrect": true
+      },
+      {
+        "text": "In-place deployment",
+        "isCorrect": false
+      },
+      {
+        "text": "Canary deployment",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Blue-green deployment maintains two identical environments, allowing instant rollback by switching traffic back to the previous (blue) environment if issues occur.",
+    "awsService": "CodeDeploy"
+  },
+  {
+    "id": "q225",
+    "questionText": "A gaming company needs to store player profiles that can be accessed globally with single-digit millisecond latency. The data is frequently updated. Which solution is most appropriate?",
+    "options": [
+      {
+        "text": "RDS with read replicas in multiple regions",
+        "isCorrect": false
+      },
+      {
+        "text": "DynamoDB Global Tables",
+        "isCorrect": true
+      },
+      {
+        "text": "ElastiCache clusters in multiple regions",
+        "isCorrect": false
+      },
+      {
+        "text": "S3 with CloudFront",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "DynamoDB Global Tables provide single-digit millisecond latency globally with multi-master replication, perfect for frequently updated gaming data.",
+    "awsService": "DynamoDB"
+  },
+  {
+    "id": "q226",
+    "questionText": "A company wants to analyze their AWS costs and identify opportunities for optimization. Which service provides detailed cost analysis and recommendations?",
+    "options": [
+      {
+        "text": "CloudWatch Billing Alerts",
+        "isCorrect": false
+      },
+      {
+        "text": "AWS Cost Explorer with recommendations",
+        "isCorrect": true
+      },
+      {
+        "text": "AWS Budgets",
+        "isCorrect": false
+      },
+      {
+        "text": "Trusted Advisor",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "AWS Cost Explorer provides detailed cost analysis, usage patterns, and cost optimization recommendations to help reduce AWS spending.",
+    "awsService": "Cost Management"
+  },
+  {
+    "id": "q227",
+    "questionText": "A healthcare application needs to ensure HIPAA compliance for storing patient data. Which combination provides the necessary security controls?",
+    "options": [
+      {
+        "text": "S3 with default encryption",
+        "isCorrect": false
+      },
+      {
+        "text": "S3 with KMS encryption + CloudTrail + VPC",
+        "isCorrect": true
+      },
+      {
+        "text": "RDS with password authentication",
+        "isCorrect": false
+      },
+      {
+        "text": "EC2 with local storage",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "HIPAA compliance requires encryption (KMS), audit logging (CloudTrail), and network isolation (VPC) to protect sensitive healthcare data.",
+    "awsService": "Security"
+  },
+  {
+    "id": "q228",
+    "questionText": "A company needs to process large amounts of streaming data and run complex analytics in real-time. The data arrives at 100,000 records per second. Which service is most suitable?",
+    "options": [
+      {
+        "text": "Kinesis Data Streams with Lambda",
+        "isCorrect": false
+      },
+      {
+        "text": "Kinesis Data Analytics",
+        "isCorrect": true
+      },
+      {
+        "text": "SQS with EC2 processing",
+        "isCorrect": false
+      },
+      {
+        "text": "DynamoDB Streams",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Kinesis Data Analytics is specifically designed for real-time analytics on streaming data, using SQL queries to process high-throughput data streams.",
+    "awsService": "Kinesis"
+  },
+  {
+    "id": "q229",
+    "questionText": "A development team needs to automate infrastructure provisioning across development, staging, and production environments. What is the best approach?",
+    "options": [
+      {
+        "text": "Manual resource creation",
+        "isCorrect": false
+      },
+      {
+        "text": "CloudFormation templates",
+        "isCorrect": true
+      },
+      {
+        "text": "AWS CLI scripts",
+        "isCorrect": false
+      },
+      {
+        "text": "Terraform with local state",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "CloudFormation provides Infrastructure as Code with templates that can be version-controlled and deployed consistently across multiple environments.",
+    "awsService": "CloudFormation"
+  },
+  {
+    "id": "q230",
+    "questionText": "A company wants to implement a data lake for storing structured and unstructured data from multiple sources. Which combination of services is most appropriate?",
+    "options": [
+      {
+        "text": "RDS + DynamoDB + RedShift",
+        "isCorrect": false
+      },
+      {
+        "text": "S3 + Glue + Athena + QuickSight",
+        "isCorrect": true
+      },
+      {
+        "text": "EC2 + Hadoop + Spark",
+        "isCorrect": false
+      },
+      {
+        "text": "Lambda + DynamoDB + CloudWatch",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "S3 provides scalable storage for all data types, Glue catalogs and transforms data, Athena queries data, and QuickSight provides visualization - forming a complete data lake solution.",
+    "awsService": "S3"
+  },
+  {
+    "id": "q231",
+    "questionText": "A mobile application needs to authenticate users through social media accounts (Google, Facebook) and provide temporary AWS credentials. Which service should be used?",
+    "options": [
+      {
+        "text": "IAM users with access keys",
+        "isCorrect": false
+      },
+      {
+        "text": "Cognito Identity Pools",
+        "isCorrect": true
+      },
+      {
+        "text": "STS assume role directly",
+        "isCorrect": false
+      },
+      {
+        "text": "Custom OAuth implementation",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Cognito Identity Pools enable authentication through social identity providers and provide temporary AWS credentials to authenticated users through STS.",
+    "awsService": "Cognito"
+  },
+  {
+    "id": "q232",
+    "questionText": "A company runs a legacy application that requires a specific version of Java. They want to migrate to AWS without modifying the application. Which service is most suitable?",
+    "options": [
+      {
+        "text": "Lambda functions",
+        "isCorrect": false
+      },
+      {
+        "text": "Elastic Beanstalk",
+        "isCorrect": true
+      },
+      {
+        "text": "ECS with Fargate",
+        "isCorrect": false
+      },
+      {
+        "text": "API Gateway",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Elastic Beanstalk supports multiple Java versions and platforms, allowing easy deployment of legacy applications without code changes while handling infrastructure management.",
+    "awsService": "Elastic Beanstalk"
+  },
+  {
+    "id": "q233",
+    "questionText": "A company needs to ensure their critical application can survive the failure of an entire AWS region. What architecture should they implement?",
+    "options": [
+      {
+        "text": "Multi-AZ deployment in one region",
+        "isCorrect": false
+      },
+      {
+        "text": "Multi-region active-passive setup",
+        "isCorrect": true
+      },
+      {
+        "text": "Single region with backups",
+        "isCorrect": false
+      },
+      {
+        "text": "Auto Scaling across AZs",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Multi-region active-passive setup ensures application availability even if an entire region fails, with the passive region ready to take over operations.",
+    "awsService": "Global Infrastructure"
+  },
+  {
+    "id": "q234",
+    "questionText": "A data science team needs to collaborate on Jupyter notebooks with shared datasets and computing resources. Which service provides this capability?",
+    "options": [
+      {
+        "text": "EC2 with Jupyter installed",
+        "isCorrect": false
+      },
+      {
+        "text": "SageMaker Studio",
+        "isCorrect": true
+      },
+      {
+        "text": "Lambda with custom runtime",
+        "isCorrect": false
+      },
+      {
+        "text": "EMR with Zeppelin",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "SageMaker Studio provides a collaborative environment for data scientists with shared Jupyter notebooks, datasets, and managed computing resources.",
+    "awsService": "SageMaker"
+  },
+  {
+    "id": "q235",
+    "questionText": "A company needs to securely transfer 50TB of data from their on-premises data center to S3. The internet connection is slow and unreliable. What is the best solution?",
+    "options": [
+      {
+        "text": "Direct upload over internet",
+        "isCorrect": false
+      },
+      {
+        "text": "AWS Snowball Edge",
+        "isCorrect": true
+      },
+      {
+        "text": "AWS DataSync over internet",
+        "isCorrect": false
+      },
+      {
+        "text": "S3 Transfer Acceleration",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "AWS Snowball Edge is designed for transferring large amounts of data (up to 100TB) when internet connectivity is limited or unreliable.",
+    "awsService": "Snowball"
+  },
+  {
+    "id": "q236",
+    "questionText": "A company wants to implement automated security scanning of their EC2 instances for vulnerabilities and compliance violations. Which service should they use?",
+    "options": [
+      {
+        "text": "AWS Config",
+        "isCorrect": false
+      },
+      {
+        "text": "Amazon Inspector",
+        "isCorrect": true
+      },
+      {
+        "text": "AWS CloudTrail",
+        "isCorrect": false
+      },
+      {
+        "text": "AWS Security Hub",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Amazon Inspector automatically assesses EC2 instances for security vulnerabilities and provides detailed findings with remediation guidance.",
+    "awsService": "Inspector"
+  },
+  {
+    "id": "q237",
+    "questionText": "A real-time gaming application needs to maintain WebSocket connections for thousands of concurrent players. Which service combination is most appropriate?",
+    "options": [
+      {
+        "text": "CloudFront + S3",
+        "isCorrect": false
+      },
+      {
+        "text": "API Gateway WebSocket + Lambda",
+        "isCorrect": true
+      },
+      {
+        "text": "ELB + EC2",
+        "isCorrect": false
+      },
+      {
+        "text": "Route 53 + ALB",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "API Gateway WebSocket APIs can handle persistent connections and route messages to Lambda functions for real-time, serverless gaming applications.",
+    "awsService": "API Gateway"
+  },
+  {
+    "id": "q238",
+    "questionText": "A company needs to ensure their application logs are retained for 7 years for compliance. The logs are rarely accessed after 30 days. What is the most cost-effective storage strategy?",
+    "options": [
+      {
+        "text": "CloudWatch Logs with default retention",
+        "isCorrect": false
+      },
+      {
+        "text": "S3 with lifecycle policies to Glacier Deep Archive",
+        "isCorrect": true
+      },
+      {
+        "text": "EBS snapshots",
+        "isCorrect": false
+      },
+      {
+        "text": "RDS with automated backups",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "S3 lifecycle policies can automatically transition logs to Glacier Deep Archive after 30 days, providing the lowest cost for long-term retention while maintaining compliance.",
+    "awsService": "S3"
+  },
+  {
+    "id": "q239",
+    "questionText": "A company wants to implement end-to-end encryption for their web application traffic. Which combination provides complete encryption coverage?",
+    "options": [
+      {
+        "text": "CloudFront + ALB with HTTP",
+        "isCorrect": false
+      },
+      {
+        "text": "CloudFront HTTPS + ALB HTTPS + backend HTTPS",
+        "isCorrect": true
+      },
+      {
+        "text": "Route 53 + CloudFront HTTP",
+        "isCorrect": false
+      },
+      {
+        "text": "WAF + ALB HTTP",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "End-to-end encryption requires HTTPS/TLS at every layer: CloudFront to users, ALB to CloudFront, and backend services to ALB.",
+    "awsService": "CloudFront"
+  },
+  {
+    "id": "q240",
+    "questionText": "A machine learning application needs to process images uploaded by users to detect objects. The processing should be automatic and cost-effective. Which service combination is best?",
+    "options": [
+      {
+        "text": "S3 + Lambda + custom ML model",
+        "isCorrect": false
+      },
+      {
+        "text": "S3 + Lambda + Amazon Rekognition",
+        "isCorrect": true
+      },
+      {
+        "text": "EC2 + OpenCV + custom processing",
+        "isCorrect": false
+      },
+      {
+        "text": "SageMaker + custom endpoint",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "S3 triggers Lambda automatically on upload, and Amazon Rekognition provides pre-trained object detection capabilities without the need to build custom ML models.",
+    "awsService": "Rekognition"
+  },
+  {
+    "id": "q241",
+    "questionText": "A startup needs to deploy a web application with a database. They want minimal operational overhead and automatic scaling. Which combination is most suitable?",
+    "options": [
+      {
+        "text": "EC2 + RDS MySQL",
+        "isCorrect": false
+      },
+      {
+        "text": "Amplify + DynamoDB",
+        "isCorrect": true
+      },
+      {
+        "text": "ECS + Aurora",
+        "isCorrect": false
+      },
+      {
+        "text": "Lambda + RDS",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "AWS Amplify provides hosting with automatic scaling and CI/CD, while DynamoDB offers serverless database with automatic scaling and minimal operational overhead.",
+    "awsService": "Amplify"
+  },
+  {
+    "id": "q242",
+    "questionText": "A company runs batch processing jobs that analyze large datasets. The jobs can be interrupted and restarted. Which compute option provides the best cost optimization?",
+    "options": [
+      {
+        "text": "EC2 Reserved Instances",
+        "isCorrect": false
+      },
+      {
+        "text": "EC2 Spot Instances",
+        "isCorrect": true
+      },
+      {
+        "text": "EC2 On-Demand Instances",
+        "isCorrect": false
+      },
+      {
+        "text": "Fargate Spot",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "EC2 Spot Instances provide up to 90% cost savings compared to On-Demand pricing and are perfect for fault-tolerant batch processing jobs that can handle interruptions.",
+    "awsService": "EC2"
+  },
+  {
+    "id": "q243",
+    "questionText": "A global company needs to serve static content to users worldwide with the lowest possible latency. Which solution is most effective?",
+    "options": [
+      {
+        "text": "S3 with regional replication",
+        "isCorrect": false
+      },
+      {
+        "text": "CloudFront with global edge locations",
+        "isCorrect": true
+      },
+      {
+        "text": "Multiple ALBs in different regions",
+        "isCorrect": false
+      },
+      {
+        "text": "Route 53 with latency-based routing",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "CloudFront's global network of edge locations caches content close to users worldwide, providing the lowest latency for static content delivery.",
+    "awsService": "CloudFront"
+  },
+  {
+    "id": "q244",
+    "questionText": "A company needs to ensure their multi-tier application can handle the failure of any single component. What architecture principle should they follow?",
+    "options": [
+      {
+        "text": "Single point of failure design",
+        "isCorrect": false
+      },
+      {
+        "text": "Loosely coupled architecture",
+        "isCorrect": true
+      },
+      {
+        "text": "Monolithic application design",
+        "isCorrect": false
+      },
+      {
+        "text": "Shared database architecture",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Loosely coupled architecture ensures that components can fail independently without affecting the entire system, using services like SQS, SNS, and Load Balancers.",
+    "awsService": "Well-Architected Framework"
+  },
+  {
+    "id": "q245",
+    "questionText": "A development team needs to test their application with a copy of production data monthly. What is the most cost-effective approach for the test database?",
+    "options": [
+      {
+        "text": "Maintain a separate production-sized RDS instance",
+        "isCorrect": false
+      },
+      {
+        "text": "Create RDS snapshots and restore when needed",
+        "isCorrect": true
+      },
+      {
+        "text": "Use DynamoDB with on-demand capacity",
+        "isCorrect": false
+      },
+      {
+        "text": "Replicate data to a read replica",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "RDS snapshots are cost-effective for periodic testing - you only pay for storage until you restore a snapshot to a running instance for testing.",
+    "awsService": "RDS"
+  },
+  {
+    "id": "q246",
+    "questionText": "A company wants to monitor their application performance and automatically scale based on custom business metrics like order processing rate. Which service combination enables this?",
+    "options": [
+      {
+        "text": "CloudWatch default metrics + Auto Scaling",
+        "isCorrect": false
+      },
+      {
+        "text": "CloudWatch custom metrics + Auto Scaling",
+        "isCorrect": true
+      },
+      {
+        "text": "X-Ray + Lambda",
+        "isCorrect": false
+      },
+      {
+        "text": "Config + Systems Manager",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "CloudWatch custom metrics allow you to send business-specific metrics, and Auto Scaling can use these custom metrics to scale resources based on business requirements.",
+    "awsService": "CloudWatch"
+  },
+  {
+    "id": "q247",
+    "questionText": "A financial services company needs to ensure all administrative actions in their AWS account are logged and tamper-proof. Which service configuration provides this?",
+    "options": [
+      {
+        "text": "CloudWatch Logs with encryption",
+        "isCorrect": false
+      },
+      {
+        "text": "CloudTrail with log file validation and S3 MFA delete",
+        "isCorrect": true
+      },
+      {
+        "text": "Config with S3 storage",
+        "isCorrect": false
+      },
+      {
+        "text": "VPC Flow Logs",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "CloudTrail with log file validation ensures logs haven't been tampered with, and S3 MFA delete prevents unauthorized deletion of log files.",
+    "awsService": "CloudTrail"
+  },
+  {
+    "id": "q248",
+    "questionText": "A company runs a containerized application that needs to scale rapidly based on incoming requests. They want to minimize cold start times. Which service is most appropriate?",
+    "options": [
+      {
+        "text": "Lambda with container images",
+        "isCorrect": false
+      },
+      {
+        "text": "ECS with Fargate Spot",
+        "isCorrect": false
+      },
+      {
+        "text": "ECS with Fargate and Application Auto Scaling",
+        "isCorrect": true
+      },
+      {
+        "text": "EKS with HPA",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "ECS with Fargate provides fast container startup times without managing infrastructure, and Application Auto Scaling can quickly scale based on metrics to minimize response times.",
+    "awsService": "ECS"
+  },
+  {
+    "id": "q249",
+    "questionText": "A data analytics company needs to query petabytes of data stored in S3 using SQL without moving the data. Which service should they use?",
+    "options": [
+      {
+        "text": "Amazon Redshift Spectrum",
+        "isCorrect": true
+      },
+      {
+        "text": "Amazon Athena",
+        "isCorrect": false
+      },
+      {
+        "text": "Amazon EMR",
+        "isCorrect": false
+      },
+      {
+        "text": "AWS Glue",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "While Athena can query S3 data, Redshift Spectrum is specifically designed for querying petabyte-scale data in S3 and can handle much larger datasets more efficiently.",
+    "awsService": "Redshift"
+  },
+  {
+    "id": "q250",
+    "questionText": "A mobile gaming company needs to implement leaderboards that update in real-time for millions of players globally. Which architecture provides the best performance?",
+    "options": [
+      {
+        "text": "RDS with read replicas",
+        "isCorrect": false
+      },
+      {
+        "text": "DynamoDB Global Tables with GSI",
+        "isCorrect": true
+      },
+      {
+        "text": "ElastiCache clusters in multiple regions",
+        "isCorrect": false
+      },
+      {
+        "text": "S3 with CloudFront",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "DynamoDB Global Tables provide multi-region, multi-master replication with Global Secondary Indexes (GSI) perfect for real-time leaderboards accessed globally.",
+    "awsService": "DynamoDB"
+  },
+  {
+    "id": "q251",
+    "questionText": "A company has a CRM application hosted on an Auto Scaling group of On-Demand EC2 instances with different instance types and sizes. The application is extensively used during office hours from 9 AM to 5 PM. Users are complaining that the performance of the application is slow during the start of the day but then works normally after a couple of hours. Which of the following is the MOST operationally efficient solution?",
+    "options": [
+      {
+        "text": "Configure a Dynamic scaling policy for the Auto Scaling group to launch new instances based on the CPU utilization",
+        "isCorrect": false
+      },
+      {
+        "text": "Configure a Dynamic scaling policy for the Auto Scaling group to launch new instances based on the Memory utilization",
+        "isCorrect": false
+      },
+      {
+        "text": "Configure a Scheduled scaling policy for the Auto Scaling group to launch new instances before the start of the day",
+        "isCorrect": true
+      },
+      {
+        "text": "Configure a Predictive scaling policy for the Auto Scaling group to automatically adjust the number of Amazon EC2 instances",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Since the application has predictable usage patterns (9 AM to 5 PM), scheduled scaling is the most operationally efficient solution. It proactively scales the infrastructure before the demand increases, preventing performance issues.",
+    "awsService": "EC2"
+  },
+  {
+    "id": "q252",
+    "questionText": "A financial application consists of an Auto Scaling group of Amazon EC2 instances, an Application Load Balancer, and a MySQL RDS instance in Multi-AZ deployment. To protect customers' confidential data, the RDS database must only be accessible using authentication tokens specific to the profile credentials of EC2 instances. Which action should be taken?",
+    "options": [
+      {
+        "text": "Enable the IAM DB Authentication",
+        "isCorrect": true
+      },
+      {
+        "text": "Configure SSL in your application to encrypt the database connection to RDS",
+        "isCorrect": false
+      },
+      {
+        "text": "Create an IAM Role and assign it to your EC2 instances which will grant exclusive access to your RDS instance",
+        "isCorrect": false
+      },
+      {
+        "text": "Use a combination of IAM and STS to enforce restricted access to your RDS instance using a temporary authentication token",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "IAM DB Authentication allows you to authenticate to your RDS MySQL and PostgreSQL instances using AWS IAM users and roles, eliminating the need to store database credentials in the application code.",
+    "awsService": "RDS"
+  },
+  {
+    "id": "q253",
+    "questionText": "A company needs to implement a fanout messaging pattern where a single message should be delivered to multiple SQS queues based on message attributes. What is the most efficient solution?",
+    "options": [
+      {
+        "text": "Use multiple SQS queues with a Lambda function to route messages",
+        "isCorrect": false
+      },
+      {
+        "text": "Create an SNS topic with message filtering policy and configure multiple SQS queues to subscribe to the topic",
+        "isCorrect": true
+      },
+      {
+        "text": "Use Amazon EventBridge with custom event patterns",
+        "isCorrect": false
+      },
+      {
+        "text": "Implement application-level message routing using SQS batch operations",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "SNS with message filtering policies allows you to implement fanout messaging efficiently. Each SQS queue can subscribe to the SNS topic with specific filter policies to receive only relevant messages.",
+    "awsService": "SNS"
+  },
+  {
+    "id": "q254",
+    "questionText": "An application requires a database with read replication latency of less than 1 second across multiple regions. Which database solution should be used?",
+    "options": [
+      {
+        "text": "Amazon RDS with Multi-AZ deployment",
+        "isCorrect": false
+      },
+      {
+        "text": "Amazon Aurora with cross-region replicas",
+        "isCorrect": true
+      },
+      {
+        "text": "Amazon DynamoDB with Global Tables",
+        "isCorrect": false
+      },
+      {
+        "text": "Amazon RDS with Read Replicas in multiple regions",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Amazon Aurora with cross-region replicas provides sub-second replication latency across regions, making it ideal for applications requiring fast read access globally.",
+    "awsService": "Aurora"
+  },
+  {
+    "id": "q255",
+    "questionText": "A company wants to improve application performance by reducing response times from milliseconds to microseconds for a DynamoDB table. What solution should be implemented?",
+    "options": [
+      {
+        "text": "Enable DynamoDB Auto Scaling",
+        "isCorrect": false
+      },
+      {
+        "text": "Use Amazon DynamoDB Accelerator (DAX)",
+        "isCorrect": true
+      },
+      {
+        "text": "Implement Amazon ElastiCache for Redis",
+        "isCorrect": false
+      },
+      {
+        "text": "Use DynamoDB Global Secondary Indexes",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "DynamoDB Accelerator (DAX) is a fully managed, highly available, in-memory cache for DynamoDB that delivers up to 10x performance improvement, reducing response times from milliseconds to microseconds.",
+    "awsService": "DynamoDB"
+  },
+  {
+    "id": "q256",
+    "questionText": "A web application uses a Network Load Balancer for thousands of game servers around the world that communicate using UDP protocol. The application needs to route traffic based on the location of users. What routing policy should be used with Route 53?",
+    "options": [
+      {
+        "text": "Latency-based routing",
+        "isCorrect": false
+      },
+      {
+        "text": "Geolocation routing policy",
+        "isCorrect": true
+      },
+      {
+        "text": "Weighted routing policy",
+        "isCorrect": false
+      },
+      {
+        "text": "Failover routing policy",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Geolocation routing policy allows you to route traffic based on the geographic location of users, which is perfect for directing users to the nearest game servers.",
+    "awsService": "Route53"
+  },
+  {
+    "id": "q257",
+    "questionText": "A company needs to upload a 1 TB file to an S3 bucket efficiently. What is the recommended approach?",
+    "options": [
+      {
+        "text": "Use the standard S3 PUT operation",
+        "isCorrect": false
+      },
+      {
+        "text": "Use Amazon S3 multipart upload API",
+        "isCorrect": true
+      },
+      {
+        "text": "Use AWS DataSync",
+        "isCorrect": false
+      },
+      {
+        "text": "Use AWS Storage Gateway",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "S3 multipart upload API allows you to upload large objects in parts, enabling parallel uploads, improved throughput, and the ability to resume uploads if any part fails.",
+    "awsService": "S3"
+  },
+  {
+    "id": "q258",
+    "questionText": "An application needs to retrieve a subset of data from a large CSV file stored in an S3 bucket without downloading the entire file. Which feature should be used?",
+    "options": [
+      {
+        "text": "S3 Transfer Acceleration",
+        "isCorrect": false
+      },
+      {
+        "text": "S3 Select operation",
+        "isCorrect": true
+      },
+      {
+        "text": "S3 Intelligent Tiering",
+        "isCorrect": false
+      },
+      {
+        "text": "S3 Cross-Region Replication",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "S3 Select allows you to retrieve only a subset of data from an object by using simple SQL expressions, reducing the amount of data transferred and improving performance.",
+    "awsService": "S3"
+  },
+  {
+    "id": "q259",
+    "questionText": "A company needs to monitor the memory and disk space utilization of EC2 instances. The default CloudWatch metrics don't include this information. What should be done?",
+    "options": [
+      {
+        "text": "Enable detailed monitoring in CloudWatch",
+        "isCorrect": false
+      },
+      {
+        "text": "Install Amazon CloudWatch agent on the instances",
+        "isCorrect": true
+      },
+      {
+        "text": "Use AWS Systems Manager",
+        "isCorrect": false
+      },
+      {
+        "text": "Configure AWS Config rules",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "The CloudWatch agent must be installed on EC2 instances to collect memory, disk, and other system-level metrics that are not available by default.",
+    "awsService": "CloudWatch"
+  },
+  {
+    "id": "q260",
+    "questionText": "A company wants to set up a DNS failover to a static website hosted in S3. Which Route 53 routing policy should be used?",
+    "options": [
+      {
+        "text": "Weighted routing",
+        "isCorrect": false
+      },
+      {
+        "text": "Latency-based routing",
+        "isCorrect": false
+      },
+      {
+        "text": "Failover routing to a static S3 website or CloudFront distribution",
+        "isCorrect": true
+      },
+      {
+        "text": "Geolocation routing",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Failover routing policy allows you to configure active-passive failover, where Route 53 fails over to a static S3 website or CloudFront distribution when the primary resource becomes unavailable.",
+    "awsService": "Route53"
+  },
+  {
+    "id": "q261",
+    "questionText": "A company needs to implement automated backup for all EBS volumes with a 90-day retention policy. What is the most efficient solution?",
+    "options": [
+      {
+        "text": "Create manual EBS snapshots using AWS CLI",
+        "isCorrect": false
+      },
+      {
+        "text": "Use Amazon Data Lifecycle Manager to automate EBS snapshots",
+        "isCorrect": true
+      },
+      {
+        "text": "Use AWS Backup service",
+        "isCorrect": false
+      },
+      {
+        "text": "Create Lambda functions to automate snapshot creation",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Amazon Data Lifecycle Manager provides a simple way to automate the creation, retention, and deletion of EBS snapshots and AMIs, making it the most efficient solution for automated backups.",
+    "awsService": "EBS"
+  },
+  {
+    "id": "q262",
+    "questionText": "An application needs to monitor the SwapUtilization metric of EC2 instances. This metric is not available by default in CloudWatch. What should be implemented?",
+    "options": [
+      {
+        "text": "Enable enhanced monitoring",
+        "isCorrect": false
+      },
+      {
+        "text": "Install the CloudWatch agent and configure custom metrics",
+        "isCorrect": true
+      },
+      {
+        "text": "Use AWS Systems Manager Session Manager",
+        "isCorrect": false
+      },
+      {
+        "text": "Configure VPC Flow Logs",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "The CloudWatch agent can collect system-level metrics including SwapUtilization, which are not available through the default CloudWatch metrics.",
+    "awsService": "CloudWatch"
+  },
+  {
+    "id": "q263",
+    "questionText": "A company needs a fully managed ETL (extract, transform, and load) service to process data from various sources. Which AWS service should be used?",
+    "options": [
+      {
+        "text": "Amazon EMR",
+        "isCorrect": false
+      },
+      {
+        "text": "AWS Glue",
+        "isCorrect": true
+      },
+      {
+        "text": "Amazon Kinesis Data Firehose",
+        "isCorrect": false
+      },
+      {
+        "text": "AWS DataSync",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "AWS Glue is a fully managed ETL service that makes it easy to prepare and load data for analytics. It provides automatic code generation and serverless execution.",
+    "awsService": "Glue"
+  },
+  {
+    "id": "q264",
+    "questionText": "A company needs a fully managed, petabyte-scale data warehouse service for analytics workloads. Which service should be used?",
+    "options": [
+      {
+        "text": "Amazon RDS",
+        "isCorrect": false
+      },
+      {
+        "text": "Amazon DynamoDB",
+        "isCorrect": false
+      },
+      {
+        "text": "Amazon Redshift",
+        "isCorrect": true
+      },
+      {
+        "text": "Amazon Aurora",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Amazon Redshift is a fully managed, petabyte-scale data warehouse service designed for analytics workloads with high performance and cost efficiency.",
+    "awsService": "Redshift"
+  },
+  {
+    "id": "q265",
+    "questionText": "A company wants to encrypt EBS volumes that were restored from unencrypted snapshots. What is the correct approach?",
+    "options": [
+      {
+        "text": "Enable encryption directly on the existing volume",
+        "isCorrect": false
+      },
+      {
+        "text": "Copy the snapshot and enable encryption with a new CMK while creating the EBS volume",
+        "isCorrect": true
+      },
+      {
+        "text": "Use AWS KMS to encrypt the snapshot",
+        "isCorrect": false
+      },
+      {
+        "text": "Create a new encrypted volume and copy data manually",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "To encrypt a volume from an unencrypted snapshot, you must copy the snapshot with encryption enabled using a Customer Master Key (CMK), then create the volume from the encrypted snapshot copy.",
+    "awsService": "EBS"
+  },
+  {
+    "id": "q266",
+    "questionText": "A web application needs to limit the maximum number of requests from a single IP address to prevent abuse. Which AWS service should be implemented?",
+    "options": [
+      {
+        "text": "Amazon CloudFront",
+        "isCorrect": false
+      },
+      {
+        "text": "AWS WAF with rate-based rules",
+        "isCorrect": true
+      },
+      {
+        "text": "Application Load Balancer",
+        "isCorrect": false
+      },
+      {
+        "text": "Amazon API Gateway",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "AWS WAF allows you to create rate-based rules that can limit the number of requests from individual IP addresses, providing protection against abuse and DDoS attacks.",
+    "awsService": "WAF"
+  },
+  {
+    "id": "q267",
+    "questionText": "A company needs to ensure that all uploaded objects in an S3 bucket grant the bucket owner full access. What should be configured?",
+    "options": [
+      {
+        "text": "Enable S3 Block Public Access",
+        "isCorrect": false
+      },
+      {
+        "text": "Create a bucket policy that requires users to set the object's ACL to bucket-owner-full-control",
+        "isCorrect": true
+      },
+      {
+        "text": "Enable S3 Object Lock",
+        "isCorrect": false
+      },
+      {
+        "text": "Configure default encryption",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "A bucket policy can enforce that all uploaded objects must include the bucket-owner-full-control ACL, ensuring the bucket owner always has full access to uploaded objects.",
+    "awsService": "S3"
+  },
+  {
+    "id": "q268",
+    "questionText": "A company wants to protect objects in an S3 bucket from accidental deletion or overwrite. What should be implemented?",
+    "options": [
+      {
+        "text": "Enable S3 Cross-Region Replication",
+        "isCorrect": false
+      },
+      {
+        "text": "Enable versioning and MFA delete",
+        "isCorrect": true
+      },
+      {
+        "text": "Configure S3 Lifecycle policies",
+        "isCorrect": false
+      },
+      {
+        "text": "Enable S3 Transfer Acceleration",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "S3 versioning keeps multiple versions of objects, and MFA delete provides an additional layer of security by requiring multi-factor authentication to permanently delete object versions.",
+    "awsService": "S3"
+  },
+  {
+    "id": "q269",
+    "questionText": "A company needs to access resources on both on-premises and AWS using existing Active Directory credentials. What should be implemented?",
+    "options": [
+      {
+        "text": "AWS IAM with LDAP",
+        "isCorrect": false
+      },
+      {
+        "text": "Set up SAML 2.0-Based Federation using Microsoft Active Directory Federation Service",
+        "isCorrect": true
+      },
+      {
+        "text": "AWS Single Sign-On",
+        "isCorrect": false
+      },
+      {
+        "text": "AWS Cognito User Pools",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "SAML 2.0-based federation with Microsoft Active Directory Federation Service allows users to access AWS resources using their existing on-premises Active Directory credentials.",
+    "awsService": "IAM"
+  },
+  {
+    "id": "q270",
+    "questionText": "A web application needs to serve SSL traffic over the same IP address for multiple domains. What should be configured?",
+    "options": [
+      {
+        "text": "Use multiple Elastic IP addresses",
+        "isCorrect": false
+      },
+      {
+        "text": "Use AWS Certificate Manager with CloudFront and enable Server Name Indication (SNI)",
+        "isCorrect": true
+      },
+      {
+        "text": "Configure multiple Application Load Balancers",
+        "isCorrect": false
+      },
+      {
+        "text": "Use Network Load Balancer with multiple certificates",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Server Name Indication (SNI) allows multiple SSL certificates to be served from the same IP address, enabling CloudFront to serve multiple domains with SSL encryption.",
+    "awsService": "CloudFront"
+  },
+  {
+    "id": "q271",
+    "questionText": "A company needs to control access to several S3 buckets using a VPC endpoint and allow access only to trusted buckets. What should be implemented?",
+    "options": [
+      {
+        "text": "Configure S3 bucket policies",
+        "isCorrect": false
+      },
+      {
+        "text": "Create an endpoint policy for trusted S3 buckets",
+        "isCorrect": true
+      },
+      {
+        "text": "Use IAM policies",
+        "isCorrect": false
+      },
+      {
+        "text": "Configure VPC NACLs",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "VPC endpoint policies allow you to control which S3 buckets can be accessed through the VPC endpoint, providing an additional layer of access control for trusted buckets.",
+    "awsService": "VPC"
+  },
+  {
+    "id": "q272",
+    "questionText": "A company needs to track all configuration changes made to AWS services for compliance purposes. What should be implemented?",
+    "options": [
+      {
+        "text": "Enable AWS CloudTrail",
+        "isCorrect": false
+      },
+      {
+        "text": "Set up AWS Config rules to identify compliant and non-compliant services",
+        "isCorrect": true
+      },
+      {
+        "text": "Use Amazon CloudWatch Events",
+        "isCorrect": false
+      },
+      {
+        "text": "Configure VPC Flow Logs",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "AWS Config continuously monitors and records configuration changes to AWS resources and can evaluate compliance against configuration best practices and organizational policies.",
+    "awsService": "Config"
+  },
+  {
+    "id": "q273",
+    "questionText": "An application needs short-lived access tokens for temporary access to AWS resources. Which service should be used?",
+    "options": [
+      {
+        "text": "AWS IAM Users",
+        "isCorrect": false
+      },
+      {
+        "text": "AWS Security Token Service (STS)",
+        "isCorrect": true
+      },
+      {
+        "text": "AWS Cognito",
+        "isCorrect": false
+      },
+      {
+        "text": "AWS Secrets Manager",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "AWS Security Token Service (STS) provides short-lived, temporary security credentials that act as temporary access tokens for accessing AWS resources.",
+    "awsService": "STS"
+  },
+  {
+    "id": "q274",
+    "questionText": "A company needs to encrypt and automatically rotate database credentials, API keys, and other secrets. Which service should be used?",
+    "options": [
+      {
+        "text": "AWS Systems Manager Parameter Store",
+        "isCorrect": false
+      },
+      {
+        "text": "AWS Secrets Manager with automatic rotation enabled",
+        "isCorrect": true
+      },
+      {
+        "text": "AWS KMS",
+        "isCorrect": false
+      },
+      {
+        "text": "Amazon S3 with encryption",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "AWS Secrets Manager automatically encrypts secrets and can automatically rotate credentials for supported databases and services, reducing the risk of credential exposure.",
+    "awsService": "SecretsManager"
+  },
+  {
+    "id": "q275",
+    "questionText": "A company wants to implement a cost-effective solution for over-provisioned EC2 resources. What scaling configuration should be used?",
+    "options": [
+      {
+        "text": "Configure simple scaling policies",
+        "isCorrect": false
+      },
+      {
+        "text": "Configure target tracking scaling in Auto Scaling Groups",
+        "isCorrect": true
+      },
+      {
+        "text": "Use manual scaling",
+        "isCorrect": false
+      },
+      {
+        "text": "Configure step scaling policies",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Target tracking scaling automatically adjusts the number of instances to maintain a specified metric target, helping to eliminate over-provisioning and reduce costs.",
+    "awsService": "AutoScaling"
+  },
+  {
+    "id": "q276",
+    "questionText": "A company has application data stored in tape backup solutions that must be preserved for 10 years. What is the most cost-effective storage solution?",
+    "options": [
+      {
+        "text": "Amazon S3 Standard",
+        "isCorrect": false
+      },
+      {
+        "text": "Amazon S3 Glacier",
+        "isCorrect": false
+      },
+      {
+        "text": "Use AWS Storage Gateway to backup data directly to Amazon S3 Glacier Deep Archive",
+        "isCorrect": true
+      },
+      {
+        "text": "Amazon EBS volumes",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "AWS Storage Gateway can connect to existing tape infrastructure and automatically archive data to S3 Glacier Deep Archive, which is the most cost-effective option for long-term archival.",
+    "awsService": "StorageGateway"
+  },
+  {
+    "id": "q277",
+    "questionText": "A company needs to accelerate the transfer of historical records from on-premises to AWS over the Internet in a cost-effective manner. What should be used?",
+    "options": [
+      {
+        "text": "AWS Direct Connect",
+        "isCorrect": false
+      },
+      {
+        "text": "AWS DataSync with Amazon S3 Glacier Deep Archive as destination",
+        "isCorrect": true
+      },
+      {
+        "text": "AWS Storage Gateway",
+        "isCorrect": false
+      },
+      {
+        "text": "Amazon S3 Transfer Acceleration",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "AWS DataSync can efficiently transfer large amounts of data to AWS, and using S3 Glacier Deep Archive as the destination provides the most cost-effective long-term storage.",
+    "awsService": "DataSync"
+  },
+  {
+    "id": "q278",
+    "questionText": "A company needs to globally deliver static content and media files to customers with low latency. What is the most efficient solution?",
+    "options": [
+      {
+        "text": "Use multiple S3 buckets in different regions",
+        "isCorrect": false
+      },
+      {
+        "text": "Store files in Amazon S3 and create a CloudFront distribution with S3 as the origin",
+        "isCorrect": true
+      },
+      {
+        "text": "Use Amazon EFS with regional endpoints",
+        "isCorrect": false
+      },
+      {
+        "text": "Deploy EC2 instances in multiple regions",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "CloudFront with S3 as the origin provides global content delivery through edge locations, ensuring low latency access to static content worldwide.",
+    "awsService": "CloudFront"
+  },
+  {
+    "id": "q279",
+    "questionText": "An application must be hosted on two EC2 instances and run continuously for three years with stable and predictable CPU utilization. What is the most cost-effective option?",
+    "options": [
+      {
+        "text": "On-Demand Instances",
+        "isCorrect": false
+      },
+      {
+        "text": "Spot Instances",
+        "isCorrect": false
+      },
+      {
+        "text": "Reserved Instances",
+        "isCorrect": true
+      },
+      {
+        "text": "Dedicated Hosts",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Reserved Instances provide significant cost savings (up to 75%) for applications with predictable usage patterns over a 1 or 3-year term commitment.",
+    "awsService": "EC2"
+  },
+  {
+    "id": "q280",
+    "questionText": "A company needs to implement a cost-effective solution for S3 objects that are accessed less frequently over time. What should be configured?",
+    "options": [
+      {
+        "text": "Enable S3 Cross-Region Replication",
+        "isCorrect": false
+      },
+      {
+        "text": "Create an Amazon S3 lifecycle policy to move objects to S3 Standard-IA",
+        "isCorrect": true
+      },
+      {
+        "text": "Enable S3 Transfer Acceleration",
+        "isCorrect": false
+      },
+      {
+        "text": "Configure S3 Intelligent Tiering",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "S3 lifecycle policies can automatically transition objects to more cost-effective storage classes like Standard-IA for infrequently accessed data, reducing storage costs.",
+    "awsService": "S3"
+  },
+  {
+    "id": "q281",
+    "questionText": "A company wants to minimize data transfer costs between two EC2 instances. What is the best approach?",
+    "options": [
+      {
+        "text": "Deploy instances in different Availability Zones",
+        "isCorrect": false
+      },
+      {
+        "text": "Deploy the EC2 instances in the same Region and Availability Zone",
+        "isCorrect": true
+      },
+      {
+        "text": "Use different instance families",
+        "isCorrect": false
+      },
+      {
+        "text": "Enable Enhanced Networking",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Data transfer between EC2 instances in the same Availability Zone is free, making it the most cost-effective approach for minimizing data transfer costs.",
+    "awsService": "EC2"
+  },
+  {
+    "id": "q282",
+    "questionText": "A company needs to import SSL/TLS certificates for their application. What are the available options?",
+    "options": [
+      {
+        "text": "Only AWS Certificate Manager",
+        "isCorrect": false
+      },
+      {
+        "text": "Only AWS IAM",
+        "isCorrect": false
+      },
+      {
+        "text": "Import the certificate into AWS Certificate Manager or upload it to AWS IAM",
+        "isCorrect": true
+      },
+      {
+        "text": "Only Amazon S3",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "SSL/TLS certificates can be imported into AWS Certificate Manager for use with AWS services, or uploaded to AWS IAM for use with EC2 instances and other resources.",
+    "awsService": "ACM"
+  },
+  {
+    "id": "q283",
+    "questionText": "A company has deployed a parallel file system for frequently accessed 'hot' data in a high-performance computing environment. Which service should be used?",
+    "options": [
+      {
+        "text": "Amazon EFS",
+        "isCorrect": false
+      },
+      {
+        "text": "Amazon FSx for Lustre",
+        "isCorrect": true
+      },
+      {
+        "text": "Amazon S3",
+        "isCorrect": false
+      },
+      {
+        "text": "Amazon EBS",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Amazon FSx for Lustre is designed for high-performance computing workloads that require fast access to shared data, providing sub-millisecond latencies and high throughput.",
+    "awsService": "FSx"
+  },
+  {
+    "id": "q284",
+    "questionText": "A company needs synchronous data replication across Availability Zones with automatic failover for their RDS database. What should be implemented?",
+    "options": [
+      {
+        "text": "Read Replicas",
+        "isCorrect": false
+      },
+      {
+        "text": "Enable Multi-AZ deployment in Amazon RDS",
+        "isCorrect": true
+      },
+      {
+        "text": "Cross-Region backups",
+        "isCorrect": false
+      },
+      {
+        "text": "Database snapshots",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "RDS Multi-AZ deployment provides synchronous data replication to a standby instance in a different AZ with automatic failover capabilities for high availability.",
+    "awsService": "RDS"
+  },
+  {
+    "id": "q285",
+    "questionText": "A company needs storage for 'cold' (infrequently accessed) data with the lowest cost and can tolerate longer retrieval times. What storage class should be used?",
+    "options": [
+      {
+        "text": "Amazon S3 Standard",
+        "isCorrect": false
+      },
+      {
+        "text": "Amazon S3 Standard-IA",
+        "isCorrect": false
+      },
+      {
+        "text": "Amazon S3 Glacier Deep Archive",
+        "isCorrect": true
+      },
+      {
+        "text": "Amazon S3 One Zone-IA",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "S3 Glacier Deep Archive provides the lowest cost storage for long-term retention and digital preservation of data that is accessed once or twice per year.",
+    "awsService": "S3"
+  },
+  {
+    "id": "q286",
+    "questionText": "A company needs to set up a relational database with a disaster recovery plan that has an RPO of 1 second and RTO of less than 1 minute. What should be used?",
+    "options": [
+      {
+        "text": "Amazon RDS with Multi-AZ",
+        "isCorrect": false
+      },
+      {
+        "text": "Amazon Aurora Global Database",
+        "isCorrect": true
+      },
+      {
+        "text": "Amazon RDS with Read Replicas",
+        "isCorrect": false
+      },
+      {
+        "text": "Amazon DynamoDB Global Tables",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Aurora Global Database provides cross-region replication with typical lag of less than 1 second and recovery time objective (RTO) of less than 1 minute for disaster recovery.",
+    "awsService": "Aurora"
+  },
+  {
+    "id": "q287",
+    "questionText": "A company wants to monitor database metrics and send email notifications when specific thresholds are breached. What should be implemented?",
+    "options": [
+      {
+        "text": "Use only CloudWatch alarms",
+        "isCorrect": false
+      },
+      {
+        "text": "Create an SNS topic and add the topic to CloudWatch alarms",
+        "isCorrect": true
+      },
+      {
+        "text": "Use AWS Config rules",
+        "isCorrect": false
+      },
+      {
+        "text": "Configure VPC Flow Logs",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "CloudWatch alarms can monitor database metrics and trigger notifications through SNS topics, which can then send email notifications to subscribers when thresholds are breached.",
+    "awsService": "CloudWatch"
+  },
+  {
+    "id": "q288",
+    "questionText": "A company needs to implement a 90-day backup retention policy for Amazon Aurora. What service should be used?",
+    "options": [
+      {
+        "text": "Aurora automated backups",
+        "isCorrect": false
+      },
+      {
+        "text": "AWS Backup",
+        "isCorrect": true
+      },
+      {
+        "text": "Manual snapshots",
+        "isCorrect": false
+      },
+      {
+        "text": "Cross-Region replication",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "AWS Backup provides centralized backup management and can extend backup retention beyond the default Aurora backup retention period, supporting up to 35 days for automated backups but longer for managed backups.",
+    "awsService": "Backup"
+  },
+  {
+    "id": "q289",
+    "questionText": "An application needs to retrieve the instance ID, public keys, and public IP address of an EC2 instance from within the instance. What should be used?",
+    "options": [
+      {
+        "text": "AWS CLI",
+        "isCorrect": false
+      },
+      {
+        "text": "Access the EC2 instance metadata service at http://169.254.169.254/latest/meta-data/",
+        "isCorrect": true
+      },
+      {
+        "text": "AWS Systems Manager",
+        "isCorrect": false
+      },
+      {
+        "text": "Amazon CloudWatch",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "The EC2 instance metadata service provides information about the instance accessible via the local IP address 169.254.169.254, including instance ID, public keys, and network information.",
+    "awsService": "EC2"
+  },
+  {
+    "id": "q290",
+    "questionText": "A company needs to use the AWS Well-Architected Framework to review their applications and follow architectural best practices. What type of AWS resource would this involve?",
+    "options": [
+      {
+        "text": "AWS Config Rules",
+        "isCorrect": false
+      },
+      {
+        "text": "AWS Well-Architected Tool for workload reviews",
+        "isCorrect": true
+      },
+      {
+        "text": "AWS Systems Manager",
+        "isCorrect": false
+      },
+      {
+        "text": "AWS CloudFormation",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "The AWS Well-Architected Tool helps you review your architectures against AWS best practices and provides guidance for improvement across the five pillars of the Well-Architected Framework.",
+    "awsService": "WellArchitectedTool"
+  },
+  {
+    "id": "q291",
+    "questionText": "A company needs to implement attribute-based access control (ABAC) for fine-grained permissions based on user attributes. What IAM feature should be used?",
+    "options": [
+      {
+        "text": "IAM Groups",
+        "isCorrect": false
+      },
+      {
+        "text": "IAM Policies with condition keys and tags",
+        "isCorrect": true
+      },
+      {
+        "text": "IAM Users",
+        "isCorrect": false
+      },
+      {
+        "text": "IAM Roles only",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "ABAC in AWS uses IAM policies with condition keys and tags to define permissions based on attributes, allowing for more flexible and scalable access control compared to traditional role-based access control.",
+    "awsService": "IAM"
+  },
+  {
+    "id": "q292",
+    "questionText": "A serverless application needs to automatically adjust capacity based on incoming request patterns. Which compute option provides this capability?",
+    "options": [
+      {
+        "text": "Amazon EC2 with Auto Scaling",
+        "isCorrect": false
+      },
+      {
+        "text": "AWS Lambda with automatic scaling",
+        "isCorrect": true
+      },
+      {
+        "text": "Amazon ECS with Service Auto Scaling",
+        "isCorrect": false
+      },
+      {
+        "text": "AWS Batch",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "AWS Lambda automatically scales execution environment capacity based on incoming requests, providing true serverless computing without the need to manage infrastructure or capacity planning.",
+    "awsService": "Lambda"
+  },
+  {
+    "id": "q293",
+    "questionText": "A company wants to implement CI/CD best practices for software development. Which AWS services should be considered for continuous integration?",
+    "options": [
+      {
+        "text": "Amazon S3 and CloudFront",
+        "isCorrect": false
+      },
+      {
+        "text": "AWS CodeBuild and AWS CodePipeline",
+        "isCorrect": true
+      },
+      {
+        "text": "Amazon EC2 and ELB",
+        "isCorrect": false
+      },
+      {
+        "text": "AWS Lambda and API Gateway",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "AWS CodeBuild provides managed build service for compiling source code and running tests, while CodePipeline orchestrates the continuous integration and deployment workflow.",
+    "awsService": "CodeBuild"
+  },
+  {
+    "id": "q294",
+    "questionText": "A company needs to ensure data encryption in transit and at rest for their S3 bucket. What should be configured?",
+    "options": [
+      {
+        "text": "Only SSL/TLS for data in transit",
+        "isCorrect": false
+      },
+      {
+        "text": "Only server-side encryption for data at rest",
+        "isCorrect": false
+      },
+      {
+        "text": "Enable Amazon S3 Server-Side Encryption and use SSL/TLS for data in transit",
+        "isCorrect": true
+      },
+      {
+        "text": "Use VPC endpoints only",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Complete data protection requires both server-side encryption (SSE) for data at rest in S3 and SSL/TLS encryption for data in transit during API calls and data transfers.",
+    "awsService": "S3"
+  },
+  {
+    "id": "q295",
+    "questionText": "A high-performance computing application requires low-latency networking between EC2 instances for parallel processing workloads. What should be implemented?",
+    "options": [
+      {
+        "text": "Enhanced Networking with SR-IOV",
+        "isCorrect": false
+      },
+      {
+        "text": "Elastic Fabric Adapter (EFA)",
+        "isCorrect": true
+      },
+      {
+        "text": "Multiple Elastic Network Interfaces",
+        "isCorrect": false
+      },
+      {
+        "text": "VPC Peering",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Elastic Fabric Adapter (EFA) provides high-performance networking for HPC and machine learning applications, enabling low-latency communication with OS-bypass capabilities.",
+    "awsService": "EFA"
+  },
+  {
+    "id": "q296",
+    "questionText": "A company needs to implement automated scaling for their containerized applications running on Amazon ECS. What scaling capability should be configured?",
+    "options": [
+      {
+        "text": "EC2 Auto Scaling only",
+        "isCorrect": false
+      },
+      {
+        "text": "ECS Service Auto Scaling with target tracking",
+        "isCorrect": true
+      },
+      {
+        "text": "Manual scaling only",
+        "isCorrect": false
+      },
+      {
+        "text": "Lambda scaling",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "ECS Service Auto Scaling automatically adjusts the number of tasks in an ECS service based on CloudWatch metrics, providing efficient resource utilization for containerized applications.",
+    "awsService": "ECS"
+  },
+  {
+    "id": "q297",
+    "questionText": "A company wants to enable cross-account access to their S3 bucket while maintaining security. What is the recommended approach?",
+    "options": [
+      {
+        "text": "Make the bucket public",
+        "isCorrect": false
+      },
+      {
+        "text": "Use cross-account IAM roles with bucket policies",
+        "isCorrect": true
+      },
+      {
+        "text": "Share access keys",
+        "isCorrect": false
+      },
+      {
+        "text": "Use VPC peering only",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Cross-account IAM roles combined with bucket policies provide secure, auditable access to S3 resources across AWS accounts without sharing long-term credentials.",
+    "awsService": "S3"
+  },
+  {
+    "id": "q298",
+    "questionText": "A company needs to implement Blue/Green deployments for their web application to minimize downtime during updates. Which AWS service facilitates this deployment strategy?",
+    "options": [
+      {
+        "text": "AWS CloudFormation only",
+        "isCorrect": false
+      },
+      {
+        "text": "AWS CodeDeploy with Blue/Green deployment configuration",
+        "isCorrect": true
+      },
+      {
+        "text": "Amazon EC2 Auto Scaling only",
+        "isCorrect": false
+      },
+      {
+        "text": "AWS Lambda versions only",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "AWS CodeDeploy supports Blue/Green deployments, allowing you to deploy application updates with minimal downtime by gradually shifting traffic from the current version to the new version.",
+    "awsService": "CodeDeploy"
+  },
+  {
+    "id": "q299",
+    "questionText": "A company needs to analyze streaming data in real-time for fraud detection. Which AWS service is most appropriate for this use case?",
+    "options": [
+      {
+        "text": "Amazon S3",
+        "isCorrect": false
+      },
+      {
+        "text": "Amazon Kinesis Data Analytics",
+        "isCorrect": true
+      },
+      {
+        "text": "Amazon RDS",
+        "isCorrect": false
+      },
+      {
+        "text": "Amazon Redshift",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "Amazon Kinesis Data Analytics enables real-time analysis of streaming data using SQL queries, making it ideal for fraud detection and real-time analytics use cases.",
+    "awsService": "Kinesis"
+  },
+  {
+    "id": "q300",
+    "questionText": "A company wants to migrate their on-premises VMware environment to AWS while maintaining compatibility. Which service should they use?",
+    "options": [
+      {
+        "text": "Amazon EC2 instances",
+        "isCorrect": false
+      },
+      {
+        "text": "AWS Server Migration Service",
+        "isCorrect": false
+      },
+      {
+        "text": "VMware Cloud on AWS",
+        "isCorrect": true
+      },
+      {
+        "text": "AWS Application Migration Service",
+        "isCorrect": false
+      }
+    ],
+    "explanation": "VMware Cloud on AWS allows organizations to run VMware vSphere workloads natively on AWS infrastructure, providing seamless migration and hybrid cloud capabilities with full VMware compatibility.",
+    "awsService": "VMwareCloud"
   }
 ]
