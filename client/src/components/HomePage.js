@@ -13,24 +13,21 @@ const HomePage = () => {
   const [selectedQuestionSet, setSelectedQuestionSet] = useState('official'); // 'official', 'practice', 'all'
 
   useEffect(() => {
-    // Fetch both question sets
-    Promise.all([
-      fetch(process.env.PUBLIC_URL + '/questions.json').then(res => res.json()),
-      fetch(process.env.PUBLIC_URL + '/practice-questions.json').then(res => res.json())
-    ])
-      .then(([officialData, practiceData]) => {
-        // Add source tags to questions
-        const taggedOfficial = officialData.map(q => ({ ...q, source: 'official' }));
-        const taggedPractice = practiceData.map(q => ({ ...q, source: 'practice' }));
+    // Fetch the unified questions file
+    fetch(process.env.PUBLIC_URL + '/questions.json')
+      .then(res => res.json())
+      .then(questionsData => {
+        // Separate questions by source
+        const officialData = questionsData.filter(q => q.source !== 'practice');
+        const practiceData = questionsData.filter(q => q.source === 'practice');
         
-        setOfficialQuestions(taggedOfficial);
-        setPracticeQuestions(taggedPractice);
-        setAllQuestions([...taggedOfficial, ...taggedPractice]);
+        setOfficialQuestions(officialData);
+        setPracticeQuestions(practiceData);
+        setAllQuestions(questionsData);
         
         // Count questions with notes from all sources
         const notes = JSON.parse(localStorage.getItem('aws-notes') || '{}');
-        const allQuestionsData = [...taggedOfficial, ...taggedPractice];
-        const questionsWithNotes = allQuestionsData.filter(q => 
+        const questionsWithNotes = questionsData.filter(q => 
           notes[q.id] && notes[q.id].trim()
         );
         setNotesCount(questionsWithNotes.length);
